@@ -23,7 +23,7 @@ public class HomeControllerTest {
         String username = (String) modelAndView.getModel().get("username");
         User user = (User) modelAndView.getModel().get("user");
 
-        assertThat(username, equalTo("valid-user"));
+        assertThat(username, equalTo("valid-user-fail"));
         assertThat(user.getName(), equalTo("valid-user"));
     }
 
