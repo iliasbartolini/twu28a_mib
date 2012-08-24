@@ -5,11 +5,11 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class SendPostRequest implements SendRequest{
+public class RequestSender implements ServerRequest {
 
     private String url;
 
-    public SendPostRequest(String url) {
+    public RequestSender(String url) {
         this.url = url;
     }
 

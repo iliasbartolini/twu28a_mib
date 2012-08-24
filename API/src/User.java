@@ -5,25 +5,19 @@ import java.io.IOException;
 //Job: Understands how to work with an idea
 public class User {
 
-    private SendRequest sendRequest;
+    private ServerRequest serverRequest;
 
-    public User(SendRequest sendRequest) {
-        this.sendRequest=sendRequest;
+    public User(ServerRequest serverRequest) {
+        this.serverRequest = serverRequest;
     }
 
     public Idea createIdea(Integer section, String message) throws IOException {
-        String command = "/points.json?point[section_id]=" +
-                section.toString() +
-                "&point[message]=" +
-                message;
-        String data = null;
+        String command = String.format("/points.json?point[section_id]=%s&point[message]=%s", section.toString(), message);
 
-        String response = sendRequest.post(command, data);
+        String response = serverRequest.post(command, null);
 
         ResponseData responseData = new Gson().fromJson(response, ResponseData.class);
 
-        Idea newIdea = new Idea(responseData);
-
-        return newIdea;
+        return new Idea(responseData);
     }
 }

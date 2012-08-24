@@ -1,9 +1,7 @@
-public class SendPostRequestStub implements SendRequest {
+public class ServerRequestStub implements ServerRequest {
 
-    private String url;
 
-    public SendPostRequestStub(String url) {
-        this.url = url;
+    public ServerRequestStub() {
     }
 
     @Override
