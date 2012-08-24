@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Idea</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../themes/Bootstrap.css">
+    <link rel="stylesheet" href="../lib/jquery.mobile.structure-1.1.1.min.css" />
+    <link rel="stylesheet" href="../themes/mib_custom.css" />
+    <script src="../lib/jquery-1.7.1.min.js"></script>
+    <script src="../lib/jquery.mobile-1.1.1.min.js"></script>
+    <script src="../js/mib_script.js"></script>
+</head>
+<body>
+    <div data-role="page" data-theme="a">
+
+    <div data-role="header" data-position="inline" class="mib_header">
+        <h1><span class="lightbulb-icon"></span>New Idea</h1>
+    </div><!-- /header -->
+
+    <div data-role="content" data-theme="a">
+        <form action="#" method="post" class="addStickyForm">
+            <div data-role="fieldcontain">
+                <p>Add Idea to: <b>Section 1</b></p>
+                <div class="sticky largeSticky">
+                    <textarea name="idea_content" id="idea_content"></textarea>
+                </div>
+            </div>
+            <div class="ui-body ui-body-b">
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a cancelBtn"><button id="discardBtn" type="reset" data-theme="a">Discard</button></div>
+                    <div class="ui-block-b submitBtn"><button id="submitBtn" type="submit" data-theme="d">Submit Idea</button></div>
+                </fieldset>
+            </div>
+        </form>
+
+    </div><!-- /content -->
+
+</div><!-- /page -->
+
+</body>
+</html>
