@@ -2,15 +2,14 @@ package com.thoughtworks.twu.controller;
 
 import com.thoughtworks.twu.domain.Idea;
 import com.thoughtworks.twu.domain.IdeaForm;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class IdeaControllerTest
 {
@@ -29,8 +28,7 @@ public class IdeaControllerTest
     }
 
     @Test
-    public void shouldDisplayCreateIdeaPageAfterCreatingIdea()
-    {
+    public void shouldDisplayCreateIdeaPageAfterCreatingIdea() throws IOException {
         IdeaForm form = new IdeaForm("1","hi");
 
         ModelAndView modelAndView = ideaController.createIdea(form);
@@ -40,8 +38,7 @@ public class IdeaControllerTest
     }
 
     @Test
-    public void shouldReturnIdeaObjectWhenCreateIdeaIsCalled()
-    {
+    public void shouldReturnIdeaObjectWhenCreateIdeaIsCalled() throws IOException {
         IdeaForm form = new IdeaForm("1", "hi");
         ModelAndView modelAndView = ideaController.createIdea(form);
         Idea idea =(Idea)modelAndView.getModel().get("idea");
