@@ -26,7 +26,7 @@ public class IdeaController
             Collaborator collaborator = new Collaborator(new RequestSender("http://10.10.15.130:3000"));
             //Idea idea = collaborator.createIdea(Integer.parseInt(ideaForm.getSectionId()),ideaForm.getIdeaText());
             Idea idea = collaborator.createIdea(3,ideaForm.getIdeaText());
-            modelAndView.addObject("createNewIdeaForm", ideaForm);
+            modelAndView.addObject("ideaForm", ideaForm);
             modelAndView.addObject("idea",idea);
         }
         return modelAndView;

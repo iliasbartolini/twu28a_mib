@@ -33,7 +33,7 @@ public class IdeaControllerTest
 
         ModelAndView modelAndView = ideaController.createIdea(form);
 
-        assertThat((IdeaForm) modelAndView.getModel().get("createNewIdeaForm"), is(form));
+        assertThat((IdeaForm) modelAndView.getModel().get("ideaForm"), is(form));
         assertThat( modelAndView.getViewName(), is("example/createIdea"));
     }
 

@@ -3,7 +3,7 @@ package com.thoughtworks.twu.domain;
 public class IdeaForm
 {
     private String sectionId;
-    private String ideaText;
+    public String ideaText;
 
     public IdeaForm(String sectionId, String ideaText)
     {
@@ -33,7 +33,8 @@ public class IdeaForm
         this.sectionId = sectionId;
     }
 
-    public void setNewIdeaText(String message)
+
+    public void setIdeaText(String message)
     {
 
         ideaText = message;
