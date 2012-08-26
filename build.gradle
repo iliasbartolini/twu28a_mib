@@ -20,7 +20,8 @@ dependencies {
             'org.freemarker:freemarker:2.3.19',
             'ch.qos.logback:logback-classic:1.0.0',
             'commons-lang:commons-lang:2.6',
-            'hsqldb:hsqldb:1.8.0.10'
+            'hsqldb:hsqldb:1.8.0.10',
+            'com.google.code.gson:gson:2.2.2'
 
 
     testCompile 'junit:junit:4.10',
