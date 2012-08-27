@@ -33,7 +33,7 @@ dependencies {
 }
 
 jettyRun {
-    contextPath = 'twu'
+    contextPath = 'mib'
 }
 
 test {

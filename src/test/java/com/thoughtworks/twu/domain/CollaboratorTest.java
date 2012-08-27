@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 
-public class UserTest {
+public class CollaboratorTest {
 
 
     @Test

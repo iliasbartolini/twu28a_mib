@@ -12,20 +12,24 @@ import java.io.IOException;
 @Controller
 public class IdeaController
 {
+
+//    public static final String IDEA_BOARDZ_URL = "http://0.0.0.0:3000";
+    public static final String IDEA_BOARDZ_URL = "http://10.10.15.130:3000";
+
     @RequestMapping(value = "createIdea", method = RequestMethod.GET)
     public ModelAndView showCreateIdeaPage()
     {
         ModelAndView modelAndView = new ModelAndView("example/createIdea");
         return modelAndView;
     }
+
     @RequestMapping(value = "createIdea", method = RequestMethod.POST)
-    public ModelAndView createIdea(@ModelAttribute() IdeaForm ideaForm) throws IOException {
+    public ModelAndView createIdea(@ModelAttribute("ideaForm") IdeaForm ideaForm) throws IOException {
         ModelAndView modelAndView = new ModelAndView("example/createIdea");
         if(ideaForm.isValid())
         {
-            Collaborator collaborator = new Collaborator(new RequestSender("http://10.10.15.130:3000"));
-            //Idea idea = collaborator.createIdea(Integer.parseInt(ideaForm.getSectionId()),ideaForm.getIdeaText());
-            Idea idea = collaborator.createIdea(3,ideaForm.getIdeaText());
+            Collaborator collaborator = new Collaborator(new RequestSender(IDEA_BOARDZ_URL));
+            Idea idea = collaborator.createIdea(ideaForm.getSectionId(),ideaForm.getIdeaText());
             modelAndView.addObject("ideaForm", ideaForm);
             modelAndView.addObject("idea",idea);
         }

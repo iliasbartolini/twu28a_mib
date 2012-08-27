@@ -16,7 +16,7 @@ public class RequestSender implements ServerRequest {
     }
 
     @Override
-        public String post(String command, String data) throws IOException {
+    public String post(String command, String data) throws IOException {
         URL postUrl = new URL(url + command);
 
         URLConnection conn = postUrl.openConnection();
