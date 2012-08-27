@@ -1,3 +1,5 @@
+// EXAMPLE FILE
+
 package com.thoughtworks.twu.controller;
 
 import com.thoughtworks.twu.domain.User;

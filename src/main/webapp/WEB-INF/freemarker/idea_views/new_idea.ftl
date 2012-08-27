@@ -24,14 +24,14 @@
 <#if ideaForm?? >
     <#if !ideaForm.isValid() >
         <div class="alert alert-error">
-        ${ideaForm.getAlert()}
+            ${ideaForm.getAlert()}
         </div>
     </#if>
 </#if>
 
     <form name="ideaForm" action="" method="post" class="addStickyForm">
         <p>
-            <input type="text" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
+            <input type="text" id="boardURL" name="boardURL" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
         </p>
         <p>
             <label for="sectionId">Add Idea to:</label>

@@ -3,6 +3,7 @@ package com.thoughtworks.twu.domain;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 //Job: Understands how to work with an idea
 public class Collaborator {
@@ -18,7 +19,7 @@ public class Collaborator {
         String command = "/points.json?point[section_id]=" +
                 section.toString() +
                 "&point[message]=" +
-                message;
+                URLEncoder.encode(message,"UTF-8");
 
         String response = serverRequest.post(command, null);
 

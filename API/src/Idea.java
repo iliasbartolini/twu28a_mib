@@ -31,10 +31,6 @@ public class Idea {
         return id;
     }
 
-
-
-
-
     @Override
     public String toString() {
         return "Idea{" +
