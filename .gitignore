@@ -17,3 +17,4 @@ out/
 .gradle
 build/
 logs/
+classes/
