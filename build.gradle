@@ -3,6 +3,8 @@ apply plugin: 'jetty'
 apply plugin: 'war'
 apply plugin: 'idea'
 
+apply from:"file:gradleplugins/emmaPlugin/emma.gradle"
+
 repositories {
     mavenCentral()
 }
@@ -23,6 +25,8 @@ dependencies {
             'hsqldb:hsqldb:1.8.0.10',
             'com.google.code.gson:gson:2.2.2'
 
+    emma "emma:emma:2.0.5312"
+    emma "emma:emma_ant:2.0.5312"
 
     testCompile 'junit:junit:4.10',
             'org.springframework:spring-test:3.1.1.RELEASE',

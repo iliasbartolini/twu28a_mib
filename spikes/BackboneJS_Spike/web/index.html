@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contribute Idea</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/mib_custom.css"/>
+
+    <script src="../js/lib/zepto.min.js"></script>
+    <script src="../js/lib/json2.js"></script>
+    <script src="../js/lib/underscore-min.js"></script>
+    <script src="../js/lib/backbone-min.js"></script>
+
+    <script src="../js/mib/demo.js"></script>
+    <script src="../js/mib/models.js"></script>
+    <script src="../js/mib/views.js"></script>
+    <script src="../js/mib/routes.js"></script>
+
+    <script type="text/javascript">
+        if (!$){$ = Zepto}; //zepto fix
+    </script>
+</head>
+<body>
+
+    <script type="text/html" id="template-newIdea">
+        <div class="mib_header">
+            <h1><span class="lightbulb-icon"></span>New Idea</h1>
+        </div>
+        <div class="mib_content">
+
+            <form name="ideaForm" action="" method="post" class="addStickyForm">
+                <p>
+                    <input type="text" id="boardURL" name="boardURL" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
+                </p>
+                <p>
+                    <label for="sectionId">Add Idea to:</label>
+                    <select name="sectionId" id="sectionId">
+                        <option value="20" selected="selected">Section ID #20</option>
+                    </select>
+                </p>
+                <div class="sticky largeSticky">
+                    <textarea name="ideaText" id="ideaText"></textarea>
+                </div>
+                <div class="form_action">
+                    <button id="resetBtn" type="reset" class="btn btn-large">Discard</button>
+                    <button id="submitBtn" type="submit" class="btn btn-large btn-success btn-primary">Submit Idea</button>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <!--Initially populated by templates/layout.html -->
+    <div class="container"></div>
+
+</body>
+
+</html>
