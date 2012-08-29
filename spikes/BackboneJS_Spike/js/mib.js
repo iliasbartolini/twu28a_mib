@@ -15,7 +15,7 @@ var IndexView = Backbone.View.extend({
 
     render: function() {
         var html = this.template();
-        $(this.el).append(html);  // Append the result to the view's element.
+        $(this.el).html(html);  // Append the result to the view's element.
         return this;
     }
 });
@@ -40,7 +40,7 @@ var CreateIdeaView = Backbone.View.extend({
 
     render: function(){
         var html = this.template({ boardName: this._boardName, boardId: this._boardID });
-        $(this.el).append(html);  // Append the result to the view's element.
+        $(this.el).html(html);  // Append the result to the view's element.
         return this;
     }
 });
