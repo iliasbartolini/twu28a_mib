@@ -49,8 +49,6 @@
     </form>
 </div>
 </body>
-<script src="<@spring.url '/static/javascript/zepto.min.js'/>"></script>
-<script src="<@spring.url '/static/javascript/bootstrap.min.js'/>"></script>
-<script src="<@spring.url '/static/javascript/helper.js'/>"></script>
+<script src="<@spring.url '/static/lib/zepto.min.js'/>"></script>
 <script src="<@spring.url '/static/javascript/mib_script.js'/>"></script>
 </html>
