@@ -17,13 +17,13 @@
 <div class="mib_content">
 
 <#if idea??>
-    <div class="alert alert-success">
+    <div class="alert alert-success" id="alertSuccess">
         Your idea has been posted
     </div>
 </#if>
 <#if ideaForm?? >
     <#if !ideaForm.isValid() >
-        <div class="alert alert-error">
+        <div class="alert alert-error" id="alertError">
         ${ideaForm.getAlert()}
         </div>
     </#if>

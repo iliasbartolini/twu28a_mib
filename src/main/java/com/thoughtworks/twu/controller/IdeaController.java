@@ -13,7 +13,6 @@ import java.io.IOException;
 public class IdeaController
 {
 
-//    public static final String IDEA_BOARDZ_URL = "http://0.0.0.0:3000";
     public static final String IDEA_BOARDZ_URL = "http://10.10.15.130:3000";
 
     @RequestMapping(value = "createIdea", method = RequestMethod.GET)
