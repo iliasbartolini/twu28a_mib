@@ -1,4 +1,4 @@
-var cache = new CacheProvider;
+//var cache = new CacheProvider;
 
 /**
  * IndexView: The default view seen when opening up the application for the first time.
@@ -38,8 +38,8 @@ var CreateIdeaView = Backbone.View.extend({
         this.render();
     },
 
-    render: function() {
-        var html = this.template();
+    render: function(){
+        var html = this.template({ boardName: this._boardName, boardId: this._boardID });
         $(this.el).append(html);  // Append the result to the view's element.
         return this;
     }
@@ -50,15 +50,14 @@ var CreateIdeaView = Backbone.View.extend({
 
 var AppRouter = Backbone.Router.extend({
     routes: {
-        "": "index", // matches http://localhost/
-        "/:boardName/:id": "createIdea" // matches http://localhost/
+        "": "index", // http://localhost/
+        "for/:boardName/:id": "createIdea" // #for/mibTest/9
     },
     index: function(){
         var indexView = new IndexView();
     },
     createIdea: function(boardName, id){
-        alert("create idea called");
-        var createIdeaView = new CreateIdeaView();
+        var createIdeaView = new CreateIdeaView(boardName, id);
     }
 });
 
