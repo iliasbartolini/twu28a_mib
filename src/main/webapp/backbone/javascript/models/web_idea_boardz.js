@@ -4,6 +4,7 @@ IdeaBoardz.WebIdeaBoardz = function(domain) {
 
 IdeaBoardz.WebIdeaBoardz.prototype = {
     createIdea: function(message) {
+        console.log("in createIdea before ajax call");
         $.ajax({
             type : 'POST',
             url : this.domain + '/points.json?point[section_id]=2&point[message]=' + encodeURIComponent(message)

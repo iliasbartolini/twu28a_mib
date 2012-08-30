@@ -17,21 +17,21 @@
 <div class="mib_content">
 
 <#if idea??>
-    <div class="alert alert-success" id="alertSuccess">
+    <div class="alert alert-success">
         Your idea has been posted
     </div>
 </#if>
 <#if ideaForm?? >
     <#if !ideaForm.isValid() >
-        <div class="alert alert-error" id="alertError">
-        ${ideaForm.getAlert()}
+        <div class="alert alert-error">
+            ${ideaForm.getAlert()}
         </div>
     </#if>
 </#if>
 
     <form name="ideaForm" action="" method="post" class="addStickyForm">
         <p>
-            <input type="text" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
+            <input type="text" id="boardURL" name="boardURL" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
         </p>
         <p>
             <label for="sectionId">Add Idea to:</label>
@@ -44,13 +44,13 @@
         </div>
         <div class="form_action">
             <button id="resetBtn" type="reset" class="btn btn-large">Discard</button>
-            <button id="submitBtn" type="button" class="btn btn-large btn-success btn-primary">Submit Idea</button>
+            <button id="submitBtn" type="submit" class="btn btn-large btn-success btn-primary">Submit Idea</button>
         </div>
     </form>
 </div>
 </body>
-<script src="<@spring.url '/static/lib/zepto.min.js'/>"></script>
-<script src="<@spring.url '/static/javascript/idea_boardz.js'/>"></script>
-<script src="<@spring.url '/static/javascript/web_idea_boardz.js'/>"></script>
-<script src="<@spring.url '/static/javascript/idea_creation_binding.js'/>"></script>
+<script src="<@spring.url '/static/js/zepto.min.js'/>"></script>
+<script src="<@spring.url '/static/js/bootstrap.min.js'/>"></script>
+<script src="<@spring.url '/static/js/helper.js'/>"></script>
+<script src="<@spring.url '/static/js/idea_creation_binding.js'/>"></script>
 </html>
