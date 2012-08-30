@@ -5,7 +5,7 @@ describe("UI interaction", function() {
         var submitButton = $("<button>");
         var ideaTextBox = $("<textarea>").val("some");
 
-        MobileIdeaBoardz.IdeaCreationBinding.bind(submitButton, ideaTextBox);
+        IdeaBoardz.IdeaCreationBinding.bind(submitButton, ideaTextBox);
 
         spyOn($, 'ajax');
 
@@ -22,7 +22,7 @@ describe("UI interaction", function() {
         var submitButton = $("<button>");
         var ideaTextBox = $("<textarea>").val("this value & that value/something?");
 
-        MobileIdeaBoardz.IdeaCreationBinding.bind(submitButton, ideaTextBox);
+        IdeaBoardz.IdeaCreationBinding.bind(submitButton, ideaTextBox);
 
         spyOn($, 'ajax');
 
@@ -35,18 +35,4 @@ describe("UI interaction", function() {
 
     });
 
-    it("should not send request when submit button is clicked with empty text box", function(){
-        var submitButton = $("<button>");
-        var ideaTextBox = $("<textarea>").val("");
-
-        spyOn($, 'ajax');
-
-        MobileIdeaBoardz.IdeaCreationBinding.bind(submitButton, ideaTextBox);
-
-        submitButton.click();
-
-        //expect($.ajax).to
-
-
-    })
 });
