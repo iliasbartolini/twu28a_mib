@@ -26,7 +26,7 @@ public class IOSCreateIdeaTest {
 
     @Test
     public void shouldDisplayBoardNameOnCreateIdeaPage() {
-        webDriver.get("http://localhost:9876/mib/createIdea");
+        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement header = webDriver.findElement(By.className("mib_header"));
 
         assertThat(header.getText(), is("New Idea"));
@@ -35,7 +35,7 @@ public class IOSCreateIdeaTest {
 
     @Test
     public void shouldDisplaySubmitButtonOnCreateIdeaPage() {
-        webDriver.get("http://localhost:9876/mib/createIdea");
+        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement button = webDriver.findElement(By.id("submitBtn"));
 
         assertThat(button.getText(), is("Submit Idea"));
@@ -43,7 +43,7 @@ public class IOSCreateIdeaTest {
 
     @Test
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        webDriver.get("http://localhost:9876/mib/createIdea");
+        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
         message.sendKeys("Functional test idea!");
@@ -58,7 +58,7 @@ public class IOSCreateIdeaTest {
 
     @Test
     public void shouldShowEmptyIdeaMessageAfterSubmissionOfEmptyIdea() {
-        webDriver.get("http://localhost:9876/mib/createIdea");
+        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
 
