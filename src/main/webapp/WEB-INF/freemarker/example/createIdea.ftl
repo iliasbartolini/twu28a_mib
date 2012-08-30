@@ -17,13 +17,13 @@
 <div class="mib_content">
 
 <#if idea??>
-    <div class="alert alert-success">
+    <div class="alert alert-success" id="alertSuccess">
         Your idea has been posted
     </div>
 </#if>
 <#if ideaForm?? >
     <#if !ideaForm.isValid() >
-        <div class="alert alert-error">
+        <div class="alert alert-error" id="alertError">
         ${ideaForm.getAlert()}
         </div>
     </#if>
@@ -44,13 +44,13 @@
         </div>
         <div class="form_action">
             <button id="resetBtn" type="reset" class="btn btn-large">Discard</button>
-            <button id="submitBtn" type="submit" class="btn btn-large btn-success btn-primary">Submit Idea</button>
+            <button id="submitBtn" type="button" class="btn btn-large btn-success btn-primary">Submit Idea</button>
         </div>
     </form>
 </div>
 </body>
-<script src="<@spring.url '/static/js/zepto.min.js'/>"></script>
-<script src="<@spring.url '/static/js/bootstrap.min.js'/>"></script>
-<script src="<@spring.url '/static/js/helper.js'/>"></script>
-<script src="<@spring.url '/static/js/mib_script.js'/>"></script>
+<script src="<@spring.url '/static/lib/zepto.min.js'/>"></script>
+<script src="<@spring.url '/static/javascript/mobile_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/static/javascript/web_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/static/javascript/idea_creation_binding.js'/>"></script>
 </html>

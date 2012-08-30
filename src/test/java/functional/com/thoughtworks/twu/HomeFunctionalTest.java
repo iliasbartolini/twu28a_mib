@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class HomeFunctionalTest {
 
     private WebDriver webDriver;
-
+/*
     @Before
     public void setUp() {
         webDriver = new FirefoxDriver();
@@ -38,6 +38,6 @@ public class HomeFunctionalTest {
     public void tearDown() {
         webDriver.close();
     }
-
+  */
 
 }
