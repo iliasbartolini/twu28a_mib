@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
-    <display-name>TWU_Demo</display-name>
+    <display-name>TWU_MIB</display-name>
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -16,12 +16,12 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/deprecated/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>static</servlet-name>
-        <url-pattern>/static/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

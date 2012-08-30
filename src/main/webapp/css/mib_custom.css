@@ -49,7 +49,7 @@ body {
 }
 
 span.lightbulb-icon {
-    background: url(images/light_bulb_icon.png) no-repeat top center;
+    background: url(../images/light_bulb_icon.png) no-repeat top center;
     display: inline-block;
     width: 20px;
     height: 24px;

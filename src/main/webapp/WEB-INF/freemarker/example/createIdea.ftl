@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="<@spring.url '/static/css/bootstrap.css'/>"/>
-    <link rel="stylesheet" href="<@spring.url '/static/css/mib_custom.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/css/bootstrap.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/css/mib_custom.css'/>"/>
 </head>
 <body>
 <div class="mib_header">
@@ -49,8 +49,8 @@
     </form>
 </div>
 </body>
-<script src="<@spring.url '/static/lib/zepto.min.js'/>"></script>
-<script src="<@spring.url '/static/javascript/mobile_idea_boardz.js'/>"></script>
-<script src="<@spring.url '/static/javascript/web_idea_boardz.js'/>"></script>
-<script src="<@spring.url '/static/javascript/idea_creation_binding.js'/>"></script>
+<script src="<@spring.url '/javascript/lib/zepto.min.js'/>"></script>
+<script src="<@spring.url '/javascript/app/models/mobile_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/javascript/app/models/web_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/javascript/app/models/idea_creation_binding.js'/>"></script>
 </html>
