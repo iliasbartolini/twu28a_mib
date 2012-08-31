@@ -51,3 +51,23 @@ var CreateIdeaView = Backbone.View.extend({
         return false;
     }
 });
+
+var BoardHomeView = Backbone.View.extend({
+    el: $('#container'),
+    template:_.template($("#template-boardHome").html()),
+    boardName: null,
+    boardId: null,
+
+    initialize: function(boardName, id){
+        this.boardName = boardName;
+        this.boardId = id;
+        this.render();
+    },
+
+    render: function(){
+        var html = this.template;
+        $(this.el).html(html);
+        return this;
+    }
+
+})  ;

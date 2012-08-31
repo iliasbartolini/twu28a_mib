@@ -9,6 +9,7 @@
   <script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine/jasmine-html.js"></script>
   <script type="text/javascript" src="lib/jasmine/jasmine-jquery.js"></script>
+  <script type="text/javascript" src="lib/phantom-jasmine/console-runner.js"></script>
 
     <!-- include spec files here... -->
     <script type="text/javascript" src="spec/web_idea_boardz.spec.js"></script>
@@ -37,8 +38,10 @@
       jasmineEnv.updateInterval = 1000;
 
       var trivialReporter = new jasmine.TrivialReporter();
+      consoleReporter = new jasmine.ConsoleReporter(); // deliberately global; needed by phantom-jasmine script
 
       jasmineEnv.addReporter(trivialReporter);
+      jasmineEnv.addReporter(consoleReporter);
 
       jasmineEnv.specFilter = function(spec) {
         return trivialReporter.specFilter(spec);
@@ -51,10 +54,6 @@
           currentWindowOnload();
         }
         execJasmine();
-        
-        //Makes Spec Runner Less Annoying
-        // $('#TrivialReporter').addClass('show-passed');
-        // $('#__jasmine_TrivialReporter_showPassed__').attr('checked', 'checked')
         
         document.getElementById("TrivialReporter").className += " show-passed"
         document.getElementById("__jasmine_TrivialReporter_showPassed__").checked=true
