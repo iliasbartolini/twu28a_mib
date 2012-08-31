@@ -31,7 +31,16 @@ var CreateIdeaView = Backbone.View.extend({
 
     submitIdea: function(event){
         console.log("in submitIdea before call to createIdea");
-        IdeaBoardz.WebIdeaBoardz.instance.createIdea(this._ideaText.val());
+        var result = IdeaBoardz.WebIdeaBoardz.instance.createIdea(this._ideaText.val());
+
+        if (result.isError()) {
+            /// blah show error message
+        } else {
+            /// blah show success message
+        }
+
+        // tell, don't ask
+        // delegation
 
     }
 
