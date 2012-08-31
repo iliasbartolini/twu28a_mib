@@ -45,7 +45,12 @@ test {
     exclude '**/functional/com/thoughtworks/**/*.*'
 }
 
-task functionalTest(type: Test, dependsOn: "test") {
+task jasmineTest(type: Exec) {
+    workingDir "src/test/javascript"
+    commandLine = ["phantomjs", "lib/phantom-jasmine/run_jasmine_test.coffee", "SpecRunner.html"]
+}
+
+task functionalTest(type: Test, dependsOn: "jasmineTest") {
    include '**/functional/com/thoughtworks/**/*.*'
 }
 
