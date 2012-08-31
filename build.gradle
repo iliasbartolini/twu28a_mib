@@ -39,6 +39,7 @@ dependencies {
 
 jettyRun {
     contextPath = 'mib'
+    httpPort = 9092 // Warren request to change port
 }
 
 test {
@@ -60,4 +61,14 @@ functionalTest.doFirst {
 
 functionalTest.doLast {
     jettyStop.execute()
+}
+
+task jasmine(type: Exec) {
+    workingDir = 'src/test/javascript'
+    runnerFile = new File(workingDir, 'lib/phantomjs-testrunner.js')
+    specRunnerFile = 'file:///' + new File(workingDir, 'SpecRunner.html').absolutePath.replaceAll('\\\\', "/")
+
+    resultsDir = new File(buildDir, 'reports/jasmine')
+
+    commandLine = ['phantomjs', runnerFile, specRunnerFile]
 }
