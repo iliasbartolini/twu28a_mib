@@ -3,10 +3,10 @@ IdeaBoardz.WebIdeaBoardz = function(domain) {
 }
 
 IdeaBoardz.WebIdeaBoardz.prototype = {
-    createIdea: function(message) {
+    createIdea: function(sectionId, message) {
         $.ajax({
             type : 'POST',
-            url : this.domain + '/points.json?point[section_id]=2&point[message]=' + encodeURIComponent(message)
+            url : this.domain + '/points.json?point[section_id]='+ sectionId +'&point[message]=' + encodeURIComponent(message)
         });
     }
 }

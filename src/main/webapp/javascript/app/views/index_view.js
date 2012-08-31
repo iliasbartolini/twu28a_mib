@@ -15,7 +15,7 @@ var IndexView = Backbone.View.extend({
 
     render: function() {
         var html = this.template();
-        $(this.el).html(html);  // Append the result to the view's element.
+        $(this.el).html(html);  // Replace the view's element with the result
         return this;
     }
 });
