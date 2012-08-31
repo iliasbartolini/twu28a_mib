@@ -6,12 +6,20 @@ var CreateIdeaView = Backbone.View.extend({
     _boardName: null,
     _boardID: null,
 
+    events: {
+        "click button#submitBtn": "submitIdea"
+    } ,
+
     initialize: function(container, template, ideaText, boardName, id) {
+        console.log("in initialize");
         this.el = container;
         this.template = _.template(template);
         this._boardName = boardName;
         this._boardID = id;
         this._ideaText = ideaText;
+
+        //IdeaBoardz.WebIdeaBoardz.instance.getSections();
+
         this.render();
     },
 
@@ -22,23 +30,14 @@ var CreateIdeaView = Backbone.View.extend({
         return this;
     },
 
-    events: {
-        "click .submitButton": "submitIdea"
-    } ,
-
     submitIdea: function(event){
+
         console.log("in submitIdea before call to createIdea");
         var result = IdeaBoardz.WebIdeaBoardz.instance.createIdea(this._ideaText.val());
 
-        if (result.isError()) {
-            /// blah show error message
-        } else {
-            /// blah show success message
-        }
-
         // tell, don't ask
         // delegation
-
+        return false;
     }
 
 });
