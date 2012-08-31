@@ -1,14 +1,20 @@
-MobileIdeaBoardz.WebIdeaBoardz = function(domain) {
+IdeaBoardz.WebIdeaBoardz = function(domain) {
     this.domain = domain;
 }
 
-MobileIdeaBoardz.WebIdeaBoardz.prototype = {
-    createIdea: function(message) {
+IdeaBoardz.WebIdeaBoardz.prototype = {
+    createIdea: function(message, callbacks) {
+        callbacks = callbacks || {};
+        var success = callbacks.success || function() {};
+        var error = callbacks.error || function() {};
+
         $.ajax({
             type : 'POST',
-            url : this.domain + '/points.json?point[section_id]=2&point[message]=' + encodeURIComponent(message)
+            url : this.domain + '/points.json?point[section_id]=2&point[message]=' + encodeURIComponent(message),
+            success : success,
+            error : error
         });
     }
 }
 
-MobileIdeaBoardz.WebIdeaBoardz.instance = new MobileIdeaBoardz.WebIdeaBoardz("http://10.10.15.130:3000");
+IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://10.10.15.130:3000");

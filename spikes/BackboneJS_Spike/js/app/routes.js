@@ -9,9 +9,9 @@ var AppRouter = Backbone.Router.extend({
         var indexView = new IndexView();
     },
     createIdea: function(boardName, id){
-        var createIdeaView = new CreateIdeaView(boardName, id);
+        var createIdeaView = new CreateIdeaView($("#blah"), boardName, id);
     },
     boardHome: function(boardName, id){
-        var boardHomeView = new BoardHomeView(boardName, id)
+        var boardHomeView = new BoardHomeView(boardName, id);
     }
 });

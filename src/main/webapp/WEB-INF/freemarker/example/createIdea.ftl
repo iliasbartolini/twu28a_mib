@@ -31,12 +31,14 @@
 
     <form name="ideaForm" action="" method="post" class="addStickyForm">
         <p>
-            <input type="text" placeholder="board URL" value="http://10.10.15.130:3000/for/mibTest/9"/>
+            <input type="text" placeholder="board URL" value="http://10.10.15.130:3000/for/mibSC_3182012/14"/>
         </p>
         <p>
             <label for="sectionId">Add Idea to:</label>
             <select name="sectionId" id="sectionId">
-                <option value="20" selected="selected">Section ID #20</option>
+                <option value="29" selected="selected">Section ID #29</option>
+                <option value="30">Section ID #30</option>
+                <option value="31">Section ID #31</option>
             </select>
         </p>
         <div class="sticky largeSticky">
@@ -49,8 +51,10 @@
     </form>
 </div>
 </body>
+
 <script src="<@spring.url '/javascript/lib/zepto.min.js'/>"></script>
-<script src="<@spring.url '/javascript/app/models/mobile_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/javascript/app/models/idea_boardz.js'/>"></script>
 <script src="<@spring.url '/javascript/app/models/web_idea_boardz.js'/>"></script>
 <script src="<@spring.url '/javascript/app/models/idea_creation_binding.js'/>"></script>
+
 </html>

@@ -1,11 +1,12 @@
-MobileIdeaBoardz.IdeaCreationBinding = {
-    bind: function (submitButton, ideaTextBox){
+IdeaBoardz.IdeaCreationBinding = {
+    bind: function (submitButton, sectionId, ideaTextBox){
           submitButton.bind('click', function(){
-              MobileIdeaBoardz.WebIdeaBoardz.instance.createIdea(ideaTextBox.val());
+              IdeaBoardz.WebIdeaBoardz.instance.createIdea(sectionId.val(), ideaTextBox.val());
+              ideaTextBox.val("");
           });
     }
 };
 
 $(document).ready( function(){
-    MobileIdeaBoardz.IdeaCreationBinding.bind($('#submitBtn'), $('#ideaText'));
+    IdeaBoardz.IdeaCreationBinding.bind($('#submitBtn'), $('#sectionId'), $('#ideaText'));
 });
