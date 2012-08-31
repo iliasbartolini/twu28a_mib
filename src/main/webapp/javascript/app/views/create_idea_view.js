@@ -8,7 +8,7 @@ var CreateIdeaView = Backbone.View.extend({
 
     initialize: function(container, template, ideaText, boardName, id) {
         this.el = container;
-        this.template = _.template(template.html());
+        this.template = _.template(template);
         this._boardName = boardName;
         this._boardID = id;
         this._ideaText = ideaText;
