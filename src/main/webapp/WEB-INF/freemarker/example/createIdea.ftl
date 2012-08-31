@@ -51,7 +51,7 @@
 </body>
 
 <script src="<@spring.url '/javascript/lib/zepto.min.js'/>"></script>
-<script src="<@spring.url '/javascript/app/models/mobile_idea_boardz.js'/>"></script>
+<script src="<@spring.url '/javascript/app/models/idea_boardz.js'/>"></script>
 <script src="<@spring.url '/javascript/app/models/web_idea_boardz.js'/>"></script>
 <script src="<@spring.url '/javascript/app/models/idea_creation_binding.js'/>"></script>
 
