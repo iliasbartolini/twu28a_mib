@@ -18,7 +18,7 @@ public class AndroidCreateIdeaTest {
 
     private WebDriver webDriver;
 
-    @Before
+    //@Before
     public void setUp(){
         FirefoxProfile fp = new FirefoxProfile();
         fp.setPreference("general.useragent.override","Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1");
@@ -26,7 +26,7 @@ public class AndroidCreateIdeaTest {
         webDriver = new FirefoxDriver(fp);
     }
 
-    @Test
+    //@Test
     public void shouldDisplayBoardNameOnCreateIdeaPage() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement header = webDriver.findElement(By.className("mib_header"));
@@ -35,7 +35,7 @@ public class AndroidCreateIdeaTest {
     }
 
 
-    @Test
+    //@Test
     public void shouldDisplaySubmitButtonOnCreateIdeaPage() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement button = webDriver.findElement(By.id("submitBtn"));
@@ -43,7 +43,7 @@ public class AndroidCreateIdeaTest {
         assertThat(button.getText(), is("Submit Idea"));
     }
 
-    @Test
+    //@Test
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
@@ -58,7 +58,7 @@ public class AndroidCreateIdeaTest {
 
     }
 
-    @Test
+    //@Test
     public void shouldShowEmptyIdeaMessageAfterSubmissionOfEmptyIdea() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
