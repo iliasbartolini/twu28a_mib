@@ -1,25 +1,43 @@
 
 describe("UI interaction", function() {
-    xit("should submit idea upon submit button click", function() {
+
+    it ("should trigger click event on submit button click", function(){
+        var container = $("<div></div>");
+        var template = "<button class='submitButton'></button>";
+
+        var ideaTextBox = $("<textarea>").val("some");
+
+        var view = new CreateIdeaView(container, template, ideaTextBox, "boardName", 3);
+
+        var button = container.find(".submitButton");
+
+        spyOnEvent(button,"click");
+
+        button.click();
+
+        expect('click').toHaveBeenTriggeredOn(button);
+    });
+
+    it("should submit idea upon submit button click", function() {
         // arrange
         var container = $("<div></div>");
         var template = "<button class='submitButton'></button>";
 
         var ideaTextBox = $("<textarea>").val("some");
 
-        var view = new CreateIdeaView(container, template, ideaTextBox, "name", 3);
+        var view = new CreateIdeaView(container, template, ideaTextBox, "boardName", 3);
 
         spyOn($, 'ajax');
 
         console.log("Before submitButton.click");
-        console.log(container);
-        container.find(".submitButton").trigger("click");
 
-        expect($.ajax).toHaveBeenCalledWith({
-            type: 'POST',
-            url: 'http://10.10.15.130:3000/points.json?point[section_id]=2&point[message]=some'
-        });
+        var button = container.find(".submitButton");
+        button.click();
+
+        expect($.ajax).toHaveBeenCalled();
     });
+
+
 
     xit("should correctly submit with values with special symbols, including space, exclamation, etc", function(){
         // arrange

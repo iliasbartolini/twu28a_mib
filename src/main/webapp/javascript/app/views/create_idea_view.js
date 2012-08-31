@@ -1,8 +1,4 @@
-/**
- * CreateIdeaView: The view for creating new idea
- * For now will be the default page when enter a correct Board URL
- * @type Backbone.View
- */
+
 var CreateIdeaView = Backbone.View.extend({
     el: null,
     template: null,
@@ -22,6 +18,7 @@ var CreateIdeaView = Backbone.View.extend({
     render: function(){
         var html = this.template({ boardName: this._boardName, boardId: this._boardID });
         $(this.el).html(html);  // Append the result to the view's element.
+        this.delegateEvents();
         return this;
     },
 
