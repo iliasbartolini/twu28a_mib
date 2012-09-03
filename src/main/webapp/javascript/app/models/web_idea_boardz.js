@@ -17,7 +17,6 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         var error = callbacks.error || function() {};
 
         $.ajax({
-
             type : 'POST',
             url : this.domain + '/points.json?point[section_id]=20&point[message]=' + encodeURIComponent(message),
             success : success,

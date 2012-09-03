@@ -19,7 +19,7 @@ describe("UI interaction", function() {
         expect('click').toHaveBeenTriggeredOn(button);
     });
 
-    it("should submit idea upon submit button click", function() {
+    xit("should submit idea upon submit button click", function() {
         // arrange
         var container = $("<div></div>");
         var template = "<button class='submitButton'></button>";
