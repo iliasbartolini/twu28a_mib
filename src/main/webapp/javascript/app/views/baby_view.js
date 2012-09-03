@@ -1,10 +1,11 @@
 var CreateBabyView = Backbone.View.extend({
-    el: $('#container'),
+    el: null,
     template: _.template($("#template-newIdea").html()),
     _boardName: null,
     _boardID: null,
 
-    initialize: function(boardName, id) {
+    initialize: function(container, boardName, id) {
+        this.el = container;
         this._boardName = boardName;
         this._boardID = id;
         this.render();
@@ -21,11 +22,11 @@ var CreateBabyView = Backbone.View.extend({
     },
 
     submitIdea: function(event){
-        /*console.log("in submitIdea before call to createIdea");
-        var message = el.find("#ideaText").val();
-        console.log(message);*/
+        console.log("in submitIdea before call to createIdea");
+        var message = $(this.el).find("#ideaText").val();
+        console.log(message);
 
-        IdeaBoardz.WebIdeaBoardz.instance.createIdea("baby steps");
+        IdeaBoardz.WebIdeaBoardz.instance.createIdea(message);
         return false;
     }
 
