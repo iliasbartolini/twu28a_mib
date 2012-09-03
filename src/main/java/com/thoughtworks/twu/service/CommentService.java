@@ -7,9 +7,9 @@ public class CommentService implements ICommentService{
 
     public CommentService(ICommentMapper iCommentMapper)
     {
-
         this.iCommentMapper = iCommentMapper;
     }
+
     @Override
     public Comment addNewComment(String name, String comment) {
         Comment savedComment = iCommentMapper.insertComment(new Comment(name,comment));
