@@ -8,6 +8,6 @@ var AppRouter = Backbone.Router.extend({
     },
     createIdea: function(boardName, id){
         //var createIdeaView = new CreateIdeaView($("#container"), $("#template-newIdea").html(), $("#ideaText"), boardName, id);
-        var babyView = new CreateBabyView($("#container"), boardName, id);
+        var babyView = new CreateBabyView(boardName, id);
     }
 });
