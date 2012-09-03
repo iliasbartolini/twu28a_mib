@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class IOSCreateIdeaTest {
     WebDriver webDriver;
 
-    @Before
+    //@Before
     public void setUp(){
         FirefoxProfile fp = new FirefoxProfile();
         fp.setPreference("general.useragent.override","Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5");
@@ -24,7 +24,7 @@ public class IOSCreateIdeaTest {
         webDriver = new FirefoxDriver(fp);
     }
 
-    @Test
+    //@Test
     public void shouldDisplayBoardNameOnCreateIdeaPage() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement header = webDriver.findElement(By.className("mib_header"));
@@ -33,7 +33,7 @@ public class IOSCreateIdeaTest {
     }
 
 
-    @Test
+    //@Test
     public void shouldDisplaySubmitButtonOnCreateIdeaPage() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
         WebElement button = webDriver.findElement(By.id("submitBtn"));
@@ -41,7 +41,7 @@ public class IOSCreateIdeaTest {
         assertThat(button.getText(), is("Submit Idea"));
     }
 
-    @Test
+    //@Test
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
@@ -56,7 +56,7 @@ public class IOSCreateIdeaTest {
 
     }
 
-    @Test
+    //@Test
     public void shouldShowEmptyIdeaMessageAfterSubmissionOfEmptyIdea() {
         webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
 
@@ -70,7 +70,7 @@ public class IOSCreateIdeaTest {
 
     }
 
-    @After
+    //@After
     public void tearDown(){
         webDriver.close();
     }
