@@ -17,6 +17,23 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
             success : success,
             error : error
         });
+    },
+
+    getBoard: function(boardName, boardId) {
+        var board;
+
+        $.ajax({
+            type: 'GET',
+            url : this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json',
+            dataType : 'json',
+            async: false,
+            success : function(data){
+                console.log(data);
+                board = new IdeaBoardz.Board(data.name, data.id);
+            }
+        });
+
+        return board;
     }
 }
 

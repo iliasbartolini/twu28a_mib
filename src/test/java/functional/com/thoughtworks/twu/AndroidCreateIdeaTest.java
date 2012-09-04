@@ -2,6 +2,7 @@ package functional.com.thoughtworks.twu;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,26 +31,9 @@ public class AndroidCreateIdeaTest {
         webDriver = new FirefoxDriver(fp);
     }
 
-    //@Test
-    public void shouldDisplayBoardNameOnCreateIdeaPage() {
-        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
-        WebElement header = webDriver.findElement(By.className("mib_header"));
-
-        assertThat(header.getText(), is("New Idea"));
-    }
-
-
-    //@Test
-    public void shouldDisplaySubmitButtonOnCreateIdeaPage() {
-        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-
-        assertThat(button.getText(), is("Submit Idea"));
-    }
-
     @Test
     public void shouldDisplayErrorOnEmptyIdea() {
-        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
+        goToCreateIdeaView();
 
         WebElement button = webDriver.findElement(By.id("submitBtn"));
         button.click();
@@ -61,7 +45,7 @@ public class AndroidCreateIdeaTest {
 
     @Test
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
+        goToCreateIdeaView();
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
         message.sendKeys("Functional test idea!");
@@ -80,10 +64,10 @@ public class AndroidCreateIdeaTest {
         assertThat(submitErrorMessage.getText(), is("Failed to submit. Please try again in some time."));
     }
 
-
-    //@Test
+    @Test
+    @Ignore("Pending until cross-domain issue is solved")
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
+        goToCreateIdeaView();
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
         message.sendKeys("Functional test idea!");
@@ -96,10 +80,15 @@ public class AndroidCreateIdeaTest {
         assertThat(submitSuccessMessage.getText(), is("Your idea has been posted."));
     }
 
+
     @After
     public void tearDown(){
         webDriver.close();
     }
 
+    private void goToCreateIdeaView() {
+        webDriver.get("http://localhost:9876/mib/index.html#for/mibTest/9");
+        webDriver.findElement(By.className("ideaIcon")).click();
+    }
 
 }
