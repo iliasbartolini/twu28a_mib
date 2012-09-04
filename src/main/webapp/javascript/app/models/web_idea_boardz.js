@@ -3,6 +3,14 @@ IdeaBoardz.WebIdeaBoardz = function(domain) {
 }
 
 IdeaBoardz.WebIdeaBoardz.prototype = {
+
+    getSections: function(boardName, boardID){
+        $.ajax({
+            type : 'GET',
+            url : this.domain + '/for/' + boardName + '/' + boardID + '.json'
+        });
+    },
+
     createIdea: function(message, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
@@ -10,7 +18,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
 
         $.ajax({
             type : 'POST',
-            url : this.domain + '/points.json?point[section_id]=2&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]=20&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });

@@ -1,44 +1,37 @@
+$(document).ready(function() {
+    IdeaBoardz.CreateIdeaView = Backbone.View.extend({
+        el: $("#container"),
+        template: _.template($("#template-newIdea").html()),
+        _ideaText : null,
+        _boardName: null,
+        _boardID: null,
 
-var CreateIdeaView = Backbone.View.extend({
-    el: null,
-    template: null,
-    _ideaText : null,
-    _boardName: null,
-    _boardID: null,
+        events: {
+            "click #submitBtn": "submitIdea"
+        },
 
-    initialize: function(container, template, ideaText, boardName, id) {
-        this.el = container;
-        this.template = _.template(template);
-        this._boardName = boardName;
-        this._boardID = id;
-        this._ideaText = ideaText;
-        this.render();
-    },
+        initialize: function(container, boardName, id) {
+            console.log("in initialize");
+            this.el = container;
+            this._boardName = boardName;
+            this._boardID = id;
 
-    render: function(){
-        var html = this.template({ boardName: this._boardName, boardId: this._boardID });
-        $(this.el).html(html);  // Append the result to the view's element.
-        this.delegateEvents();
-        return this;
-    },
+            this.render();
+        },
 
-    events: {
-        "click .submitButton": "submitIdea"
-    } ,
+        render: function(){
+            console.log("in render");
+            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
+            $(this.el).html(html);  // Append the result to the view's element.
+            return this;
+        },
 
-    submitIdea: function(event){
-        console.log("in submitIdea before call to createIdea");
-        var result = IdeaBoardz.WebIdeaBoardz.instance.createIdea(this._ideaText.val());
+        submitIdea: function(event){
+            console.log("in submitIdea before call to createIdea");
+            IdeaBoardz.WebIdeaBoardz.instance.createIdea($(this.el).find("#ideaText").val());
 
-        if (result.isError()) {
-            /// blah show error message
-        } else {
-            /// blah show success message
+            return false;
         }
 
-        // tell, don't ask
-        // delegation
-
-    }
-
+    });
 });

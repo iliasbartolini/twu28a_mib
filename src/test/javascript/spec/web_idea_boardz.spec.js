@@ -6,7 +6,7 @@ describe("Web IdeaBoardz", function() {
        IdeaBoardz.WebIdeaBoardz.instance.createIdea("some");
 
         expect(($.ajax).mostRecentCall.args[0].type).toEqual("POST");
-        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]=2&point[message]=some");
+        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]=20&point[message]=some");
     });
 
     it("should escape special symbols when creating URL",function(){
@@ -14,7 +14,7 @@ describe("Web IdeaBoardz", function() {
         IdeaBoardz.WebIdeaBoardz.instance.createIdea("lalala/&fjf! ??&");
 
         expect(($.ajax).mostRecentCall.args[0].type).toEqual("POST");
-        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]=2&point[message]=lalala%2F%26fjf!%20%3F%3F%26");
+        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]=20&point[message]=lalala%2F%26fjf!%20%3F%3F%26");
     });
 
 
