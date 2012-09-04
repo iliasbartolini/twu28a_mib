@@ -109,3 +109,35 @@ span.lightbulb-icon {
 .form_action #submitBtn {
     width: 65%;
 }
+
+.mib_header .logo {
+    display: inline-block;
+    width: 100px;
+    height:18px;
+    background: url("../images/logo.png") no-repeat top left;
+    text-indent: -900em;
+    margin: 10px;
+
+}
+
+.mib_header .quick-links{
+    margin-right: 10px;
+}
+
+.mib_header .ideaIcon {
+    display: inline-block;
+    width: 20px;
+    height: 24px;
+    background: url("../images/light_bulb_icon.png") #B65925 no-repeat center;
+    text-indent: -900em;
+    margin: 5px 0px;
+}
+
+.mib_content h1{
+    font-size: 1.6em;
+    margin-top: 0;
+}
+
+.nav-tabs.nav-stacked > li > a {
+    font-weight: bold;
+}

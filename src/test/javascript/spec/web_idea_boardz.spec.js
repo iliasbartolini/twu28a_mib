@@ -53,7 +53,7 @@ describe("Web IdeaBoardz", function() {
         expect(callback).toHaveBeenCalled();
     });
 
-    xit("should create new BoardModel when getBoard is called", function(){
+    it("should create new BoardModel when getBoard is called", function(){
         fakeJSON={
             "name":"mibimmmm",
             "id":16,
