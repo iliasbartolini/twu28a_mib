@@ -8,6 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.annotation.Nullable;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -18,10 +22,10 @@ public class AndroidCreateIdeaTest {
 
     private WebDriver webDriver;
 
-    //@Before
+    @Before
     public void setUp(){
         FirefoxProfile fp = new FirefoxProfile();
-        fp.setPreference("general.useragent.override","Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1");
+        fp.setPreference("general.useragent.override","Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2. 0.1");
 
         webDriver = new FirefoxDriver(fp);
     }
@@ -43,38 +47,59 @@ public class AndroidCreateIdeaTest {
         assertThat(button.getText(), is("Submit Idea"));
     }
 
-    //@Test
-    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
+    @Test
+    public void shouldDisplayErrorOnEmptyIdea() {
+        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
+
+        WebElement button = webDriver.findElement(By.id("submitBtn"));
+        button.click();
+
+        WebElement emptyErrorMessage = webDriver.findElement(By.id("alert-area"));
+
+        assertThat(emptyErrorMessage.getText(), is("Please enter some text."));
+    }
+
+    @Test
+    public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
+        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
         message.sendKeys("Functional test idea!");
 
-        message.submit();
+        WebElement button = webDriver.findElement(By.id("submitBtn"));
+        button.click();
 
-        WebElement alert = webDriver.findElement(By.id("alertSuccess"));
+        (new WebDriverWait(webDriver, 1)).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return input.getPageSource().contains("Failed to submit.");
+            }
+        });
 
-        assertThat(alert.getText(), is("Your idea has been posted"));
-
+        WebElement submitErrorMessage = webDriver.findElement(By.id("alert-area"));
+        assertThat(submitErrorMessage.getText(), is("Failed to submit. Please try again in some time."));
     }
 
+
     //@Test
-    public void shouldShowEmptyIdeaMessageAfterSubmissionOfEmptyIdea() {
-        webDriver.get("http://localhost:9876/mib/deprecated/createIdea");
+    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
+        webDriver.get("http://localhost:9092/mib/index.html#for/mibTest/9");
 
         WebElement message = webDriver.findElement(By.id("ideaText"));
+        message.sendKeys("Functional test idea!");
 
-        message.submit();
+        WebElement button = webDriver.findElement(By.id("submitBtn"));
+        button.click();
 
-        WebElement alert = webDriver.findElement(By.id("alertError"));
+        WebElement submitSuccessMessage = webDriver.findElement(By.id("alert-area"));
 
-        assertThat(alert.getText(), is("Your idea is empty"));
-
+        assertThat(submitSuccessMessage.getText(), is("Your idea has been posted."));
     }
 
     @After
     public void tearDown(){
         webDriver.close();
     }
+
 
 }
