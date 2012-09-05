@@ -1,7 +1,6 @@
 package com.thoughtworks.twu.controller;
 
 import com.thoughtworks.twu.domain.Comment;
-import com.thoughtworks.twu.service.CommentService;
 import com.thoughtworks.twu.service.ICommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,7 @@ public class CommentController {
     @RequestMapping(value = "/postComment",method = RequestMethod.POST)
     public @ResponseBody String postComment(@RequestParam(value = "board_id")Integer boardID,@RequestParam(value = "name")
                                 String name,@RequestParam(value = "comment") String comment) {
-         setICommentService(new CommentService());
+//         setICommentService(new CommentService());
         return createComment(boardID,name,comment);
     }
 

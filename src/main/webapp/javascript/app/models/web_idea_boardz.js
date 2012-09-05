@@ -21,7 +21,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             url : 'http://localhost:9092/mib/postComment',
-            data : 'board_id='+10+'&name=anonymous&comment='+encodeURIComponent(comment),
+            data : 'board_id='+encodeURIComponent(boardID)+'&name=anonymous&comment='+encodeURIComponent(comment),
             success : success,
             error : error
         });

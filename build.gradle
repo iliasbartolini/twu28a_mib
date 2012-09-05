@@ -3,6 +3,7 @@ apply plugin: 'jetty'
 apply plugin: 'war'
 apply plugin: 'idea'
 
+
 apply from:"file:gradleplugins/emmaPlugin/emma.gradle"
 
 repositories {

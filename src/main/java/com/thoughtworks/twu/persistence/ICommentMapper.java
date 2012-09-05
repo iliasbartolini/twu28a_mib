@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 
 public interface ICommentMapper {
+
     @Insert("INSERT INTO comments (boardID,name,comment,createdAt) VALUES(#{boardID},#{name}, #{comment},#{createdAt})")
     public void insertComment(Comment newComment);
 

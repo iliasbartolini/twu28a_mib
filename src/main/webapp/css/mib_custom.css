@@ -36,12 +36,13 @@ body {
     background-image:         linear-gradient(   #f5f5f5   /*{a-bar-background-start}*/,   #ffffff   /*{a-bar-background-end}*/);
 }
 
-.mib_content select {
-    width: 100%;
+.mib_content h1{
+    font-size: 1.6em;
+    margin-top: 0;
 }
 
-.mib_content input[type=text] {
-    width: 95%;
+.mib_content select {
+    width: 100%;
 }
 
 .addStickyForm p {
@@ -66,17 +67,7 @@ span.lightbulb-icon {
 .largeSticky {
     min-height: 200px;
     padding: 10px;
-}
-
-.postCommentForm textarea{
-    text-align: left;
-    width: 95%;
-    min-height: 190px;
-    font-size: 1.1em;
-    border-radius: 0;
-    color: #000000;
-    outline: none;
-    border: none;
+    margin-bottom: 10px;
 }
 
 .sticky, .addStickyForm textarea {
@@ -106,26 +97,6 @@ span.lightbulb-icon {
     box-shadow: none;
 }
 
-
-.form_action .comment_action {
-    margin-top: 1em;
-    width:100%;
-    text-align: center;
-}
-
-.comment_action #postBtn{
-    width: 30%;
-}
-
-.form_action #resetBtn {
-    margin-right: .5em;
-    width: 25%;
-}
-
-.form_action #submitBtn {
-    width: 65%;
-}
-
 .mib_header .logo {
     display: inline-block;
     width: 100px;
@@ -142,18 +113,67 @@ span.lightbulb-icon {
 
 .mib_header .ideaIcon {
     display: inline-block;
-    width: 20px;
-    height: 24px;
-    background: url("../images/light_bulb_icon.png") #B65925 no-repeat center;
+    width: 15px;
+    height: 18px;
+    background: url("../images/ideaIcon.png") #B65925 no-repeat center;
     text-indent: -900em;
     margin: 5px 0px;
 }
 
-.mib_content h1{
-    font-size: 1.6em;
-    margin-top: 0;
+.mib_header .commentIcon {
+    background: #B65925;
+    margin: 5px 0px;
 }
 
 .nav-tabs.nav-stacked > li > a {
     font-weight: bold;
+}
+
+#commentsList {
+    list-style-type:none;
+    padding:10px;
+    margin: 0;
+}
+
+#commentsList > li {
+    border-top: 1px dotted #ccc;
+    padding:5px;
+    margin:0;
+
+}
+
+#commentsList > li:first-child{
+    border: none;
+}
+
+#commentsList > li > span.username {
+    font-weight:bold;
+}
+
+.postCommentForm #commentArea{
+    text-align: left;
+    height: 300px;
+    font-size: 1.1em;
+    border-radius: 0;
+    color: #000000;
+    outline: none;
+    background: #fff;
+    box-shadow: 0px 0px 5px #ccc;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.form_action .comment_action {
+    margin-top: 1em;
+    width:100%;
+    text-align: center;
+}
+
+.comment_action #postBtn{
+    position: relative;
+    top:-5px;
+}
+
+#commentText {
+    width: 75%;
 }
