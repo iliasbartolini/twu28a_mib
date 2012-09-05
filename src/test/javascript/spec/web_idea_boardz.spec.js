@@ -53,8 +53,25 @@ describe("Web IdeaBoardz", function() {
         expect(callback).toHaveBeenCalled();
     });
 
+    it("should call ajax with callback in the context of the object passed in", function(){
+        //arrange
+        spyOn($, 'ajax');
+
+        var callback = jasmine.createSpy();
+        var contextObject = {};
+
+        //act
+        IdeaBoardz.WebIdeaBoardz.instance.createIdea("idea", {
+            success: callback,
+            context: contextObject
+        });
+
+        //assert
+        expect(($.ajax).mostRecentCall.args[0].context).toEqual(contextObject);
+    });
+
     it("should create new BoardModel when getBoard is called", function(){
-        fakeJSON={
+        var fakeJSON={
             "name":"mibimmmm",
             "id":16,
             "description":"blah",
