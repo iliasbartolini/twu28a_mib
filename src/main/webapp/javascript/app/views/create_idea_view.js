@@ -36,9 +36,9 @@ $(document).ready(function() {
             return false;
         },
 
-        //CLEAR IDEA TEXT IN SUCCESS CALLBACK
         showSuccess: function(event){
             $(this.el).find("#alert-area").html($("<div id=‘success-msg’ class='alert alert-success'><p>Your idea has been posted.</p></div>"));
+            $(this.el).find("#ideaText").val("");
         },
 
         showError: function(event){
