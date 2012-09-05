@@ -9,7 +9,7 @@ describe("MIB Navigation", function(){
     });
 
 
-    it ("should navigate to sections page when proper URL is entered", function(){
+    xit ("should navigate to sections page when proper URL is entered", function(){
 
         this.routerSpy = spyOn(this.router, 'sectionsList');
 

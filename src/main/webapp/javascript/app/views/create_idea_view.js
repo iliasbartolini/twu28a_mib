@@ -1,10 +1,11 @@
 $(document).ready(function() {
     IdeaBoardz.CreateIdeaView = Backbone.View.extend({
-        el: $("#container"),
+        el: $("#viewWrapper"),
         template: _.template($("#template-newIdea").html()),
         _ideaText : null,
         _boardName: null,
         _boardID: null,
+        container: null,
 
         events: {
             "click #submitBtn": "submitIdea"
@@ -12,7 +13,7 @@ $(document).ready(function() {
 
         initialize: function(container, boardName, id) {
             console.log("in initialize");
-            this.el = container;
+            this.container = container;
             this._boardName = boardName;
             this._boardID = id;
 
@@ -22,7 +23,7 @@ $(document).ready(function() {
         render: function(){
             console.log("in render");
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
-            $(this.el).html(html);  // Append the result to the view's element.
+            $(this.el).find(this.container).html(html);  // Append the result to the view's element.
             return this;
         },
 
