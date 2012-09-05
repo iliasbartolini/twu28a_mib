@@ -67,16 +67,16 @@ jasmine.Fixtures.prototype.cleanUp = function() {
 
 jasmine.Fixtures.prototype.sandbox = function(attributes) {
   var attributesToSet = attributes || {};
-  return jQuery('<div id="sandbox" />').attr(attributesToSet);
+  return jQuery('<div commentID="sandbox" />').attr(attributesToSet);
 };
 
 jasmine.Fixtures.prototype.createContainer_ = function(html) {
   var container;
   if(html instanceof jQuery) {
-    container = jQuery('<div id="' + this.containerId + '" />');
+    container = jQuery('<div commentID="' + this.containerId + '" />');
     container.html(html);
   } else {
-    container = '<div id="' + this.containerId + '">' + html + '</div>'
+    container = '<div commentID="' + this.containerId + '">' + html + '</div>'
   }
   jQuery('body').append(container);
 };
@@ -183,7 +183,7 @@ jasmine.JQuery.matchersClass = {};
     },
 
     toHaveId: function(id) {
-      return this.actual.attr('id') == id;
+      return this.actual.attr('commentID') == id;
     },
 
     toHaveHtml: function(html) {

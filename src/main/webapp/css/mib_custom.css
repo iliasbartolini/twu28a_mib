@@ -68,6 +68,17 @@ span.lightbulb-icon {
     padding: 10px;
 }
 
+.postCommentForm textarea{
+    text-align: left;
+    width: 95%;
+    min-height: 190px;
+    font-size: 1.1em;
+    border-radius: 0;
+    color: #000000;
+    outline: none;
+    border: none;
+}
+
 .sticky, .addStickyForm textarea {
     background-color: #FF8;
     border: 1px solid #FF8;
@@ -95,10 +106,15 @@ span.lightbulb-icon {
     box-shadow: none;
 }
 
-.form_action {
+
+.form_action .comment_action {
     margin-top: 1em;
     width:100%;
     text-align: center;
+}
+
+.comment_action #postBtn{
+    width: 30%;
 }
 
 .form_action #resetBtn {

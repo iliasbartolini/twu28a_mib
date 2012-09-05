@@ -16,12 +16,12 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/deprecated/*</url-pattern>
+        <url-pattern>/postComment</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>static</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -29,7 +29,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/applicationContext.xml</param-value>
+        <param-value>classpath:/SqlMapConfig.xml</param-value>
     </context-param>
 
 </web-app>

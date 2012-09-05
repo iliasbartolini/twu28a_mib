@@ -1,25 +1,36 @@
 package com.thoughtworks.twu.service;
 
 import com.thoughtworks.twu.domain.Comment;
-import com.thoughtworks.twu.persistence.ICommentMapper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
 public class CommentServiceTest {
+
     @Test
-    public void insertCommentShouldReturnSavedComment(){
+    public void shouldAddNewCommentInDatabase(){
+        CommentService commentService = new CommentService();
+        Comment comment = commentService.addNewComment(1, "mib","hello ideaboardz");
+        assertEquals("mib",comment.name);
+    }
 
-        ICommentMapper mockedICommentMapper = mock(ICommentMapper.class);
-        CommentService commentService = new CommentService(mockedICommentMapper);
-        Comment newComment = new Comment("anoop","hi helllo");
-        when(mockedICommentMapper.insertComment(newComment)).thenReturn(newComment);
+    @Test(expected = RuntimeException.class)
+    public void  shouldNotInsertTheCommentIfMessageIsAEmptyString(){
+        CommentService commentService = new CommentService();
+        Comment comment = commentService.addNewComment(1, "mib","");
+    }
 
-        Comment savedComment = commentService.addNewComment(newComment.name, newComment.comment);
+    @Test
+    public void shouldInsertCommentWithNameAsAnonymousIfNameIsEmptyString(){
+        CommentService commentService = new CommentService();
+        Comment comment = commentService.addNewComment(1, "","hello ideaboardz");
+        assertEquals("anonymous",comment.name);
+    }
 
-        assertEquals(newComment, savedComment);
-        verify(mockedICommentMapper).insertComment(newComment);
+    @Test (expected = RuntimeException.class)
+    public void shouldThrowExceptionIfBoardIdIsNull(){
+        CommentService commentService = new CommentService();
+        Comment comment = commentService.addNewComment(null, "","hello ideaboardz");
     }
 
 }

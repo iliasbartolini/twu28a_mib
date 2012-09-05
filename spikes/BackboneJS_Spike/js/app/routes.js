@@ -1,7 +1,7 @@
 var AppRouter = Backbone.Router.extend({
     routes: {
         "": "index", // http://localhost/
-        //"for/:boardName/:id": "createIdea" // #for/mibTest/9
+        //"for/:boardName/:commentID": "createIdea" // #for/mibTest/9
         "for/:boardName/:id": "boardHome" // #for/mibTest/9
 
     },

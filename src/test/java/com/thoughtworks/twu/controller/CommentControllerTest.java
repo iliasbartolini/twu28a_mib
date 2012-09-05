@@ -20,15 +20,14 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void addNewCommentShouldReturnTheSavedComment() {
-        Comment savedComment = new Comment("anoop", "hello");
-        savedComment.id = 10;
-        when(mockedCommentService.addNewComment("anoop","hello")).thenReturn(savedComment);
+    public void shouldReturnTheMostRecentCommentAdded() {
+        Comment savedComment = new Comment(10, "anoop", "hello");
+        savedComment.commentID = 10;
+        when(mockedCommentService.addNewComment(10, "anoop","hello")).thenReturn(savedComment);
 
-        String savedCommentResult = commentController.createComment("anoop", "hello");
+        String savedCommentResult = commentController.createComment(10, "anoop", "hello");
 
-        assertEquals("{'id': 10,'name':'anoop','comment':'hello'}", savedCommentResult);
+        assertEquals(savedComment.toJSON(), savedCommentResult);
     }
-
 
 }

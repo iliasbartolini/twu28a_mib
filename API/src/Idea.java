@@ -34,7 +34,7 @@ public class Idea {
     @Override
     public String toString() {
         return "Idea{" +
-                "id=" + id +
+                "commentID=" + id +
                 '}';
     }
 

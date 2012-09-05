@@ -10,7 +10,7 @@ public class ServerRequestStub implements ServerRequest {
                 "\"created_at\":\"2012/08/24 11:28:02 +0530\"," +
                 "\"updated_at\":\"2012/08/24 11:28:02 +0530\"," +
                 "\"section_id\":2," +
-                "\"id\":39," +
+                "\"commentID\":39," +
                 "\"message\":\"message\"}";
         return response;
     }
