@@ -33,25 +33,20 @@ public class AndroidCreateIdeaTest {
 
     @Test
     public void shouldDisplayErrorOnEmptyIdea() {
-        goToCreateIdeaView();
+        navigateToCreateIdeaView();
 
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-        button.click();
+        submitIdea();
 
-        WebElement emptyErrorMessage = webDriver.findElement(By.id("alert-area"));
-
-        assertThat(emptyErrorMessage.getText(), is("Please enter some text."));
+        assertDisplayedMessageIs("Please enter some text.");
     }
 
     @Test
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        goToCreateIdeaView();
+        navigateToCreateIdeaView();
 
-        WebElement message = webDriver.findElement(By.id("ideaText"));
-        message.sendKeys("Functional test idea!");
+        addIdeaText("Functional test idea!");
 
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-        button.click();
+        submitIdea();
 
         (new WebDriverWait(webDriver, 1)).until(new ExpectedCondition<Boolean>() {
             @Override
@@ -60,35 +55,45 @@ public class AndroidCreateIdeaTest {
             }
         });
 
-        WebElement submitErrorMessage = webDriver.findElement(By.id("alert-area"));
-        assertThat(submitErrorMessage.getText(), is("Failed to submit. Please try again in some time."));
+        assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
     }
 
     @Test
     @Ignore("Pending until cross-domain issue is solved")
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        goToCreateIdeaView();
+        navigateToCreateIdeaView();
 
-        WebElement message = webDriver.findElement(By.id("ideaText"));
-        message.sendKeys("Functional test idea!");
+        addIdeaText("Functional test idea!");
 
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-        button.click();
+        submitIdea();
 
-        WebElement submitSuccessMessage = webDriver.findElement(By.id("alert-area"));
-
-        assertThat(submitSuccessMessage.getText(), is("Your idea has been posted."));
+        assertDisplayedMessageIs("Your idea has been posted.");
     }
-
 
     @After
     public void tearDown(){
         webDriver.close();
     }
 
-    private void goToCreateIdeaView() {
+    private void navigateToCreateIdeaView() {
         webDriver.get("http://localhost:9876/mib/index.html#for/mibTest/9");
         webDriver.findElement(By.className("ideaIcon")).click();
+    }
+
+    private void submitIdea() {
+        WebElement button = webDriver.findElement(By.id("submitBtn"));
+        button.click();
+    }
+
+
+    private void addIdeaText(String ideaText) {
+        WebElement message = webDriver.findElement(By.id("ideaText"));
+        message.sendKeys(ideaText);
+    }
+
+    private void assertDisplayedMessageIs(String message) {
+        WebElement alertArea = webDriver.findElement(By.id("alert-area"));
+        assertThat(alertArea.getText(), is(message));
     }
 
 }
