@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="css/mib_custom.css"/>
 
     <script type="text/template" id="template-index">
-        <div class="mib_content">
+        <div class="mib_content template_index">
             <div class="alert alert-error">
                 <h3 style="text-align:center">Welcome to MobileIdeaBoardz</h3>
 
                 <div class="sticky" style="text-align:left">
                     <h3 style="text-align:center"> How </h3>
                     <ul>
-                        <li>Get the URL of a board on IdeaBoardz.com</li>
-                        <li>Enter the URL to start reading and editing ideas</li>
+                        <li>Ask the facilitator for the URL of an IdeaBoard</li>
+                        <li>Enter the URL in your browser to start reading and editing ideas</li>
                     </ul>
                 </div>
                 <p></p>
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <p></p>
-                <p>Enter the URL for your board to get started.</p>
+                <p>Enter the URL for your board in your browser to get started.</p>
 
             </div>
         </div>
@@ -91,6 +91,10 @@
         </div>
     </script>
 
+     <script type="text/template" id="template-navigation">
+         <a href="#for/mibTest/9/comment" id="commentBtn" class="btn btn-small commentIcon"><i class="icon-comment icon-white"></i> </a>
+         <a href="#for/mibTest/9/createIdea" id="createIdeaBtn" class="btn btn-small ideaIcon">Create Idea</a>
+     </script>
 
 </head>
 <body>
@@ -98,11 +102,7 @@
 
     <div id="menu" class="mib_header clearfix">
         <a href="#" class="logo">IdeaBoardz</a>
-
-        <div class="quick-links pull-right">
-            <a href="#for/mibTest/9/comment" id="commentBtn" class="btn btn-small commentIcon"><i class="icon-comment icon-white"></i> </a>
-            <a href="#for/mibTest/9/createIdea" id="createIdeaBtn" class="btn btn-small ideaIcon">Create Idea</a>
-        </div>
+        <div id="navigation" class="quick-links pull-right"></div>
 
     </div>
 

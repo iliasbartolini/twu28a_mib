@@ -7,12 +7,12 @@ var AppRouter = Backbone.Router.extend({
 
     },
     index: function(){
-        var indexView = new IndexView($('#container'),$("#template-index"));
+        var indexView = new IdeaBoardz.IndexView();
     },
 
     sectionsList: function(boardName,id){
         console.log("hey open board");
-        var sectionsView = new SectionsView(boardName, id);
+        var sectionsView = new IdeaBoardz.SectionsView(boardName, id);
 
     },
 

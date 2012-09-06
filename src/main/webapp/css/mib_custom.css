@@ -64,6 +64,10 @@ span.lightbulb-icon {
     cursor: pointer;
 }
 
+.template_index .sticky {
+    cursor: default;
+}
+
 .largeSticky {
     min-height: 200px;
     padding: 10px;
