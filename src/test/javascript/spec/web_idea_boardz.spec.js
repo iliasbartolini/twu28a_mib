@@ -76,18 +76,16 @@ describe("Web IdeaBoardz", function() {
             "id":16,
             "description":"blah",
             "sections":[{"name":"What went well","id":33},{"name":"What can be improved","id":34},{"name":"Action Items","id":35}]
-        };
+        }
 
         spyOn($, 'ajax').andCallFake(function(options){
             options.success(fakeJSON);
         });
 
         var board= IdeaBoardz.WebIdeaBoardz.instance.getBoard("mibimmmm", 16);
-        console.log("in Board");
-        console.log(board);
-        expect(board.boardName).toBe("mibimmmm");
+
+        expect(board.name).toBe("mibimmmm");
         expect(board.id).toBe(16);
-        expect(board.sections[0].boardName="What went well");
     });
 
 });

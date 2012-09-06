@@ -53,10 +53,8 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
             dataType : 'json',
             async: false,
             success : function(data){
-                console.log("in getBoard");
                 console.log(data);
-                board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-                console.log(board);
+                board = new IdeaBoardz.Board(data.name, data.id);
             }
         });
 
@@ -64,4 +62,4 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
     }
 }
 
-IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://m.ideaboardz.local/api");
+IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://10.10.15.130:3000");
