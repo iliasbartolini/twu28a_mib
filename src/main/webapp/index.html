@@ -17,16 +17,16 @@
         </div>
     </script>
 
+
+    <script type="text/template" id="template-sectionItem">
+        <li><a href="#section1"><%= sectionName %></a></li>
+    </script>
+
+
     <script type="text/template" id="template-sectionsView">
         <div class="mib_content">
-            <h1>Board Name</h1>
-            <ul class="nav nav-tabs nav-stacked">
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section1">Section 2</a></li>
-                <li><a href="#section1">Section 3</a></li>
-                <li><a href="#section1">Section 4</a></li>
-                <li><a href="#section1">Section 5</a></li>
-                <li><a href="#section1">Section 6</a></li>
+            <h1><%= boardName %></h1>
+            <ul class="nav nav-tabs nav-stacked" id="sectionsList">
             </ul>
         </div>
     </script>

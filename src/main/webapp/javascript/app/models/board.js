@@ -1,5 +1,6 @@
-IdeaBoardz.Board = function(name, id) {
-    this.name = name;
+IdeaBoardz.Board = function(name, id, sections) {
+    this.boardName = name;
     this.id = id;
+    this.sections = sections;
 }
 
