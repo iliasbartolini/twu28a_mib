@@ -1,5 +1,6 @@
 IdeaBoardz.WebIdeaBoardz = function(domain) {
     this.domain = domain;
+    this.comments = new IdeaBoardz.CommentCollection();
 }
 
 IdeaBoardz.WebIdeaBoardz.prototype = {
@@ -11,23 +12,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    postComment: function(boardID,comment,callbacks){
-        callbacks = callbacks || {};
-        var success = callbacks.success || function() {};
-        var error = callbacks.error || function() {};
-        //call ajax to post comment using comment api
 
-        console.log("making the ajax call");
-        $.ajax({
-            type : 'POST',
-            url : 'http://localhost:9092/mib/postComment',
-            data : 'board_id='+encodeURIComponent(boardID)+'&name=anonymous&comment='+encodeURIComponent(comment),
-            success : success,
-            error : error
-        });
-
-        console.log("Ajax call made for comment:" + comment);
-    },
 
     createIdea: function(message, callbacks) {
         callbacks = callbacks || {};

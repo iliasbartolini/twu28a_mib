@@ -56,7 +56,7 @@ public class Comment  {
     }
 
     public String toJSON(){
-        return String.format("{'board_id':%d,'comment_id': %d,'name':'%s','comment':'%s','created_at':'%s'}",
+        return String.format("{\"board_id\":%d,\"comment_id\": %d,\"name\":\"%s\",\"comment\":\"%s\",\"created_at\":\"%s\"}",
                 this.boardID,this.commentID, this.name, this.comment,this.createdAt)  ;
     }
 }

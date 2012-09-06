@@ -14,9 +14,15 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/postComment</url-pattern>
+        <url-pattern>/mib/postComment</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/mib/getComments</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
