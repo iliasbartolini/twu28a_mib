@@ -30,17 +30,8 @@ public class CommentController {
     public @ResponseBody String getComments(@RequestParam(value = "board_id")Integer boardID) {
         setICommentService(new CommentService());
         List<Comment> comments = iCommentService.getAllComments(boardID);
-
-
-
-
-
-        //return  "{ \"Maths\" : [{\"Name\" : \"Amit\",\"Marks\" : 67,\"age\" : 23 },{\"Name\"  : \"Sandeep\",\"Marks\" : 65,\"age\" : 21 }]}";
-
-
-
-
-
+        if(comments.size()<=0)
+            return "{}";
         return commentsToJson(comments);
     }
 

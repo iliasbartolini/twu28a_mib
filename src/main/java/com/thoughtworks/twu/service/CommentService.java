@@ -41,13 +41,8 @@ public class CommentService implements ICommentService{
 //            session.close();
         }
 
-    }                       /*
-
-    @Override
-    public List<Comment> getAllComments(Integer boardID) {
-        return null;
     }
-                   */
+
     @Override
     public void deleteComments(Integer boardID) {
         commentMapper = session.getMapper(ICommentMapper.class);

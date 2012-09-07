@@ -8,9 +8,7 @@ IdeaBoardz.CommentServer.prototype = {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
-        //call ajax to post comment using comment api
 
-        console.log("making the ajax call");
         $.ajax({
             type : 'POST',
             url : this.domain + '/mib/postComment',
@@ -18,41 +16,27 @@ IdeaBoardz.CommentServer.prototype = {
             success : success,
             error : error
         });
-
-        console.log("Ajax call made for comment:" + comment);
     },
 
     getComments: function(boardID,callbacks){
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
-        //call ajax to post comment using comment api
-
-        console.log("Just before getting comments");
-
-
-
-
         $.ajax({
             type: 'GET',
             url : this.domain + '/mib/getComments',
             data : 'board_id='+encodeURIComponent(boardID),
             dataType: 'json',
+            async: false,
             success: function(data){
-                // Supposing this JSON payload was received:
-                //   {"project": {"id": 42, "html": "<div>..." }}
-                // append the HTML to context object.
-
-                console.log(data.comments[0].comment);
-
+                for(i=0;i<data.comments.length;i++){
+                    comment= new IdeaBoardz.Comment(data.comments[i]);
+                }
             },
             error: function(xhr, type){
-                alert('Ajax error!')
             }
         })
-
-        console.log("Just after getting comments")
     }
 }
 
-IdeaBoardz.CommentServer.instance = new IdeaBoardz.CommentServer("http://localhost:9092/mib");
+IdeaBoardz.CommentServer.instance = new IdeaBoardz.CommentServer("http://m.ideaboardz.local/commentapi");

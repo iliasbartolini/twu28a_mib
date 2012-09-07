@@ -29,7 +29,7 @@ var SectionsView = Backbone.View.extend({
         console.log(this.sections);
         console.log(this.boardName);
         var html = this.template({boardName: this.boardName});
-        $(this.el).find('#container').html(html);  // Replace the view's element with the result
+        $(this.el).find('#container').html(html);
         var html="";
         for(i=0; i< this.sections.length; i++){
              html+=this.sectionTemplate({sectionName: this.sections[i].name});

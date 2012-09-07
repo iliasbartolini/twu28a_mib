@@ -7,21 +7,17 @@ $(document).ready(function() {
     container: null,
 
     initialize: function(container,boardName, id) {
-        console.log("in initialize");
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
-        this.getAllComments();
         this.render();
+        IdeaBoardz.CommentServer.instance.getComments(this._boardID);
     },
 
     render: function(){
         console.log("in render");
-
-//        var comments = IdeaBoardz.CommentServer.instance.getComments(this._boardID);
-
         var html = this.template({ boardName: this._boardName });
-        $(this.el).find(this.container).html(html);  // Append the result to the view's element.
+        $(this.el).find(this.container).html(html);
         return this;
     },
 
@@ -29,15 +25,12 @@ $(document).ready(function() {
         "click #postBtn": "postAComment"
     },
 
-    getAllComments: function(event){
-        console.log("in getting All Comments");
-        IdeaBoardz.CommentServer.instance.getComments(this._boardID);
-    },
+
 
     postAComment: function(event){
         console.log("in post comment");
         var message = $(this.el).find("#commentText").val();
-        var commentArea = $(this.el).find("#commentsList").prepend('<li><span class="username">anonymous: </span>'+message+'</li>');
+        this.renderAComment(message);
         console.log(message);
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
         return false;

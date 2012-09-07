@@ -1,11 +1,10 @@
 
-IdeaBoardz.Comment = Backbone.model.extend({
+IdeaBoardz.Comment = Backbone.Model.extend({
+    message: null,
 
-    initialize: function(){
+    initialize: function(aComment){
+        this.message=aComment.comment;
+        new IdeaBoardz.CommentView(this.message);
     }
-
 });
 
-IdeaBoardz.CommentCollection = Backbone.Collection.extend({
-        model:IdeaBoardz.Comment
-});

@@ -76,15 +76,16 @@
     <script type="text/template" id="template-comment">
         <div class="mib_content">
             <form name="commentForm" action="" method="" class="postCommentForm">
+                <div class="comment_action">
+                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+                </div>
                 <div id="commentArea">
                     <ul id="commentsList">
                     </ul>
                 </div>
 
-                <div class="comment_action">
-                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
-                </div>
+
             </form>
         </div>
     </script>
@@ -121,9 +122,12 @@
         .script("javascript/app/models/web_idea_boardz.js")
         .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
+        .script("javascript/app/models/comment.js")
         .script("javascript/app/views/create_idea_view.js")
-        .script("javascript/app/views/post_comment_view.js")
+        .script("javascript/app/views/create_comment_view.js")
         .script("javascript/app/views/sections_view.js")
+        .script("javascript/app/views/comment_view.js")
+
         .script("javascript/app/views/index_view.js")
         .script("javascript/app/routes/routes.js")
         .script("javascript/app/mib.js");

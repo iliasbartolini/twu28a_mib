@@ -1,4 +1,4 @@
-IdeaBoardz.WebIdeaBoardz = function(domain) {
+IdeaBoardz.WebIdeaBoardz = function(domain,comments) {
     this.domain = domain;
 }
 
@@ -11,8 +11,6 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-
-
     createIdea: function(message, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
@@ -22,7 +20,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             context : context,
-            url : this.domain + '/points.json?point[section_id]=20&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]=1&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });
@@ -49,3 +47,4 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
 }
 
 IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://m.ideaboardz.local/api");
+
