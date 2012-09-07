@@ -23,8 +23,6 @@ var SectionsView = Backbone.View.extend({
 
     createIdea: function(event){
         console.log("in create idea");
-        //event.preventDefault();
-        //var view=new IdeaBoardz.CreateIdeaView("#container", this.boardName, this.boardID);
     },
 
     render: function() {
