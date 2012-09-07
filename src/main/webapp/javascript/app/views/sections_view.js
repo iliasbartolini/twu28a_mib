@@ -2,14 +2,17 @@
 var SectionsView = Backbone.View.extend({
     el: $('#viewWrapper'),
     template: _.template($('#template-sectionsView').html()),
+    sectionTemplate: _.template($('#template-sectionItem').html()),
     boardName: "",
     boardID: null,
+    sections: [],
 
-    initialize: function(boardname, id) {
-        //var board = IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardname, id);
-        //alert("Result: " + board.name + "ID: " + board.id);
-        this.boardID=id;
-        this.boardName=boardname;
+    initialize: function(boardName, id) {
+        var board = IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, id);
+        console.log(board);
+        this.boardID=board.id;
+        this.boardName=board.boardName;
+        this.sections=board.sections;
         this.render();
     },
 
@@ -20,13 +23,18 @@ var SectionsView = Backbone.View.extend({
 
     createIdea: function(event){
         console.log("in create idea");
-        //event.preventDefault();
-        //var view=new IdeaBoardz.CreateIdeaView("#container", this.boardName, this.boardID);
     },
 
     render: function() {
-        var html = this.template();
+        console.log(this.sections);
+        console.log(this.boardName);
+        var html = this.template({boardName: this.boardName});
         $(this.el).find('#container').html(html);  // Replace the view's element with the result
+        var html="";
+        for(i=0; i< this.sections.length; i++){
+             html+=this.sectionTemplate({sectionName: this.sections[i].name});
+        };
+        $('#container').find('#sectionsList').html(html);
         return this;
     }
 });

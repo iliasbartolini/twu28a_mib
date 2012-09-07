@@ -22,6 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
+@Ignore("pending until we fix the hardcoding")
 public class CreateIdeaTest {
 
     private WebDriver webDriver;
@@ -51,6 +52,7 @@ public class CreateIdeaTest {
     }
 
     @Test
+    @Ignore
     public void shouldDisplayErrorOnEmptyIdea() {
         navigateToCreateIdeaView();
 
@@ -60,6 +62,7 @@ public class CreateIdeaTest {
     }
 
     @Test
+    @Ignore
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
         navigateToCreateIdeaView();
 
@@ -71,7 +74,7 @@ public class CreateIdeaTest {
     }
 
     @Test
-    @Ignore("Pending until cross-domain issue is solved")
+    //("Pending until cross-domain issue is solved")
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
         navigateToCreateIdeaView();
 
@@ -88,7 +91,7 @@ public class CreateIdeaTest {
     }
 
     private void navigateToCreateIdeaView() {
-        webDriver.get("http://localhost:9876/mib/index.html#for/mibTest/9");
+        webDriver.get("http://m.ideaboardz.local/#for/mibTest/2");
         webDriver.findElement(By.className("ideaIcon")).click();
     }
 
