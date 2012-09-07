@@ -13,7 +13,7 @@ var AppRouter = Backbone.Router.extend({
 
     sectionsList: function(boardName, bid){
         console.log("hey open board");
-        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, id, {success:function(data){
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
             board = new IdeaBoardz.Board(data.name, data.id, data.sections);
             new SectionsView(board)}})
     },
