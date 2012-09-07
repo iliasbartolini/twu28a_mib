@@ -26,23 +26,35 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    getBoard: function(boardName, boardId) {
-        var board;
+    getBoard: function(boardName, boardId, callbacks) {
+        callbacks = callbacks || {};
+        var success = callbacks.success || function() {};
+        var error = callbacks.error || function() {};
 
         $.ajax({
             type: 'GET',
             url : this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json',
             dataType : 'json',
+            success: success
+        });
+    },
+
+    getIdeas : function(boardID){
+        var ideas;
+        $.ajax({
+            type: 'GET',
+            url : this.domain + '/retros/' + boardID + '/points.json',
+            dataType : 'json',
             async: false,
             success : function(data){
-                console.log("in getBoard");
+                console.log("in getIdeas Method");
                 console.log(data);
-                board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-                console.log(board);
+                ideas = new IdeaBoardz.IdeaCollection(data);
+                console.log(ideas);
             }
         });
 
-        return board;
+        return ideas;
     }
 }
 
