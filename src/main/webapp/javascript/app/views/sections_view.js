@@ -31,7 +31,7 @@ var SectionsView = Backbone.View.extend({
         $(this.el).find('#container').html(html);  // Replace the view's element with the result
         var html="";
         for(i=0; i< this.sections.length; i++){
-             html+=this.sectionTemplate({sectionName: this.sections[i].name});
+             html+=this.sectionTemplate({sectionName: this.sections[i].name, sectionId: this.sections[i].id,boardName: this.boardName, boardId: this.boardID });
         };
         $('#container').find('#sectionsList').html(html);
         return this;
