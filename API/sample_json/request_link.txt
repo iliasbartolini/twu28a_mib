@@ -1,8 +1,0 @@
-// get all ideas in board
------------------------------------------------------------
-http://localhost:3000/retros/2/points.json
-=> format: IDEA_BOARDZ_URL/retros/BOARD_ID/points.json
-=> response: points.json
------------------------------------------------------------
-
-

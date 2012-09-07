@@ -55,6 +55,26 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
             dataType : 'json',
             success: success
         });
+
+        return board;
+    },
+
+    getIdeas : function(boardID){
+        var ideas;
+        $.ajax({
+            type: 'GET',
+            url : this.domain + '/retros/' + boardID + '/points.json',
+            dataType : 'json',
+            async: false,
+            success : function(data){
+                console.log("in getIdeas Method");
+                console.log(data);
+                ideas = new IdeaBoardz.IdeaCollection(data);
+                console.log(ideas);
+            }
+        });
+
+        return ideas;
     }
 }
 

@@ -1,5 +1,3 @@
-//var cache = new CacheProvider;
-
 $(function() {
     Backbone.emulateJSON = true;
 
