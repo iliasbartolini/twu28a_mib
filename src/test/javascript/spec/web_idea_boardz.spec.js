@@ -89,5 +89,28 @@ describe("Web IdeaBoardz", function() {
         expect(board.id).toBe(16);
         expect(board.sections[0].boardName="What went well");
     });
+    
+    it("should collect all the Ideas in a board when getIdeas is called", function(){
+        var fakeJSON=[{"created_at":"2012/08/31 15:38:51 +0000","updated_at":"2012/08/31 15:39:06 +0000",
+                "section_id":4,"id":53874,"message":"work on multiple stories \n\nwork with claim status story",
+                "votes_count":4} ,
+
+            {"created_at":"2012/08/31 15:39:45 +0000",
+                "updated_at":"2012/08/31 16:05:39 +0000","section_id":4,"id":53876,
+                "message":"good communication wiht BO grooming is good","votes_count":3}]  ;
+
+
+
+        spyOn($, 'ajax').andCallFake(function(options){
+            options.success(fakeJSON);
+        });
+
+        var ideaCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(16);
+        console.log("in Test For Ideas");
+        console.log(ideaCollection);
+        expect(ideaCollection.ideas[0].id).toBe(53874);
+        expect(ideaCollection.ideas[1].id).toBe(53876);
+        expect(ideaCollection.ideas.length).toBe(2);
+    });
 
 });
