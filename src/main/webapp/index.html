@@ -54,7 +54,7 @@
     </script>
 
     <script type="text/template" id="template-stickyView">
-        <li class="sticky">
+        <li class="sticky small-sticky">
             <span class="ideaText"><%= ideaText %></span>
             <span class="voteNumber">+ <%= vote_count %></span>
         </li>
@@ -72,7 +72,7 @@
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
             <div id="alert-area"></div>
-            <p>Board Name: <%= boardName %>, ID: <%= boardId %></p>
+            <h1>Board Name</h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
                     <label for="sectionId">Add Idea to:</label>
@@ -113,7 +113,7 @@
 <div id="appWrapper">
     <div id="viewWrapper">
 
-        <div id="menu" class="mib_header clearfix">
+        <div id="menu" class="mib_header navbar-fixed-top clearfix">
             <a href="#" id="logo">IdeaBoardz</a>
 
             <div id="context-menu" class="quick-links pull-right">
