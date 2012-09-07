@@ -55,8 +55,6 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
             dataType : 'json',
             success: success
         });
-
-        return board;
     },
 
     getIdeas : function(boardID){
