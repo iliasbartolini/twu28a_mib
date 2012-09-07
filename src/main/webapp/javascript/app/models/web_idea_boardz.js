@@ -29,7 +29,8 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         console.log("Ajax call made for comment:" + comment);
     },
 
-    createIdea: function(message, callbacks) {
+    createIdea: function(sectionId,message, callbacks) {
+        console.log(sectionId);
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
@@ -38,7 +39,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             context : context,
-            url : this.domain + '/points.json?point[section_id]=20&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]='+sectionId+'&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });
@@ -47,7 +48,6 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
     getBoard: function(boardName, boardId, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
-        var error = callbacks.error || function() {};
 
         $.ajax({
             type: 'GET',
