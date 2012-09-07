@@ -7,9 +7,8 @@ var SectionsView = Backbone.View.extend({
     boardID: null,
     sections: [],
 
-    initialize: function(boardName, id) {
-        var board = IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, id);
-        console.log(board);
+    initialize: function(board) {
+        console.log('in sections_view initialize')
         this.boardID=board.id;
         this.boardName=board.boardName;
         this.sections=board.sections;

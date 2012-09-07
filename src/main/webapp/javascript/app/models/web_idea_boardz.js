@@ -44,20 +44,16 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    getBoard: function(boardName, boardId) {
-        var board;
+    getBoard: function(boardName, boardId, callbacks) {
+        callbacks = callbacks || {};
+        var success = callbacks.success || function() {};
+        var error = callbacks.error || function() {};
 
         $.ajax({
             type: 'GET',
             url : this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json',
             dataType : 'json',
-            async: false,
-            success : function(data){
-                console.log("in getBoard");
-                console.log(data);
-                board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-                console.log(board);
-            }
+            success: success
         });
 
         return board;
