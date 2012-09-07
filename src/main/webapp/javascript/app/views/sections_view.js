@@ -12,6 +12,8 @@ var SectionsView = Backbone.View.extend({
         this.boardID=board.id;
         this.boardName=board.boardName;
         this.sections=board.sections;
+
+        this.customizeMenuLinks();
         this.render();
     },
 
@@ -35,5 +37,11 @@ var SectionsView = Backbone.View.extend({
         };
         $('#container').find('#sectionsList').html(html);
         return this;
+    },
+
+    customizeMenuLinks: function(){
+        $(this.el).find('#logo').attr("href", "#for/"+this.boardName+"/"+this.boardID);
+        $(this.el).find('#commentBtn').attr("href", "#for/"+this.boardName+"/"+this.boardID+"/comment");
+        $(this.el).find('#createIdeaBtn').attr("href", "#for/"+this.boardName+"/"+this.boardID+"/createIdea");
     }
 });
