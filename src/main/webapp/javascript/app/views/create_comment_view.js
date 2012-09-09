@@ -36,6 +36,7 @@ $(document).ready(function() {
     postAComment: function(event){
         console.log("in post comment");
         var message = $(this.el).find("#commentText").val();
+        $(this.el).find("#commentText").val("");
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
         new IdeaBoardz.CommentView(message);
         return false;
