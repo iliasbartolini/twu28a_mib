@@ -10,11 +10,19 @@ $(document).ready(function() {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
+        _.bindAll(this,"cancel");
+        this.cancel();
         this.render();
         IdeaBoardz.CommentServer.instance.getComments(this._boardID);
+
     },
 
-    render: function(){
+    cancel:function(){
+        console.log("In Cancel");
+        $(this.el).undelegate('#postBtn', 'click');
+    },
+
+            render: function(){
         console.log("in render");
         var html = this.template({ boardName: this._boardName });
         $(this.el).find(this.container).html(html);
@@ -25,14 +33,11 @@ $(document).ready(function() {
         "click #postBtn": "postAComment"
     },
 
-
-
     postAComment: function(event){
         console.log("in post comment");
         var message = $(this.el).find("#commentText").val();
-        this.renderAComment(message);
-        console.log(message);
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
+        new IdeaBoardz.CommentView(message);
         return false;
     }
 

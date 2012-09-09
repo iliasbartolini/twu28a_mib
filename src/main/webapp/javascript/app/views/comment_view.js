@@ -13,5 +13,6 @@ IdeaBoardz.CommentView = Backbone.View.extend({
         $(this.el).find("#commentsList").prepend('<li><span class="username">anonymous: </span>'+this.message+'</li>');
     }
 
-
 });
+
+
