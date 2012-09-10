@@ -17,7 +17,15 @@ $(document).ready(function() {
             this._boardName = boardName;
             this._boardID = id;
 
+            _.bindAll(this,"cancel");
+            this.cancel();
+
             this.render();
+        },
+
+        cancel:function(){
+            console.log("In Cancel");
+            $(this.el).undelegate('#submitBtn', 'click');
         },
 
         render: function(){

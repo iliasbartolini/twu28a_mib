@@ -1,4 +1,4 @@
-IdeaBoardz.WebIdeaBoardz = function(domain) {
+IdeaBoardz.WebIdeaBoardz = function(domain,comments) {
     this.domain = domain;
 }
 
@@ -11,24 +11,6 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    postComment: function(boardID,comment,callbacks){
-        callbacks = callbacks || {};
-        var success = callbacks.success || function() {};
-        var error = callbacks.error || function() {};
-        //call ajax to post comment using comment api
-
-        console.log("making the ajax call");
-        $.ajax({
-            type : 'POST',
-            url : 'http://localhost:9092/mib/postComment',
-            data : 'board_id='+encodeURIComponent(boardID)+'&name=anonymous&comment='+encodeURIComponent(comment),
-            success : success,
-            error : error
-        });
-
-        console.log("Ajax call made for comment:" + comment);
-    },
-
     createIdea: function(message, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
@@ -38,7 +20,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             context : context,
-            url : this.domain + '/points.json?point[section_id]=20&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]=1&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });
@@ -77,3 +59,4 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
 }
 
 IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://m.ideaboardz.local/api");
+

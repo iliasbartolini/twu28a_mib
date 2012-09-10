@@ -99,8 +99,6 @@
                 </div>
                 <div id="commentArea">
                     <ul id="commentsList">
-                        <li><span class="username">Name: </span> here is my comment</li>
-                        <li><span class="username">Name 2: </span> another comment</li>
                     </ul>
                 </div>
             </form>
@@ -120,7 +118,8 @@
         <div id="menu" class="mib_header navbar-fixed-top clearfix">
             <a href="#" id="logo">IdeaBoardz</a>
 
-            <div id="navigation" class="quick-links pull-right">NAVIGATION</div>
+            <div id="navigation" class="quick-links pull-right"></div>
+
         </div>
 
         <div id="container">page here</div>
@@ -138,13 +137,17 @@
         .script("javascript/lib/backbone/backbone-min.js").wait()
         .script("javascript/app/models/idea_boardz.js")
         .script("javascript/app/models/web_idea_boardz.js")
+        .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
+        .script("javascript/app/models/comment.js")
         .script("javascript/app/models/idea_collection.js")
         .script("javascript/app/views/create_idea_view.js")
-        .script("javascript/app/views/post_comment_view.js")
+        .script("javascript/app/views/create_comment_view.js")
         .script("javascript/app/views/ideas_view.js")
         .script("javascript/app/views/sections_view.js")
+        .script("javascript/app/views/comment_view.js")
         .script("javascript/app/views/index_view.js")
+        .script("javascript/app/views/close.js")
         .script("javascript/app/routes/routes.js")
         .script("javascript/app/mib.js");
     </script>
