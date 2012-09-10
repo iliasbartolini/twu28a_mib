@@ -18,8 +18,8 @@ $(document).ready(function() {
 
             _.bindAll(this,"cancel");
             this.cancel();
-
             this.render();
+
         },
 
         cancel:function(){
@@ -31,17 +31,27 @@ $(document).ready(function() {
             console.log("in render");
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
+            $(this.el).find("#ideaText").focus();
             return this;
         },
 
         submitIdea: function(event){
             console.log("in submitIdea before call to createIdea");
             var message = $(this.el).find("#ideaText").val();
+            message = this.trim(message);
+            console.log("Trimmed Message: " + message);
             if (message == '') this.showEmptyError();
             else {
                 IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
             }
             return false;
+        },
+
+        trim: function(str){
+            return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        },
+        hasWhiteSpaces: function(message){
+            return message.indexOf(' ') == 0;
         },
 
         showSuccess: function(event){
