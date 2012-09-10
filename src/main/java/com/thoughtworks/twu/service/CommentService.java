@@ -35,7 +35,6 @@ public class CommentService implements ICommentService{
             commentMapper.insertComment(newComment);
             Comment savedComment = commentMapper.selectComment(newComment);
             return savedComment;
-
         } finally {
 //            session.commit(true);
 //            session.close();
