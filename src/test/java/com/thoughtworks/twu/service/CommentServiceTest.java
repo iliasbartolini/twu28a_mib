@@ -1,6 +1,10 @@
 package com.thoughtworks.twu.service;
 
 import com.thoughtworks.twu.domain.Comment;
+import com.thoughtworks.twu.persistence.ICommentMapper;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -8,90 +12,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class CommentServiceTest {
-    @Ignore("no database in CI server")
+    CommentService commentService;
+    private ICommentMapper mockMapper;
+
+    @Before
+    public void setUp(){
+        SqlSessionFactory mockSqlSessionFactory=mock(SqlSessionFactory.class);
+        SqlSession mockSession=mock(SqlSession.class);
+        mockMapper=mock(ICommentMapper.class);
+        when(mockSession.getMapper(ICommentMapper.class)).thenReturn(mockMapper);
+        when(mockSqlSessionFactory.openSession(true)).thenReturn(mockSession);
+        this.commentService = new CommentService(mockSqlSessionFactory);
+    }
+
     @Test
     public void shouldAddNewCommentInDatabase(){
-        CommentService commentService = new CommentService();
+
         Comment comment = commentService.addNewComment(1, "mib","AddNewComment");
-        assertEquals("mib",comment.name);
+
+        verify(mockMapper).insertComment(comment);
     }
-    @Ignore("no database in CI server")
+
     @Test(expected = RuntimeException.class)
     public void  shouldNotInsertTheCommentIfMessageIsAEmptyString(){
-        CommentService commentService = new CommentService();
-        Comment comment = commentService.addNewComment(1, "EmptyComment","");
+        commentService.addNewComment(1, "PersonName", "");
     }
-    @Ignore("no database in CI server")
+
     @Test
     public void shouldInsertCommentWithNameAsAnonymousIfNameIsEmptyString(){
-        CommentService commentService = new CommentService();
         Comment comment = commentService.addNewComment(1, "","EmptyName");
         assertEquals("anonymous",comment.name);
     }
-    @Ignore("no database in CI server")
+
     @Test (expected = RuntimeException.class)
     public void shouldThrowExceptionIfBoardIdIsNull(){
-        CommentService commentService = new CommentService();
-        Comment comment = commentService.addNewComment(null, "","Board ID Null");
+        commentService.addNewComment(null, "", "Board ID Null");
     }
-    @Ignore("no database in CI server")
+
     @Test
     public void shouldReturnTotalNumberOfCommentsForABoard(){
-        CommentService commentService = new CommentService();
         int boardID = 99;
-        commentService.deleteComments(boardID);
-        commentService.addNewComment(boardID, "mib","Should Return no. of comments");
-        Integer numberOfComments=commentService.getCommentsCount(99);
-        assertEquals( 1,numberOfComments.intValue());
+        int commentNum = 1;
+        when(mockMapper.getCommentCount(boardID)).thenReturn(commentNum);
+
+        Integer numberOfComments=commentService.getCommentsCount(boardID);
+
+        assertEquals(commentNum, numberOfComments.intValue());
     }
 
-    @Ignore("no database in CI server")
+
     @Test
     public void shouldDeleteAllCommentsForABoard(){
-        CommentService commentService = new CommentService();
         int boardID = 9;
         commentService.deleteComments(boardID);
-        Integer returnedCommentCount=commentService.getCommentsCount(boardID);
-        assertEquals(0,returnedCommentCount.intValue());
+        verify(mockMapper).deleteComments(boardID);
     }
-    @Ignore("no database in CI server")
+
     @Test
-    public void shouldGetCommentsCountForOneIdeaboard(){
+    public void shouldGetCommentsForOneIdeaboard(){
         int boardID = 1;
-        CommentService commentService = addComments(boardID);
-        List<Comment> comments = commentService.getAllComments(boardID);
-        assertEquals(3,comments.size());
+        commentService.getAllComments(boardID);
+        verify(mockMapper).getAllComments(boardID);
     }
-
-    private CommentService addComments(int boardID) {
-        CommentService commentService = new CommentService();
-        commentService.deleteComments(boardID);
-        commentService.addNewComment(boardID, "test","comment1");
-        commentService.addNewComment(boardID, "test","comment2");
-        commentService.addNewComment(boardID, "test","comment3");
-        return commentService;
-    }
-    @Ignore("no database in CI server")
-    @Test
-    public void shouldGetAllCommentsOfABoard(){
-        int boardID = 1;
-        CommentService commentService = new CommentService();
-        List<Comment> theseComments = new ArrayList<Comment>();
-        insertComments(boardID, commentService, theseComments);
-        List<Comment> comments = commentService.getAllComments(boardID);
-        assertEquals(theseComments,comments);
-    }
-
-    private void insertComments(int boardID, CommentService commentService, List<Comment> theseComments) {
-        commentService.deleteComments(boardID);
-        theseComments.add(commentService.addNewComment(boardID, "test", "comment1"));
-        theseComments.add(commentService.addNewComment(boardID, "test","comment2"));
-        theseComments.add(commentService.addNewComment(boardID, "test","comment3"));
-    }
-
-
 }
 
 

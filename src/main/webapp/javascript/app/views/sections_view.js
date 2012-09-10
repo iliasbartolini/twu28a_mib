@@ -28,20 +28,21 @@ $(document).ready(function () {
         render:function () {
             console.log(this.sections);
             console.log(this.boardName);
-            console.log($(this.el).find("#navigation"));
-            $(this.el).find("#navigation").html(this.navigationTemplate());
+
             var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
-            var html = "";
+
+            var sectionListHtml = "";
             for (i = 0; i < this.sections.length; i++) {
-                html += this.sectionTemplate({sectionName:this.sections[i].name, sectionId:this.sections[i].id, boardName:this.boardName, boardId:this.boardID });
+                sectionListHtml += this.sectionTemplate({sectionName:this.sections[i].name, sectionId:this.sections[i].id, boardName:this.boardName, boardId:this.boardID });
             }
             ;
-            $('#container').find('#sectionsList').html(html);
+            $('#container').find('#sectionsList').html(sectionListHtml);
             return this;
         },
 
         customizeMenuLinks:function () {
+            $(this.el).find("#navigation").html(this.navigationTemplate());
             $(this.el).find('#logo').attr("href", "#for/" + this.boardName + "/" + this.boardID);
             $(this.el).find('#commentBtn').attr("href", "#for/" + this.boardName + "/" + this.boardID + "/comment");
             $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this.boardName + "/" + this.boardID + "/createIdea");

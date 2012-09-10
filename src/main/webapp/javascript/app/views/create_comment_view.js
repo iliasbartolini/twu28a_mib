@@ -7,18 +7,19 @@ $(document).ready(function() {
     _boardID: null,
     container: null,
 
-    initialize: function(container,boardName, id) {
+    initialize: function(container, boardName, id) {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
-        _.bindAll(this,"cancel");
-        this.cancel();
+
+        _.bindAll(this,"resetBinding");
+        this.resetBinding();
         this.render();
         IdeaBoardz.CommentServer.instance.getComments(this._boardID);
 
     },
 
-    cancel:function(){
+    resetBinding:function(){
         console.log("In Cancel");
         $(this.el).undelegate('#postBtn', 'click');
     },

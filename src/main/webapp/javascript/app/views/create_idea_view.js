@@ -22,21 +22,23 @@ $(document).ready(function() {
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
-            _.bindAll(this,"cancel");
-            this.cancel();
+            _.bindAll(this,"resetBinding");
+            this.resetBinding();
             this.render();
 
         },
 
-        cancel:function(){
-            console.log("In Cancel");
+        resetBinding:function(){
+            console.log("In Reset Binding");
             $(this.el).undelegate('#submitBtn', 'click');
         },
 
         render: function(){
             console.log("in render");
             $(this.el).find("#navigation").html(this.navigationTemplate());
-            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
+
+            var html = this.template({ boardName: this._boardName});
+
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
             $(this.el).find("#ideaText").focus();
             return this;
@@ -57,9 +59,6 @@ $(document).ready(function() {
 
         trim: function(str){
             return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        },
-        hasWhiteSpaces: function(message){
-            return message.indexOf(' ') == 0;
         },
 
         showSuccess: function(event){

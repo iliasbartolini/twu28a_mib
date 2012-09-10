@@ -30,7 +30,7 @@ IdeaBoardz.CommentServer.prototype = {
         };
         globalDomain=this.domain,
 
-            /*
+
         (function poll() {
             setTimeout(function(){
                 $.ajax({
@@ -40,7 +40,8 @@ IdeaBoardz.CommentServer.prototype = {
                     dataType:'json',
                     success:function (data) {
                         for (i = 0; i < data.comments.length; i++) {
-                            comment = new IdeaBoardz.Comment(data.comments[i]);
+                            console.log("comment?" + data.comments[i].comment);
+                            new IdeaBoardz.CommentView(data.comments[i].comment);
                         }
                     },
                     error:function (xhr, type) {
@@ -49,7 +50,7 @@ IdeaBoardz.CommentServer.prototype = {
         },1000);
         })();
 
-                        */
+
 
         $.ajax({
             type:'GET',
