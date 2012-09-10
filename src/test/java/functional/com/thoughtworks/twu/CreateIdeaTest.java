@@ -25,8 +25,7 @@ import static org.junit.Assert.assertThat;
 @Ignore("ignored until apache and virtual hosts are setup on CI")
 public class CreateIdeaTest {
 
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
-    public static final String BOARD_NAME = "test";
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/MIBTEST/1";
 
     public static final int TIME_OUT_IN_SECONDS = 2;
 
@@ -54,7 +53,6 @@ public class CreateIdeaTest {
         firefoxProfile.setPreference(firefoxPreference.name, firefoxPreference.value);
 
         webDriver = new FirefoxDriver(firefoxProfile);
-
     }
 
     @Test
@@ -67,7 +65,7 @@ public class CreateIdeaTest {
     }
 
     @Test
-    @Ignore("ignored because cross-domain problem is fixed")
+    @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
         navigateToCreateIdeaView();
 
@@ -96,10 +94,11 @@ public class CreateIdeaTest {
 
     private void navigateToCreateIdeaView() {
         webDriver.get(BOARD_URL);
-        // wait until the customized link is assigned to menu
-        waitForElementWithText(BOARD_NAME);
 
-        webDriver.findElement(By.id("createIdeaBtn")).click();
+        By createIdeaButtonSelector = By.id("createIdeaBtn");
+        waitForElement(createIdeaButtonSelector);
+
+        webDriver.findElement(createIdeaButtonSelector).click();
     }
 
     private void submitIdea() {
@@ -112,20 +111,33 @@ public class CreateIdeaTest {
         message.sendKeys(ideaText);
     }
 
-    private void waitForElementWithText(final String toCheckFor) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(new ExpectedCondition<Boolean>() {
+    private void assertDisplayedMessageIs(String message) {
+        By alertAreaSelector = By.id("alert-area");
+        waitForText(message);
+        WebElement alertArea = webDriver.findElement(alertAreaSelector);
+        assertThat(alertArea.getText(), is(message));
+    }
+
+    private void waitForElement(final By elementSelector) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(@Nullable WebDriver input) {
-                return input.getPageSource().contains(toCheckFor);
+                return !input.findElements(elementSelector).isEmpty();
             }
         });
     }
 
-    private void assertDisplayedMessageIs(String message) {
-        waitForElementWithText(message);
+    private void waitForText(final String text) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return input.getPageSource().contains(text);
+            }
+        });
+    }
 
-        WebElement alertArea = webDriver.findElement(By.id("alert-area"));
-        assertThat(alertArea.getText(), is(message));
+    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
+        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
     private static class FirefoxPreference {
