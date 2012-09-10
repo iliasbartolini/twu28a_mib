@@ -21,8 +21,6 @@ $(document).ready(function () {
         },
 
         render:function () {
-            console.log(this.sections);
-            console.log(this.boardName);
             var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
 

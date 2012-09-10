@@ -15,14 +15,13 @@ $(document).ready(function () {
             var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(board.id);
             this.ideas = ideasCollection.ideas;
             console.log('in initialize of ideas view');
-            this.boardName = board.name;
+            this.boardName = board.boardName;
             this.boardId = board.id;
             this.sectionId = sectionId;
 
             for (var i=0; i<board.sections.length; i++){
                 if (board.sections[i].id == this.sectionId){
                     this.sectionName = board.sections[i].name;
-                    console.log("section name: ---- "+this.sectionName);
                     break;
                 }
             }
@@ -31,7 +30,6 @@ $(document).ready(function () {
         },
 
         render:function () {
-            console.log('in render of ideas view');
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardId}));
             var html = this.template({sectionId:this.sectionId, sectionName:this.sectionName});
             $(this.el).find('#container').html(html);
