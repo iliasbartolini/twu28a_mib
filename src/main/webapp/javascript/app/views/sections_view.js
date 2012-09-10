@@ -1,31 +1,40 @@
 $(document).ready(function () {
-    IdeaBoardz.SectionsView = Backbone.View.extend({
-        el: $('#viewWrapper'),
-        template: _.template($('#template-sectionsView').html()),
-        navigationTemplate: _.template($("#template-navigation").html()),
-        boardName: "",
-        boardID: null,
 
-        initialize: function(boardname, id) {
-            this.boardID=id;
-            this.boardName=boardname;
+    IdeaBoardz.SectionsView = Backbone.View.extend({
+        el:$('#viewWrapper'),
+        template:_.template($('#template-sectionsView').html()),
+        sectionTemplate:_.template($('#template-sectionItem').html()),
+        navigationTemplate:_.template($("#template-navigation").html()),
+        boardName:"",
+        boardID:null,
+        sections:[],
+
+        initialize:function (boardName, id) {
+            var board = IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, id);
+            console.log(board);
+            this.boardID = board.id;
+            this.boardName = board.boardName;
+            this.sections = board.sections;
             this.render();
         },
 
-        events: {
-            "click #createIdeaBtn": "createIdea"
-        },
 
-
-        createIdea: function(event){
+        createIdea:function (event) {
             console.log("in create idea");
         },
 
-        render: function() {
+        render:function () {
+            console.log(this.sections);
+            console.log(this.boardName);
             $(this.el).find("#navigation").append(this.navigationTemplate());
-
-            var html = this.template();
+            var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
+            var html = "";
+            for (i = 0; i < this.sections.length; i++) {
+                html += this.sectionTemplate({sectionName:this.sections[i].name});
+            }
+
+            $('#container').find('#sectionsList').html(html);
             return this;
         }
     });
