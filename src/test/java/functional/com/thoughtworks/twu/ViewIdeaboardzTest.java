@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-
+@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
     public static final String BOARD_NAME = "test";
