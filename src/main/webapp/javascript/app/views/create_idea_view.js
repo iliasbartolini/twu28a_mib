@@ -16,13 +16,12 @@ $(document).ready(function() {
             this._boardName = boardName;
             this._boardID = id;
 
-            _.bindAll(this,"cancel");
-            this.cancel();
-
+            _.bindAll(this,"unbind");
+            this.unbind();
             this.render();
         },
 
-        cancel:function(){
+        unbind:function(){
             console.log("In Cancel");
             $(this.el).undelegate('#submitBtn', 'click');
         },

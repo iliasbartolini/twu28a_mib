@@ -21,13 +21,34 @@ public class CommentControllerTest {
 
     @Test
     public void shouldReturnTheMostRecentCommentAdded() {
-        Comment savedComment = new Comment(10, "anoop", "hello");
+        Comment savedComment = new Comment(10, "mib", "hello");
         savedComment.commentID = 10;
-        when(mockedCommentService.addNewComment(10, "anoop","hello")).thenReturn(savedComment);
+        when(mockedCommentService.addNewComment(10, "mib","hello")).thenReturn(savedComment);
 
-        String savedCommentResult = commentController.createComment(10, "anoop", "hello");
+        String savedCommentResult = commentController.createComment(10, "mib", "hello");
 
         assertEquals(savedComment.toJSON(), savedCommentResult);
     }
+                      /*
+    @Test
+    public void shouldReturnAllCommentsForABoard(){
+        Comment comment1=new Comment(1,"mib","hello");
+        comment1.commentID=1;
+//        Comment comment2=new Comment(1,"mib","hi");
+//        comment2.commentID=2;
 
+        when(mockedCommentService.addNewComment(1,"mib","hello")).thenReturn(comment1);;
+
+//        when(mockedCommentService.addNewComment(1,"mib","hi")).thenReturn(comment2);;
+//        String savedComment2=commentController.createComment(1,"mib","hi");
+
+        List<Comment> savedComments=new ArrayList<Comment>();
+        savedComments.add(comment1);
+//        savedComments.add(comment2);
+
+        when(mockedCommentService.getAllComments(1)).thenReturn(savedComments);
+        String AllComments=commentController.getComments(1);
+
+//        assertEquals(commentController.commentsToJson(savedComments),AllComments);
+    }                   */
 }
