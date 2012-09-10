@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
     <title>Mobile IdeaBoardz</title>
@@ -47,7 +47,7 @@
 
     <script type="text/template" id="template-sectionsView">
         <div class="mib_content">
-            <h1><%= boardName %></h1>
+            <h1 id="boardName"><%= boardName %></h1>
             <ul class="nav nav-tabs nav-stacked" id="sectionsList">
             </ul>
         </div>
@@ -72,7 +72,7 @@
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
             <div id="alert-area"></div>
-            <h1>Board Name</h1>
+            <h1><%= boardName %></h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
                     <label for="sectionId">Add Idea to:</label>
@@ -118,10 +118,9 @@
         <div id="menu" class="mib_header navbar-fixed-top clearfix">
             <a href="#" id="logo">IdeaBoardz</a>
             <div id="navigation" class="quick-links pull-right"></div>
-
         </div>
 
-        <div id="container">page here</div>
+        <div id="container"><h1>Page Loading...</h1></div>
 
     </div>
 </div>
@@ -138,7 +137,6 @@
         .script("javascript/app/models/web_idea_boardz.js")
         .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
-        .script("javascript/app/models/comment.js")
         .script("javascript/app/models/idea_collection.js")
         .script("javascript/app/views/create_idea_view.js")
         .script("javascript/app/views/create_comment_view.js")

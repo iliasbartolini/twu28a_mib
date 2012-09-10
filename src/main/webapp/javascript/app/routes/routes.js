@@ -30,6 +30,6 @@ var AppRouter = Backbone.Router.extend({
 
     postComment: function (boardName, bid){
         console.log("in post comment");
-        var postCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
+        var createCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
     }
 });

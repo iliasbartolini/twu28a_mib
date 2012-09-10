@@ -9,13 +9,16 @@ import java.util.List;
 
 public class CommentService implements ICommentService {
     private ICommentMapper commentMapper;
-    private SqlSessionFactory sqlSessionFactory;
-    private SqlSession session;
 
     public CommentService() {
-        this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
-        this.session = sqlSessionFactory.openSession(true);
+        this(MyBatisConnectionFactory.getSqlSessionFactory());
     }
+
+    public CommentService(SqlSessionFactory sqlSessionFactory) {
+        SqlSession session = sqlSessionFactory.openSession(true);
+        commentMapper = session.getMapper(ICommentMapper.class);
+    }
+
 
     @Override
     public Comment addNewComment(Integer boardID, String name, String comment) {
@@ -29,24 +32,24 @@ public class CommentService implements ICommentService {
             name = "anonymous";
 
         Comment newComment = new Comment(boardID, name, comment);
+
+        commentMapper.insertComment(newComment);
+
         return newComment;
     }
 
     @Override
     public void deleteComments(Integer boardID) {
-        commentMapper = session.getMapper(ICommentMapper.class);
         commentMapper.deleteComments(boardID);
     }
 
     @Override
     public Integer getCommentsCount(Integer boardID) {
-        commentMapper = session.getMapper(ICommentMapper.class);
         return commentMapper.getCommentCount(boardID);
     }
 
     @Override
     public List<Comment> getAllComments(Integer boardID) {
-        commentMapper = session.getMapper(ICommentMapper.class);
         return commentMapper.getAllComments(boardID);
     }
 }
