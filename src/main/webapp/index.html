@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
     <title>Mobile IdeaBoardz</title>
@@ -64,7 +64,7 @@
 
     <script type="text/template" id="template-ideasView">
         <div class="mib_content">
-            <h1>Section Name</h1>
+            <h1><%=sectionName%></h1>
             <ul id="ideasList"></ul>
         </div>
     </script>
@@ -106,8 +106,8 @@
     </script>
 
      <script type="text/template" id="template-navigation">
-         <a href="#for/test/1/comment" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
-         <a href="#for/test/1/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
+         <a href="#for/<%=boardName%>/<%=boardId%>/comment"id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
+         <a href="#for/<%=boardName%>/<%=boardId%>/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
      </script>
 
 </head>
@@ -137,7 +137,6 @@
         .script("javascript/app/models/web_idea_boardz.js")
         .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
-        .script("javascript/app/models/comment.js")
         .script("javascript/app/models/idea_collection.js")
         .script("javascript/app/views/create_idea_view.js")
         .script("javascript/app/views/create_comment_view.js")

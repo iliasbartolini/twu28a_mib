@@ -7,7 +7,7 @@ $(document).ready(function() {
     _boardID: null,
     container: null,
 
-    initialize: function(container,boardName, id) {
+    initialize: function(container, boardName, id) {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
             render: function(){
         console.log("in render");
-        $(this.el).find("#navigation").html(this.navigationTemplate());
+        $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
 
         var html = this.template({ boardName: this._boardName });
         $(this.el).find(this.container).html(html);

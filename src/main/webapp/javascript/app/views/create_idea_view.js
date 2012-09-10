@@ -8,7 +8,13 @@ $(document).ready(function() {
         container: null,
 
         events: {
-            "click #submitBtn": "submitIdea"
+            "click #submitBtn": "submitIdea",
+            "click #createIdeaBtn": "reRender"
+        },
+
+        reRender:function(){
+            console.log("In Reload Elements");
+            this.render();
         },
 
         initialize: function(container, boardName, id) {
@@ -16,10 +22,8 @@ $(document).ready(function() {
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
-
             _.bindAll(this,"resetBinding");
             this.resetBinding();
-
             this.render();
 
         },
@@ -31,9 +35,8 @@ $(document).ready(function() {
 
         render: function(){
             console.log("in render");
-            $(this.el).find("#navigation").html(this.navigationTemplate());
-
-            var html = this.template({ boardName: this._boardName});
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
+            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
             $(this.el).find("#ideaText").focus();
@@ -49,6 +52,7 @@ $(document).ready(function() {
             else {
                 IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
             }
+            $(this.el).find("#ideaText").focus();
             return false;
         },
 

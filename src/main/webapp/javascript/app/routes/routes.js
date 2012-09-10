@@ -20,7 +20,11 @@ var AppRouter = Backbone.Router.extend({
 
     ideasList: function(boardName, bid, sid){
         console.log("in view ideas of section");
-        var ideasView = new IdeaBoardz.IdeasView(boardName, bid, sid);
+
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
+            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
+            new IdeaBoardz.IdeasView(board, sid)}})
+        //var ideasView = new IdeaBoardz.IdeasView(boardName, bid, sid);
     },
 
     createIdea: function(boardName, bid){
@@ -30,6 +34,6 @@ var AppRouter = Backbone.Router.extend({
 
     postComment: function (boardName, bid){
         console.log("in post comment");
-        var postCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
+        var createCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
     }
 });
