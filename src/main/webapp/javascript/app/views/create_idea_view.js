@@ -2,6 +2,7 @@ $(document).ready(function() {
     IdeaBoardz.CreateIdeaView = Backbone.View.extend({
         el: $("#viewWrapper"),
         template: _.template($("#template-newIdea").html()),
+        navigationTemplate: _.template($("#template-navigation").html()),
         _boardName: null,
         _boardID: null,
         container: null,
@@ -29,6 +30,7 @@ $(document).ready(function() {
 
         render: function(){
             console.log("in render");
+            $(this.el).find("#navigation").html(this.navigationTemplate());
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
             $(this.el).find("#ideaText").focus();

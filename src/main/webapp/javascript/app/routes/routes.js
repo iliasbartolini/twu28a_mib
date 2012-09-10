@@ -8,14 +8,14 @@ var AppRouter = Backbone.Router.extend({
     },
 
     index: function(){
-        var indexView = new IndexView($('#container'),$("#template-index"));
+        var indexView = new IdeaBoardz.IndexView();
     },
 
     sectionsList: function(boardName, bid){
         console.log("hey open board");
         IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
             board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            new SectionsView(board)}})
+            new IdeaBoardz.SectionsView(board)}})
     },
 
     ideasList: function(boardName, bid, sid){

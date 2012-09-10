@@ -13,14 +13,11 @@
 
     <!-- include spec files here... -->
     <script type="text/javascript" src="spec/web_idea_boardz.spec.js"></script>
-    <script type="text/javascript" src="spec/router.spec.js"></script>
 
 
     <!-- include lib for source files here... -->
 
     <script type="text/javascript" src="../../main/webapp/javascript/lib/zepto.min.js"></script>
-    <script type="text/javascript" src="../../main/webapp/javascript/lib/backbone/underscore-min.js"></script>
-    <script type="text/javascript" src="../../main/webapp/javascript/lib/backbone/backbone-min.js"></script>
 
     <!-- include source files here... -->
 
@@ -67,31 +64,6 @@
 
     })();
   </script>
-
-
-    <script type="text/template" id="template-newIdea">
-        <div class="mib_header">
-            <h1><span class="lightbulb-icon"></span>New Idea</h1>
-        </div>
-        <div class="mib_content">
-            <p>Board Name: <%= boardName %>, ID: <%= boardId %></p>
-            <form name="ideaForm" action="" method="" class="addStickyForm">
-                <p>
-                    <label for="sectionId">Add Idea to:</label>
-                    <select name="sectionId" id="sectionId">
-                        <option value="20" selected="selected">Section ID #20</option>
-                    </select>
-                </p>
-                <div class="sticky largeSticky">
-                    <textarea name="ideaText" id="ideaText"></textarea>
-                </div>
-                <div class="form_action">
-                    <button id="resetBtn" type="reset" class="btn btn-large">Discard</button>
-                    <button id="submitBtn" type="button" class="submitButton btn btn-large btn-success btn-primary">Submit Idea</button>
-                </div>
-            </form>
-        </div>
-    </script>
 
 </head>
 
