@@ -7,44 +7,29 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class CommentService implements ICommentService{
+public class CommentService implements ICommentService {
     private ICommentMapper commentMapper;
     private SqlSessionFactory sqlSessionFactory;
     private SqlSession session;
 
-    public CommentService(){
+    public CommentService() {
         this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
         this.session = sqlSessionFactory.openSession(true);
     }
 
     @Override
     public Comment addNewComment(Integer boardID, String name, String comment) {
-        try {
+        if (boardID == null)
+            throw new RuntimeException("Select a valid Ideaboard");
 
-            if(boardID==null)
-                throw new RuntimeException("Select a valid Ideaboard");
+        if (comment.isEmpty())
+            throw new RuntimeException("Please Enter a message");
 
-            if(comment.isEmpty())
-                throw new RuntimeException("Please Enter a message");
+        if (name.isEmpty())
+            name = "anonymous";
 
-            if(name.isEmpty())
-                name="anonymous";
-
-//            commentMapper = session.getMapper(ICommentMapper.class);
-            Comment newComment = new Comment(boardID, name, comment);
-/*            commentMapper.insertComment(newComment);
-            Comment savedComment = commentMapper.selectComment(newComment);
-            return savedComment;
-*/
-//            commentMapper.insertComment(newComment);
-//            Comment savedComment = commentMapper.selectComment(newComment);
-//            return savedComment;
-              return newComment;
-        } finally {
-//            session.commit(true);
-//            session.close();
-        }
-
+        Comment newComment = new Comment(boardID, name, comment);
+        return newComment;
     }
 
     @Override

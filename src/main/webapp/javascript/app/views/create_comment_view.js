@@ -2,6 +2,7 @@ $(document).ready(function() {
     IdeaBoardz.CreateCommentsView = Backbone.View.extend({
     el: $("#viewWrapper"),
     template: _.template($("#template-comment").html()),
+    navigationTemplate: _.template($("#template-navigation").html()),
     _boardName: null,
     _boardID: null,
     container: null,
@@ -24,6 +25,8 @@ $(document).ready(function() {
 
             render: function(){
         console.log("in render");
+        $(this.el).find("#navigation").html(this.navigationTemplate());
+
         var html = this.template({ boardName: this._boardName });
         $(this.el).find(this.container).html(html);
         return this;
