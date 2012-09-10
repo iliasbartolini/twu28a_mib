@@ -64,7 +64,7 @@
 
     <script type="text/template" id="template-ideasView">
         <div class="mib_content">
-            <h1>Section Name</h1>
+            <h1><%=sectionName%></h1>
             <ul id="ideasList"></ul>
         </div>
     </script>
@@ -106,8 +106,8 @@
     </script>
 
      <script type="text/template" id="template-navigation">
-         <a href="#for/MIBTEST/1/comment" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
-         <a href="#for/MIBTEST/1/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
+         <a href="#for/<%=boardName%>/<%=boardId%>/comment"id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
+         <a href="#for/<%=boardName%>/<%=boardId%>/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
      </script>
 
 </head>
@@ -120,7 +120,7 @@
             <div id="navigation" class="quick-links pull-right"></div>
         </div>
 
-        <div id="container"><h1>Page Loading...</h1></div>
+        <div id="container"><div class="mib_content"> <h1>Page Loading...</h1></div></div>
 
     </div>
 </div>

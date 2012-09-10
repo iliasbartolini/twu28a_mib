@@ -11,24 +11,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 @Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
     public static final String BOARD_NAME = "test";
-    public static final int TIME_OUT_IN_SECONDS = 2;
+    public static final int TIME_OUT_IN_SECONDS = 1000;
 
     private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
@@ -80,6 +75,29 @@ public class ViewIdeaboardzTest {
         assertEquals(BOARD_NAME, heading.getText());
     }
 
+    @Test
+    public void shouldCustomizeMenuLinksAccordingToTheBoardURL(){
+        List<String> menuLinks = new ArrayList<String>();
+        menuLinks.add(BOARD_URL);
+        menuLinks.add(BOARD_URL + "/comment");
+        menuLinks.add(BOARD_URL + "/createIdea");
+        navigateToMainBoardPage();
+
+        List<WebElement> menuIcons = new ArrayList<WebElement>();
+        menuIcons.add(webDriver.findElement(By.id("logo")));
+        menuIcons.add(webDriver.findElement(By.id("commentBtn")));
+        menuIcons.add(webDriver.findElement(By.id("createIdeaBtn")));
+        assertMenuLinkCustomization(menuLinks, menuIcons);
+    }
+
+    private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
+        int index = 0;
+        for(WebElement element:menuIcons){
+            assertEquals(menuLinks.get(index), element.getAttribute("href"));
+            index++;
+        }
+    }
+
     private void assertSectionNamesDisplayedAre(List<String> expected, List<WebElement> actual) {
         int index = 0;
         for(WebElement element:actual){
@@ -96,18 +114,13 @@ public class ViewIdeaboardzTest {
 
     private void navigateToMainBoardPage() {
         webDriver.get(BOARD_URL);
-        waitForElementWithText(BOARD_NAME);
+        try{
+        waitForBoardNameToAppear(webDriver);
+        }
+        catch(Exception e){
+            System.out.println("Timeout for Board Name to appear on screen");
+        }
     }
-
-    private void waitForElementWithText(final String toCheckFor) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return input.getPageSource().contains(toCheckFor);
-            }
-        });
-    }
-
 
     private static class FirefoxPreference {
         private String name;
@@ -120,4 +133,22 @@ public class ViewIdeaboardzTest {
     }
 
 
+
+    public void waitForBoardNameToAppear(WebDriver driver) throws Exception {
+        for (int second = 0;; second++) {
+            if (second >= 30) break;
+            try {
+                if (isElementActive(By.id("boardName"), driver))
+                    break;
+            } catch (Exception e) {}
+            Thread.sleep(1000);
+        }
+    }
+
+    private boolean isElementActive(By id, WebDriver driver) {
+        WebElement we =  driver.findElement(id);
+        if(we.isEnabled())
+            return true;
+        return false;
+    }
 }

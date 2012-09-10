@@ -22,12 +22,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
+//@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class CreateIdeaTest {
 
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/MIBTEST/1";
 
-    public static final int TIME_OUT_IN_SECONDS = 2;
+    public static final int TIME_OUT_IN_SECONDS = 5;
 
 
     private WebDriver webDriver;
@@ -149,4 +149,5 @@ public class CreateIdeaTest {
             this.value = value;
         }
     }
+
 }
