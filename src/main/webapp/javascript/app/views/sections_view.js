@@ -28,7 +28,7 @@ $(document).ready(function () {
         render:function () {
             console.log(this.sections);
             console.log(this.boardName);
-            $(this.el).find("#navigation").html(this.navigationTemplate());
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
             var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
             var html = "";

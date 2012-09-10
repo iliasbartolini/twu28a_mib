@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         render:function () {
             console.log('in render of ideas view');
-            $(this.el).find("#navigation").html(this.navigationTemplate());
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardId}));
             var html = this.template({sectionId:this.sectionId});
             $(this.el).find('#container').html(html);
             this.populateStickies();
