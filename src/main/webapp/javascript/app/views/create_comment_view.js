@@ -6,7 +6,7 @@ $(document).ready(function() {
     _boardID: null,
     container: null,
 
-    initialize: function(container,boardName, id) {
+    initialize: function(container, boardName, id) {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
