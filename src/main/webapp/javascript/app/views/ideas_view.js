@@ -8,22 +8,32 @@ $(document).ready(function () {
         boardName:null,
         boardId:null,
         sectionId:null,
+        sectionName: null,
         ideas:[],
 
-        initialize:function (boardName, boardId, sectionId) {
-            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(boardId);
+        initialize:function (board, sectionId) {
+            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(board.id);
             this.ideas = ideasCollection.ideas;
             console.log('in initialize of ideas view');
-            this.boardName = boardName;
-            this.boardId = boardId;
+            this.boardName = board.name;
+            this.boardId = board.id;
             this.sectionId = sectionId;
+
+            for (var i=0; i<board.sections.length; i++){
+                if (board.sections[i].id == this.sectionId){
+                    this.sectionName = board.sections[i].name;
+                    console.log("section name: ---- "+this.sectionName);
+                    break;
+                }
+            }
+
             this.render();
         },
 
         render:function () {
             console.log('in render of ideas view');
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardId}));
-            var html = this.template({sectionId:this.sectionId});
+            var html = this.template({sectionId:this.sectionId, sectionName:this.sectionName});
             $(this.el).find('#container').html(html);
             this.populateStickies();
 

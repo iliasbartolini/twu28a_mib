@@ -20,11 +20,6 @@ $(document).ready(function () {
             this.render();
         },
 
-
-        createIdea:function (event) {
-            console.log("in create idea");
-        },
-
         render:function () {
             console.log(this.sections);
             console.log(this.boardName);
