@@ -28,7 +28,7 @@ public class CreateIdeaTest {
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
     public static final String BOARD_NAME = "test";
 
-    public static final int TIME_OUT_IN_SECONDS = 2;
+    public static final int TIME_OUT_IN_SECONDS = 5;
 
 
     private WebDriver webDriver;
@@ -95,11 +95,7 @@ public class CreateIdeaTest {
     }
 
     private void navigateToCreateIdeaView() {
-        webDriver.get(BOARD_URL);
-        // wait until the customized link is assigned to menu
-        waitForElementWithText(BOARD_NAME);
-
-        webDriver.findElement(By.id("createIdeaBtn")).click();
+        webDriver.get(BOARD_URL+"/createIdea");
     }
 
     private void submitIdea() {
@@ -137,4 +133,5 @@ public class CreateIdeaTest {
             this.value = value;
         }
     }
+
 }
