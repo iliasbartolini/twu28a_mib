@@ -8,7 +8,13 @@ $(document).ready(function() {
         container: null,
 
         events: {
-            "click #submitBtn": "submitIdea"
+            "click #submitBtn": "submitIdea",
+            "click #createIdeaBtn": "reRender"
+        },
+
+        reRender:function(){
+            console.log("In Reload Elements");
+            this.render();
         },
 
         initialize: function(container, boardName, id) {
@@ -16,7 +22,6 @@ $(document).ready(function() {
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
-
             _.bindAll(this,"cancel");
             this.cancel();
             this.render();
@@ -46,6 +51,7 @@ $(document).ready(function() {
             else {
                 IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
             }
+            $(this.el).find("#ideaText").focus();
             return false;
         },
 
