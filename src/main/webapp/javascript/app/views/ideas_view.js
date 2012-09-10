@@ -11,7 +11,7 @@ $(document).ready(function () {
         ideas:[],
 
         initialize:function (boardName, boardId, sectionId) {
-            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(boardId)
+            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(boardId);
             this.ideas = ideasCollection.ideas;
             console.log('in initialize of ideas view');
             this.boardName = boardName;
@@ -25,22 +25,33 @@ $(document).ready(function () {
             $(this.el).find("#navigation").html(this.navigationTemplate());
             var html = this.template({sectionId:this.sectionId});
             $(this.el).find('#container').html(html);
-            var sticky_html = "";
-            for (var index = 0; index < this.ideas.length; index++) {
-                var idea = this.ideas[index];
-                if (idea.section_id == this.sectionId) {
-                    sticky_html += this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count});
-                }
-            }
-            $('#container').find('#ideasList').html(sticky_html);
+            this.populateStickies();
 
             this.doPoll();
 
             return this;
         },
 
+        populateStickies:function () {
+            console.log("in populateStickies");
+
+            var sticky_html = "";
+            for (var index = 0; index < this.ideas.length; index++) {
+                var idea = this.ideas[index];
+                if (idea.section_id == this.sectionId) {
+                    sticky_html = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + sticky_html;
+                }
+            }
+            $('#container').find('#ideasList').html(sticky_html);
+        },
+
         doPoll:function () {
             console.log("Polling every 5 seconds");
+            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
+            this.ideas = ideasCollection.ideas;
+
+            this.populateStickies();
+
             var that = this;
             setTimeout(function(){that.doPoll()}, 5000);
         }

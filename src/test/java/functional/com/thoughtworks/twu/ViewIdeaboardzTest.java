@@ -15,21 +15,20 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 @Ignore("ignored until apache and virtual hosts are setup on CI")
-public class CreateIdeaTest {
-
+public class ViewIdeaboardzTest {
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
     public static final String BOARD_NAME = "test";
-
     public static final int TIME_OUT_IN_SECONDS = 2;
-
 
     private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
@@ -37,14 +36,14 @@ public class CreateIdeaTest {
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
         return Arrays.asList(
-                new Object[][] {
-                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1") },
-                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5") }
+                new Object[][]{
+                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
+                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
                 }
         );
     }
 
-    public CreateIdeaTest(FirefoxPreference firefoxPreference) {
+    public ViewIdeaboardzTest(FirefoxPreference firefoxPreference) {
         this.firefoxPreference = firefoxPreference;
     }
 
@@ -58,35 +57,36 @@ public class CreateIdeaTest {
     }
 
     @Test
-    public void shouldDisplayErrorOnEmptyIdea() {
-        navigateToCreateIdeaView();
+    public void shouldDisplayNamesOfAllSections(){
+        List<String> sectionNameList = new ArrayList<String>();
+        sectionNameList.add("What went well");
+        sectionNameList.add("What can be improved");
+        sectionNameList.add("Action Items");
 
-        submitIdea();
+        navigateToMainBoardPage();
 
-        assertDisplayedMessageIs("Please enter some text.");
+        List<WebElement> sectionItems = webDriver.findElements(By.cssSelector("#sectionsList li a"));
+
+        assertSectionNamesDisplayedAre(sectionNameList, sectionItems);
+
     }
 
     @Test
-    @Ignore("ignored because cross-domain problem is fixed")
-    public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        navigateToCreateIdeaView();
+    public void shouldDisplayBoardName(){
+        navigateToMainBoardPage();
 
-        addIdeaText("Functional test idea!");
+        WebElement heading = webDriver.findElement(By.id("boardName"));
 
-        submitIdea();
-
-        assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+        assertEquals(BOARD_NAME, heading.getText());
     }
 
-    @Test
-    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        navigateToCreateIdeaView();
+    private void assertSectionNamesDisplayedAre(List<String> expected, List<WebElement> actual) {
+        int index = 0;
+        for(WebElement element:actual){
+            assertEquals(expected.get(index), element.getText());
+            index++;
+        }
 
-        addIdeaText("Functional test idea!");
-
-        submitIdea();
-
-        assertDisplayedMessageIs("Your idea has been posted.");
     }
 
     @After
@@ -94,22 +94,9 @@ public class CreateIdeaTest {
         webDriver.close();
     }
 
-    private void navigateToCreateIdeaView() {
+    private void navigateToMainBoardPage() {
         webDriver.get(BOARD_URL);
-        // wait until the customized link is assigned to menu
         waitForElementWithText(BOARD_NAME);
-
-        webDriver.findElement(By.id("createIdeaBtn")).click();
-    }
-
-    private void submitIdea() {
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-        button.click();
-    }
-
-    private void addIdeaText(String ideaText) {
-        WebElement message = webDriver.findElement(By.id("ideaText"));
-        message.sendKeys(ideaText);
     }
 
     private void waitForElementWithText(final String toCheckFor) {
@@ -121,12 +108,6 @@ public class CreateIdeaTest {
         });
     }
 
-    private void assertDisplayedMessageIs(String message) {
-        waitForElementWithText(message);
-
-        WebElement alertArea = webDriver.findElement(By.id("alert-area"));
-        assertThat(alertArea.getText(), is(message));
-    }
 
     private static class FirefoxPreference {
         private String name;
@@ -137,4 +118,6 @@ public class CreateIdeaTest {
             this.value = value;
         }
     }
+
+
 }
