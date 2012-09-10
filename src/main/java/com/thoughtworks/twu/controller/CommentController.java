@@ -35,7 +35,7 @@ public class CommentController {
         return commentsToJson(comments);
     }
 
-    public String commentsToJson(List<Comment> comments) {
+    private String commentsToJson(List<Comment> comments) {
         String commentsInJson = "{\"comments\":[";
         for (Comment comment : comments) {
             commentsInJson=commentsInJson + comment.toJSON()+",";

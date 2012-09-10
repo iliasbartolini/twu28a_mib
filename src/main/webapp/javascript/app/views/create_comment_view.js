@@ -10,19 +10,19 @@ $(document).ready(function() {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
-        _.bindAll(this,"unbind");
-        this.unbind();
+        _.bindAll(this,"cancel");
+        this.cancel();
         this.render();
         IdeaBoardz.CommentServer.instance.getComments(this._boardID);
 
     },
 
-    unbind:function(){
-        console.log("In Unbinding");
+    cancel:function(){
+        console.log("In Cancel");
         $(this.el).undelegate('#postBtn', 'click');
     },
 
-    render: function(){
+            render: function(){
         console.log("in render");
         var html = this.template({ boardName: this._boardName });
         $(this.el).find(this.container).html(html);
