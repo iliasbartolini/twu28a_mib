@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 
         initialize:function (board) {
-            console.log('in sections_view initialize')
+            console.log('in sections_view initialize: '+board);
             this.boardID = board.id;
             this.boardName = board.boardName;
             this.sections = board.sections;
@@ -28,7 +28,8 @@ $(document).ready(function () {
         render:function () {
             console.log(this.sections);
             console.log(this.boardName);
-            $(this.el).find("#navigation").append(this.navigationTemplate());
+            console.log($(this.el).find("#navigation"));
+            $(this.el).find("#navigation").html(this.navigationTemplate());
             var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
             var html = "";

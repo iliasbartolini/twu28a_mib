@@ -77,6 +77,7 @@
                 <p>
                     <label for="sectionId">Add Idea to:</label>
                     <select name="sectionId" id="sectionId">
+                        <option value="20" selected="selected">Section ID #20</option>
                     </select>
                 </p>
                 <div class="sticky largeSticky">
@@ -87,10 +88,6 @@
                 </div>
             </form>
         </div>
-    </script>
-
-    <script type="text/template" id="template-sectionOptions">
-        <option value="<%= sectionId %>" ><%= sectionName %></option>
     </script>
 
     <script type="text/template" id="template-comment">
@@ -111,8 +108,8 @@
     </script>
 
      <script type="text/template" id="template-navigation">
-         <a href="#for/mibTest/9/comment" id="commentBtn" class="btn btn-small commentIcon"><i class="icon-comment icon-white"></i> </a>
-         <a href="#for/mibTest/9/createIdea" id="createIdeaBtn" class="btn btn-small ideaIcon">Create Idea</a>
+         <a href="#for/mibTest/9/comment" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
+         <a href="#for/mibTest/9/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
      </script>
 
 </head>
@@ -120,17 +117,10 @@
 <div id="appWrapper">
     <div id="viewWrapper">
 
-    <div id="menu" class="mib_header clearfix">
-        <a href="#" class="logo">IdeaBoardz</a>
-        <div id="navigation" class="quick-links pull-right"></div>
         <div id="menu" class="mib_header navbar-fixed-top clearfix">
             <a href="#" id="logo">IdeaBoardz</a>
 
-            <div id="context-menu" class="quick-links pull-right">
-                <a href="#" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
-                <a href="#" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
-            </div>
-
+            <div id="navigation" class="quick-links pull-right">NAVIGATION</div>
         </div>
 
         <div id="container">page here</div>

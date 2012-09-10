@@ -3,49 +3,37 @@ $(document).ready(function() {
         el: $("#viewWrapper"),
         template: _.template($("#template-newIdea").html()),
         navigationTemplate: _.template($("#template-navigation").html()),
-        sectionOptionsTemplate: _.template($('#template-sectionOptions').html()),
         _boardName: null,
         _boardID: null,
-        _sections:null,
         container: null,
 
         events: {
             "click #submitBtn": "submitIdea"
         },
 
-        initialize: function(container, board) {
+        initialize: function(container, boardName, id) {
             console.log("in initialize");
             this.container = container;
-            this._boardName = board.boardName;
-            this._boardID = board.id;
-            this._sections=board.sections;
+            this._boardName = boardName;
+            this._boardID = id;
+
             this.render();
         },
 
         render: function(){
-            console.log("in render"+this._sections[0].name);
-            $(this.el).find("#navigation").append(this.navigationTemplate());
+            console.log("in render");
+            $(this.el).find("#navigation").html(this.navigationTemplate());
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
-            console.log("in render"+this._sections[0].name);
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
-            console.log("in render"+this._sections[0].name);
-            var htmlForSections="";
-            for(var i=0; i< this._sections.length; i++){
-                htmlForSections+=this.sectionOptionsTemplate({sectionName: this._sections[i].name, sectionId: this._sections[i].id });
-            };
-            console.log(htmlForSections);
-            console.log("in render"+this._sections[0].name);
-            $('#container').find('#sectionId').html(htmlForSections);
             return this;
         },
 
         submitIdea: function(event){
             console.log("in submitIdea before call to createIdea");
             var message = $(this.el).find("#ideaText").val();
-            var selectedSectionId = $(this.el).find("#sectionId").val();
             if (message == '') this.showEmptyError();
             else {
-                IdeaBoardz.WebIdeaBoardz.instance.createIdea(selectedSectionId,message, {success: this.showSuccess, error: this.showError, context: this} );
+                IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
             }
             return false;
         },

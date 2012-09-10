@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     render: function(){
         console.log("in render");
-        $(this.el).find("#navigation").append(this.navigationTemplate());
+        $(this.el).find("#navigation").html(this.navigationTemplate());
 
         var html = this.template({ boardName: this._boardName });
         $(this.el).find(this.container).html(html);  // Append the result to the view's element.

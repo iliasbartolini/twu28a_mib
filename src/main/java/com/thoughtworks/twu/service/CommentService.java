@@ -27,12 +27,12 @@ public class CommentService implements ICommentService{
             if(name.isEmpty())
                 name="anonymous";
 
-            commentMapper = session.getMapper(ICommentMapper.class);
+//            commentMapper = session.getMapper(ICommentMapper.class);
             Comment newComment = new Comment(boardID, name, comment);
-           commentMapper.insertComment(newComment);
-            Comment savedComment = commentMapper.selectComment(newComment);
-            return savedComment;
-
+//            commentMapper.insertComment(newComment);
+//            Comment savedComment = commentMapper.selectComment(newComment);
+//            return savedComment;
+              return newComment;
         } finally {
 //            session.commit(true);
 //            session.close();
