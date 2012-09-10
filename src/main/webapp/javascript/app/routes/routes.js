@@ -1,28 +1,42 @@
 var AppRouter = Backbone.Router.extend({
     routes: {
         "": "index", // http://localhost/
-        "for/:boardName/:id/createIdea": "createIdea", // #for/mibTest/9/createIdea
-        "for/:boardName/:id/comment": "postComment",  //#for/mibTest/9/comment
-        "for/:boardName/:id": "sectionsList" //#for/mibTest/9
-
+        "for/:boardName/:bid": "sectionsList", //#for/mibTest/9
+        "for/:boardName/:bid/createIdea": "createIdeaPage", // #for/mibTest/9/createIdea
+        "for/:boardName/:bid/comment": "postComment",  //#for/mibTest/9/comment
+        "for/:boardName/:bid/:sid": "ideasList" //#for/mibTest/9/1
     },
+
     index: function(){
         var indexView = new IdeaBoardz.IndexView();
     },
 
-    sectionsList: function(boardName,id){
+    sectionsList: function(boardName, bid){
         console.log("hey open board");
         var sectionsView = new IdeaBoardz.SectionsView(boardName, id);
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
 
+            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
+            new SectionsView(board);
+        }})
     },
 
-    createIdea: function(boardName, id){
+    ideasList: function(boardName, bid, sid){
+        console.log("in view ideas of section");
+        var ideasView = new IdeasView(boardName, bid, sid);
+    },
+
+    createIdeaPage: function(boardName, bid){
         console.log("in createIdea") ;
-        var createIdeaView = new IdeaBoardz.CreateIdeaView("#container", boardName, id);
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
+
+            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
+            new IdeaBoardz.CreateIdeaView("#container", board);
+        }})
     },
 
-    postComment: function (boardName, id){
+    postComment: function (boardName, bid){
         console.log("in post comment");
-        var postCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,id);
+        var postCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
     }
 });

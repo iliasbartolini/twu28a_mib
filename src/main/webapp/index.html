@@ -38,7 +38,10 @@
 
 
     <script type="text/template" id="template-sectionItem">
-        <li><a href="#section1"><%= sectionName %></a></li>
+        <li>
+            <i class="icon-chevron-right"></i>
+            <a href="#for/<%=boardName%>/<%= boardId %>/<%= sectionId %>"><%= sectionName %></a>
+        </li>
     </script>
 
 
@@ -50,15 +53,30 @@
         </div>
     </script>
 
+    <script type="text/template" id="template-stickyView">
+        <li class="sticky small-sticky">
+            <span class="ideaText"><%= ideaText %></span>
+            <span class="voteNumber">+ <%= vote_count %></span>
+        </li>
+    </script>
+
+
+
+    <script type="text/template" id="template-ideasView">
+        <div class="mib_content">
+            <h1>Section Name</h1>
+            <ul id="ideasList"></ul>
+        </div>
+    </script>
+
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
             <div id="alert-area"></div>
-            <p>Board Name: <%= boardName %>, ID: <%= boardId %></p>
+            <h1>Board Name</h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
                     <label for="sectionId">Add Idea to:</label>
                     <select name="sectionId" id="sectionId">
-                        <option value="20" selected="selected">Section ID #20</option>
                     </select>
                 </p>
                 <div class="sticky largeSticky">
@@ -71,21 +89,22 @@
         </div>
     </script>
 
-
+    <script type="text/template" id="template-sectionOptions">
+        <option value="<%= sectionId %>" ><%= sectionName %></option>
+    </script>
 
     <script type="text/template" id="template-comment">
         <div class="mib_content">
             <form name="commentForm" action="" method="" class="postCommentForm">
+                <div class="comment_action">
+                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+                </div>
                 <div id="commentArea">
                     <ul id="commentsList">
                         <li><span class="username">Name: </span> here is my comment</li>
                         <li><span class="username">Name 2: </span> another comment</li>
                     </ul>
-                </div>
-
-                <div class="comment_action">
-                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
                 </div>
             </form>
         </div>
@@ -98,18 +117,26 @@
 
 </head>
 <body>
-<div id="viewWrapper">
+<div id="appWrapper">
+    <div id="viewWrapper">
 
     <div id="menu" class="mib_header clearfix">
         <a href="#" class="logo">IdeaBoardz</a>
         <div id="navigation" class="quick-links pull-right"></div>
+        <div id="menu" class="mib_header navbar-fixed-top clearfix">
+            <a href="#" id="logo">IdeaBoardz</a>
+
+            <div id="context-menu" class="quick-links pull-right">
+                <a href="#" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
+                <a href="#" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
+            </div>
+
+        </div>
+
+        <div id="container">page here</div>
 
     </div>
-
-    <div id="container">page here</div>
-
 </div>
-
 
 <script src="javascript/lib/LAB.min.js" type="text/javascript"></script>
 
@@ -118,12 +145,14 @@
         .script("javascript/lib/zepto.min.js").wait()
         .script("javascript/lib/backbone/underscore-min.js")
         .script("javascript/lib/backbone/json2.js")
-        .script("javascript/lib/backbone/backbone-min.js")
+        .script("javascript/lib/backbone/backbone-min.js").wait()
         .script("javascript/app/models/idea_boardz.js")
         .script("javascript/app/models/web_idea_boardz.js")
         .script("javascript/app/models/board.js")
+        .script("javascript/app/models/idea_collection.js")
         .script("javascript/app/views/create_idea_view.js")
         .script("javascript/app/views/post_comment_view.js")
+        .script("javascript/app/views/ideas_view.js")
         .script("javascript/app/views/sections_view.js")
         .script("javascript/app/views/index_view.js")
         .script("javascript/app/routes/routes.js")
