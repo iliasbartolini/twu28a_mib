@@ -28,7 +28,6 @@ $(document).ready(function () {
         render:function () {
             console.log(this.sections);
             console.log(this.boardName);
-            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
             var html = this.template({boardName:this.boardName});
             $(this.el).find('#container').html(html);  // Replace the view's element with the result
 
@@ -42,7 +41,7 @@ $(document).ready(function () {
         },
 
         customizeMenuLinks:function () {
-            $(this.el).find("#navigation").html(this.navigationTemplate());
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
             $(this.el).find('#logo').attr("href", "#for/" + this.boardName + "/" + this.boardID);
             $(this.el).find('#commentBtn').attr("href", "#for/" + this.boardName + "/" + this.boardID + "/comment");
             $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this.boardName + "/" + this.boardID + "/createIdea");
