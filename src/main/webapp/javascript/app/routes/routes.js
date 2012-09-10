@@ -20,7 +20,7 @@ var AppRouter = Backbone.Router.extend({
 
     ideasList: function(boardName, bid, sid){
         console.log("in view ideas of section");
-        var ideasView = new IdeasView(boardName, bid, sid);
+        var ideasView = new IdeaBoardz.IdeasView(boardName, bid, sid);
     },
 
     createIdea: function(boardName, bid){
