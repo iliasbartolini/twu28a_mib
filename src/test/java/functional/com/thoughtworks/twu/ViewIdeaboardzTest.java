@@ -11,7 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -114,12 +117,20 @@ public class ViewIdeaboardzTest {
 
     private void navigateToMainBoardPage() {
         webDriver.get(BOARD_URL);
-        try{
-        waitForBoardNameToAppear(webDriver);
-        }
-        catch(Exception e){
-            System.out.println("Timeout for Board Name to appear on screen");
-        }
+        waitForElement(By.id("boardName"));
+    }
+
+    private void waitForElement(final By elementSelector) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return !input.findElements(elementSelector).isEmpty();
+            }
+        });
+    }
+
+    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
+        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
     private static class FirefoxPreference {
@@ -130,25 +141,5 @@ public class ViewIdeaboardzTest {
             this.name = name;
             this.value = value;
         }
-    }
-
-
-
-    public void waitForBoardNameToAppear(WebDriver driver) throws Exception {
-        for (int second = 0;; second++) {
-            if (second >= 30) break;
-            try {
-                if (isElementActive(By.id("boardName"), driver))
-                    break;
-            } catch (Exception e) {}
-            Thread.sleep(1000);
-        }
-    }
-
-    private boolean isElementActive(By id, WebDriver driver) {
-        WebElement we =  driver.findElement(id);
-        if(we.isEnabled())
-            return true;
-        return false;
     }
 }
