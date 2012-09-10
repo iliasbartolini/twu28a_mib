@@ -30,7 +30,6 @@ public class Comment  {
         Comment comment1 = (Comment) o;
 
         if (comment != null ? !comment.equals(comment1.comment) : comment1.comment != null) return false;
-        //if (createdAt != null ? !createdAt.equals(comment1.createdAt) : comment1.createdAt != null) return false;
         if (name != null ? !name.equals(comment1.name) : comment1.name != null) return false;
 
         return true;
@@ -56,7 +55,7 @@ public class Comment  {
     }
 
     public String toJSON(){
-        return String.format("{'board_id':%d,'comment_id': %d,'name':'%s','comment':'%s','created_at':'%s'}",
+        return String.format("{\"board_id\":%d,\"comment_id\": %d,\"name\":\"%s\",\"comment\":\"%s\",\"created_at\":\"%s\"}",
                 this.boardID,this.commentID, this.name, this.comment,this.createdAt)  ;
     }
 }

@@ -2,6 +2,7 @@ $(document).ready(function() {
     IdeaBoardz.CreateIdeaView = Backbone.View.extend({
         el: $("#viewWrapper"),
         template: _.template($("#template-newIdea").html()),
+        navigationTemplate: _.template($("#template-navigation").html()),
         _boardName: null,
         _boardID: null,
         container: null,
@@ -16,24 +17,43 @@ $(document).ready(function() {
             this._boardName = boardName;
             this._boardID = id;
 
+            _.bindAll(this,"resetBinding");
+            this.resetBinding();
+
             this.render();
+
+        },
+
+        resetBinding:function(){
+            console.log("In Reset Binding");
+            $(this.el).undelegate('#submitBtn', 'click');
         },
 
         render: function(){
             console.log("in render");
-            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
+            $(this.el).find("#navigation").html(this.navigationTemplate());
+
+            var html = this.template({ boardName: this._boardName});
+
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
+            $(this.el).find("#ideaText").focus();
             return this;
         },
 
         submitIdea: function(event){
             console.log("in submitIdea before call to createIdea");
             var message = $(this.el).find("#ideaText").val();
+            message = this.trim(message);
+            console.log("Trimmed Message: " + message);
             if (message == '') this.showEmptyError();
             else {
                 IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
             }
             return false;
+        },
+
+        trim: function(str){
+            return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         },
 
         showSuccess: function(event){

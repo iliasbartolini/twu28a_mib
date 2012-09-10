@@ -3,19 +3,20 @@
  * This will be just a message to request user to enter specific board URL for now
  * @type Backbone.View
  */
-var IndexView = Backbone.View.extend({
-    el: null,
-    template: null,
+$(document).ready(function () {
+    IdeaBoardz.IndexView = Backbone.View.extend({
+        el:$("#viewWrapper"),
+        template:_.template($("#template-index").html()),
 
-    initialize: function(container, template) {
-        this.el = container;
-        this.template = _.template(template.html());
-        this.render();
-    },
+        initialize:function () {
+            this.render();
+        },
 
-    render: function() {
-        var html = this.template();
-        $(this.el).html(html);  // Replace the view's element with the result
-        return this;
-    }
+        render:function () {
+            $(this.el).find("#navigation").empty();
+            $(this.el).find("#container").html(this.template());
+
+            return this;
+        }
+    });
 });

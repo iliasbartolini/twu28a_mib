@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="css/mib_custom.css"/>
 
     <script type="text/template" id="template-index">
-        <div class="mib_content">
+        <div class="mib_content template_index">
             <div class="alert alert-error">
                 <h3 style="text-align:center">Welcome to MobileIdeaBoardz</h3>
 
                 <div class="sticky" style="text-align:left">
                     <h3 style="text-align:center"> How </h3>
                     <ul>
-                        <li>Get the URL of a board on IdeaBoardz.com</li>
-                        <li>Enter the URL to start reading and editing ideas</li>
+                        <li>Ask the facilitator for the URL of an IdeaBoard</li>
+                        <li>Enter the URL in your browser to start reading and editing ideas</li>
                     </ul>
                 </div>
                 <p></p>
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <p></p>
-                <p>Enter the URL for your board to get started.</p>
+                <p>Enter the URL for your board in your browser to get started.</p>
 
             </div>
         </div>
@@ -72,7 +72,7 @@
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
             <div id="alert-area"></div>
-            <h1>Board Name</h1>
+            <h1><%= boardName %></h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
                     <label for="sectionId">Add Idea to:</label>
@@ -99,14 +99,16 @@
                 </div>
                 <div id="commentArea">
                     <ul id="commentsList">
-                        <li><span class="username">Name: </span> here is my comment</li>
-                        <li><span class="username">Name 2: </span> another comment</li>
                     </ul>
                 </div>
             </form>
         </div>
     </script>
 
+     <script type="text/template" id="template-navigation">
+         <a href="#for/test/1/comment" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
+         <a href="#for/test/1/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
+     </script>
 
 </head>
 <body>
@@ -115,15 +117,10 @@
 
         <div id="menu" class="mib_header navbar-fixed-top clearfix">
             <a href="#" id="logo">IdeaBoardz</a>
-
-            <div id="context-menu" class="quick-links pull-right">
-                <a href="#" id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
-                <a href="#" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
-            </div>
-
+            <div id="navigation" class="quick-links pull-right"></div>
         </div>
 
-        <div id="container">page here</div>
+        <div id="container"><h1>Page Loading...</h1></div>
 
     </div>
 </div>
@@ -138,12 +135,15 @@
         .script("javascript/lib/backbone/backbone-min.js").wait()
         .script("javascript/app/models/idea_boardz.js")
         .script("javascript/app/models/web_idea_boardz.js")
+        .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
+        .script("javascript/app/models/comment.js")
         .script("javascript/app/models/idea_collection.js")
         .script("javascript/app/views/create_idea_view.js")
-        .script("javascript/app/views/post_comment_view.js")
+        .script("javascript/app/views/create_comment_view.js")
         .script("javascript/app/views/ideas_view.js")
         .script("javascript/app/views/sections_view.js")
+        .script("javascript/app/views/comment_view.js")
         .script("javascript/app/views/index_view.js")
         .script("javascript/app/routes/routes.js")
         .script("javascript/app/mib.js");
