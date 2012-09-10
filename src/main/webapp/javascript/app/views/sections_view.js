@@ -11,7 +11,6 @@ $(document).ready(function () {
 
 
         initialize:function (board) {
-            console.log('in sections_view initialize: '+board);
             this.boardID = board.id;
             this.boardName = board.boardName;
             this.sections = board.sections;

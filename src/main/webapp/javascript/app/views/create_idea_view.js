@@ -34,8 +34,7 @@ $(document).ready(function() {
         },
 
         render: function(){
-            console.log("in render");
-            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
