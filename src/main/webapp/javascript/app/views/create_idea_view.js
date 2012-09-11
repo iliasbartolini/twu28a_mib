@@ -16,9 +16,7 @@ $(document).ready(function() {
 
         events: {
             "click #submitBtn": "submitIdea",
-            "click #createIdeaBtn": "reRender",
-            "click #commentBtn": "reRender",
-            "click #sectionsBtn": "reRender"
+            "click #createIdeaBtn": "reRender"
         },
 
         reRender:function(){

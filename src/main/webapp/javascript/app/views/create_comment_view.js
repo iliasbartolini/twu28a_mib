@@ -11,9 +11,7 @@ $(document).ready(function() {
 
     events: {
         "click #postBtn": "postAComment",
-        "click #createIdeaBtn": "reRender",
-        "click #commentBtn": "reRender",
-        "click #sectionsBtn": "reRender"
+        "click #commentBtn": "reRender"
     },
 
 
