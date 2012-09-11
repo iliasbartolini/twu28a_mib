@@ -51,18 +51,15 @@ public class TopBarTest {
     @Test
     public void shouldNavigateToCreateIdeaView()
     {
-        testHelper.makeGetRequestForTheBoard();
-
-        By createIdeaButtonSelector = By.id("createIdeaBtn");
-        testHelper.waitForElement(createIdeaButtonSelector);
-
-        testHelper.clickElement("createIdeaBtn");
-
+        testHelper.navigateToCreateIdeaView();
 
         String currentUrl= testHelper.getUrl();
 
         assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
     }
+
+
+
     @After
     public void tearDown()
     {
