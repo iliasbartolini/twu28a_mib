@@ -7,24 +7,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-//@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class CreateIdeaTest {
 
     private FirefoxPreference firefoxPreference;
@@ -34,9 +24,9 @@ public class CreateIdeaTest {
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
         return Arrays.asList(
-                new Object[][] {
-                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1") },
-                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5") }
+                new Object[][]{
+                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
+                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
                 }
         );
     }
@@ -46,14 +36,9 @@ public class CreateIdeaTest {
     }
 
     @Before
-    public void setUp(){
-        testHelper=new TestHelper(this.firefoxPreference);
-
+    public void setUp() {
+        testHelper = new TestHelper(this.firefoxPreference);
     }
-
-
-
-
 
     @Test
     public void shouldDisplayErrorOnEmptyIdea() {
@@ -62,8 +47,6 @@ public class CreateIdeaTest {
         submitIdea();
 
         testHelper.assertDisplayedMessageIs("Please enter some text.");
-
-
     }
 
     @Test
@@ -71,7 +54,6 @@ public class CreateIdeaTest {
         testHelper.navigateToCreateIdeaView();
 
         testHelper.waitForElement(By.id("ideaText"));
-
 
         addIdeaText("Functional test idea!");
 
@@ -85,14 +67,11 @@ public class CreateIdeaTest {
     }
 
     @Test
-    public void shouldRemainOnCreateIdeaPageAfterSubmitting()
-    {
-
+    public void shouldRemainOnCreateIdeaPageAfterSubmitting() {
         testHelper.navigateToCreateIdeaView();
         submitIdea();
 
-
-        String currentUrl= testHelper.getUrl();
+        String currentUrl = testHelper.getUrl();
 
         assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
 
@@ -102,8 +81,7 @@ public class CreateIdeaTest {
     }
 
     @Test
-    public void shouldSeeContributIdeaPageWithCorrectBoardName()
-    {
+    public void shouldSeeContributIdeaPageWithCorrectBoardName() {
         testHelper.navigateToCreateIdeaView();
 
         WebElement boardName = testHelper.findElementByTagName("h1");
@@ -112,17 +90,14 @@ public class CreateIdeaTest {
 
     }
 
-
-
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         testHelper.closeWebDriver();
     }
 
     private void addIdeaText(String ideaText) {
 
-        WebElement message =testHelper.findElement("ideaText");
+        WebElement message = testHelper.findElement("ideaText");
         message.sendKeys(ideaText);
     }
 
@@ -142,9 +117,5 @@ public class CreateIdeaTest {
 
         testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
     }
-
-
-
-
 
 }

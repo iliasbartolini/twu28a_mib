@@ -27,15 +27,11 @@ $(document).ready(function () {
         },
 
         render:function () {
-
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
             this.requestBoardData();
-
-
         },
 
         requestBoardData: function(){
-
             //register to listen to event of data come back
             IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
@@ -83,14 +79,14 @@ $(document).ready(function () {
 
         populateStickies:function () {
             var ideas = IdeaBoardz.Board.instance.ideas;
-            var sticky_html = "";
+            var stickyHtml = "";
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];
                 if (idea.section_id == this.sectionId) {
-                    sticky_html = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + sticky_html;
+                    stickyHtml = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + stickyHtml;
                 }
             }
-            $(this.container).find('#ideasList').html(sticky_html);
+            $(this.container).find('#ideasList').html(stickyHtml);
         },
 
         doPoll:function () {
