@@ -1,18 +1,19 @@
 package functional.com.thoughtworks.twu;
 
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 public class TestHelper
 {
     public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/MIBTEST/4";
@@ -62,6 +63,31 @@ public class TestHelper
     public void closeWebDriver()
     {
         webDriver.close();
+    }
+
+    public void navigateToView(String boardUrl) {
+        webDriver.get(boardUrl);
+
+        By postCommentButtonSelector = By.id("postBtn");
+        waitForElement(postCommentButtonSelector);
+
+        webDriver.findElement(postCommentButtonSelector).click();
+    }
+
+    public void assertDisplayedMessageIs(String message) {
+        By alertAreaSelector = By.id("alert-area");
+        waitForText(message);
+        WebElement alertArea = webDriver.findElement(alertAreaSelector);
+        assertThat(alertArea.getText(), is(message));
+    }
+
+    private void waitForText(final String text) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return input.getPageSource().contains(text);
+            }
+        });
     }
 }
 
