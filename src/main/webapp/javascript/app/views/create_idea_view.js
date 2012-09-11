@@ -9,7 +9,9 @@ $(document).ready(function() {
 
         events: {
             "click #submitBtn": "submitIdea",
-            "click #createIdeaBtn": "reRender"
+            "click #createIdeaBtn": "reRender",
+            "click #commentBtn": "reRender",
+            "click #sectionsBtn": "reRender"
         },
 
         reRender:function(){
@@ -36,8 +38,10 @@ $(document).ready(function() {
 
         render: function(){
             console.log("in render");
+
             $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
             $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
+            $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
 
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
