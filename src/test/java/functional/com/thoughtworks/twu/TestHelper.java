@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 public class TestHelper
 {
     public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/MIBTEST/4";
-    public static final int TIME_OUT_IN_SECONDS = 10;
+    public static final int TIME_OUT_IN_SECONDS = 5;
     private WebDriver webDriver;
 
 
@@ -101,6 +101,11 @@ public class TestHelper
                 return input.getPageSource().contains(text);
             }
         });
+    }
+
+    public WebElement findElementByTagName(String tagName)
+    {
+        return webDriver.findElement(By.tagName(tagName));  //To change body of created methods use File | Settings | File Templates.
     }
 }
 

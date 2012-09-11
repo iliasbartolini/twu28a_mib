@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -94,15 +95,18 @@ public class CreateIdeaTest {
         String currentUrl= testHelper.getUrl();
 
         assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
+
+        testHelper.waitForElement(By.id("ideaText"));
+        WebElement ideaTextBox = testHelper.findElement("ideaText");
+        assertEquals("", ideaTextBox.getText());
     }
 
     @Test
     public void shouldSeeContributIdeaPageWithCorrectBoardName()
     {
         testHelper.navigateToCreateIdeaView();
-        testHelper.waitForElement(By.id("boardName"));
 
-        WebElement boardName = testHelper.findElement("boardName");
+        WebElement boardName = testHelper.findElementByTagName("h1");
 
         assertEquals("MIBTEST", boardName.getText());
 
@@ -110,11 +114,11 @@ public class CreateIdeaTest {
 
 
 
-//    @After
-//    public void tearDown()
-//    {
-//        testHelper.closeWebDriver();
-//    }
+    @After
+    public void tearDown()
+    {
+        testHelper.closeWebDriver();
+    }
 
     private void addIdeaText(String ideaText) {
 
@@ -126,49 +130,21 @@ public class CreateIdeaTest {
         WebElement button = testHelper.findElement("submitBtn");
         button.click();
     }
-    /*
+
     @Test
     @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        navigateToCreateIdeaView();
+        testHelper.navigateToCreateIdeaView();
 
         addIdeaText("Functional test idea!");
 
         submitIdea();
 
-        assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+        testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
     }
 
 
 
-    @After
-    public void tearDown(){
-        webDriver.close();
-    }
-
-
-
-
-
-
-
-
-
-    private void waitForElement(final By elementSelector) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return !input.findElements(elementSelector).isEmpty();
-            }
-        });
-    }
-
-
-
-    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
-    }
-    */
 
 
 }
