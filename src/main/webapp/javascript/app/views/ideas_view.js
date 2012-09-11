@@ -14,6 +14,7 @@ $(document).ready(function () {
         initialize:function (container, boardName, boardId, sectionId) {
 
             this.container = container;
+
             this.sectionId = sectionId;
 
             if(IdeaBoardz.Board.instance === undefined) {
@@ -21,21 +22,17 @@ $(document).ready(function () {
                 this.boardId = boardId;
                 this.render();
             } else {
+                clearTimeout(IdeaBoardz.Board.instance.timer);
                 this.updateBoardDetails(IdeaBoardz.Board.instance);
             }
-            this.render();
         },
 
         render:function () {
-
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
             this.requestBoardData();
-
-
         },
 
         requestBoardData: function(){
-
             //register to listen to event of data come back
             IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
@@ -64,10 +61,7 @@ $(document).ready(function () {
 
         requestIdeasData: function(){
             //register to listen to event of data come back
-            IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
-            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
-
-            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
+            this.doPoll();
         },
 
         renderIdeasList: function(){
@@ -75,10 +69,8 @@ $(document).ready(function () {
             var html = this.template({sectionId:this.sectionId, sectionName:this.sectionName});
             $(this.el).find(this.container).html(html);
             this.populateStickies();
-
-            //this.doPoll();
-
-            return this;
+            IdeaBoardz.dispatcher.off("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         },
 
         renderErrorNotice: function(message) {
@@ -88,25 +80,24 @@ $(document).ready(function () {
 
         populateStickies:function () {
             var ideas = IdeaBoardz.Board.instance.ideas;
-
-            var sticky_html = "";
+            var stickyHtml = "";
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];
                 if (idea.section_id == this.sectionId) {
-                    sticky_html = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + sticky_html;
+                    stickyHtml = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + stickyHtml;
                 }
             }
-            $(this.container).find('#ideasList').html(sticky_html);
+            $(this.container).find('#ideasList').html(stickyHtml);
         },
 
         doPoll:function () {
-            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
-            this.ideas = ideasCollection.ideas;
+            IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
 
-            this.populateStickies();
+            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
 
-            var that = this;
-            setTimeout(function(){that.doPoll()}, 5000);
+            var currentView = this;     //In setTimeout, 'this' always refers to the global object, so we have to pass the current context as a variable.
+            IdeaBoardz.Board.instance.timer = setTimeout(function(){currentView.doPoll()}, 5000);
         }
     });
 });

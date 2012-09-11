@@ -1,4 +1,3 @@
-
 describe("Web IdeaBoardz", function() {
 
     it("should make ajax POST request with message in URL", function(){
@@ -140,10 +139,8 @@ describe("Web IdeaBoardz", function() {
 
         spyOn(IdeaBoardz.dispatcher, 'trigger').andCallFake(function(options){
         });
-
         IdeaBoardz.WebIdeaBoardz.instance.getIdeas(IdeaBoardz.Board.instance.id);
 
         expect(IdeaBoardz.Board.instance.ideas).toBe(fakeJSON);
     });
-
 });

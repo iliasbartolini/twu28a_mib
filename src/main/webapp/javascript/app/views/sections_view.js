@@ -18,6 +18,7 @@ $(document).ready(function () {
             if(IdeaBoardz.Board.instance === undefined) {
                 this.render();
             } else {
+                clearTimeout(IdeaBoardz.Board.instance.timer);
                 this.updateBoardDetails(IdeaBoardz.Board.instance);
             }
 
@@ -35,11 +36,20 @@ $(document).ready(function () {
         },
 
         requestBoardData: function(){
-
             //register to listen to event of data come back
             IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
             IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID );
+        },
+
+        updateBoardDetails:function(board){
+            this.boardID = board.id;
+            this.boardName = board.boardName;
+            this.sections = board.sections;
+
+            IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
+
+            this.renderSectionsList();
         },
 
         renderSectionsList: function(){

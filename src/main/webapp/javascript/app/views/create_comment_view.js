@@ -19,13 +19,14 @@ $(document).ready(function() {
 
     reRender:function(){
        this.render();
-       this.render();
     },
 
     initialize: function(container, boardName, id) {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
+
+        if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
 
         _.bindAll(this,"resetBinding");
         this.resetBinding();
@@ -52,9 +53,17 @@ $(document).ready(function() {
     postAComment: function(event){
         var message = $(this.el).find("#commentText").val();
         $(this.el).find("#commentText").val("");
+        if(message == '') {
+            this.showEmptyError();
+            return false;
+        }
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
         new IdeaBoardz.CommentView(message);
         return false;
+    },
+
+    showEmptyError: function(){
+        $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'><p>Please enter a message</p></div>"));
     }
 
     });

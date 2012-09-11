@@ -29,6 +29,7 @@ $(document).ready(function() {
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
+            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
             _.bindAll(this,"resetBinding");
             this.resetBinding();
             this.render();
@@ -38,10 +39,10 @@ $(document).ready(function() {
             $(this.el).undelegate('#submitBtn', 'click');
         },
 
-
         render: function(){
             updateQuickLinks(this);
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
+
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
             var boardInstance = IdeaBoardz.Board.instance;

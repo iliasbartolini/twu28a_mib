@@ -9,6 +9,10 @@ $(document).ready(function () {
         template:_.template($("#template-index").html()),
 
         initialize:function () {
+            if (IdeaBoardz.Board.instance){
+                clearTimeout(IdeaBoardz.Board.instance.timer);
+            }
+
             this.render();
         },
 
