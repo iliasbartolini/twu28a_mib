@@ -11,6 +11,14 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
         "for/:boardName/:bid/:sid": "ideasList" //#for/mibTest/9/1
     },
 
+    initialize: function(){
+        var findSlash = new RegExp("(\/)+$", "g");
+        this.route(/(.*)\/+$/, "trailFix", function (id) {
+            var idWithNoEndingSlash = id.replace(findSlash, '');
+            this.navigate(idWithNoEndingSlash, true);
+        });
+    },
+
     index: function(){
         var indexView = new IdeaBoardz.IndexView();
     },
