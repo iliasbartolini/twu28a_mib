@@ -5,34 +5,89 @@ $(document).ready(function () {
         template:_.template($('#template-sectionsView').html()),
         sectionTemplate:_.template($('#template-sectionItem').html()),
         navigationTemplate:_.template($("#template-navigation").html()),
+        container:null,
         boardName:"",
         boardID:null,
         sections:[],
 
+        initialize:function (container, boardName, boardId) {
+            console.log('in sections_view initialize');
+            this.boardID = boardId;
+            this.boardName = boardName;
+            this.container = container;
 
-        initialize:function (board) {
-            this.boardID = board.id;
-            this.boardName = board.boardName;
-            this.sections = board.sections;
+            if(IdeaBoardz.Board.instance === undefined) {
+                console.log("NO BOARD DEFINED YET!!!");
+                this.render();
+            } else {
+                console.log("SOME BOARD IS DEFINED! RENDER DATA DIRECTLY");
+                this.updateBoardDetails(IdeaBoardz.Board.instance);
+            }
 
-            this.customizeMenuLinks();
-            this.render();
         },
 
         render:function () {
+            console.log('render place holder text');
+            $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
+            this.requestData();
+        },
+
+        renderErrorNotice: function(message) {
+            console.log('render error');
+            $(this.el).find('#container').html('<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+message+'</div></div>');
+            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
+        },
+
+        requestData: function(){
+            console.log('request board data');
+
+            //register to listen to event of data come back
+            IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
+            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
+
+            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID, {
+                success:function(data){
+                    console.log('data returned success');
+                    IdeaBoardz.Board.instance = new IdeaBoardz.Board(data.name, data.id, data.sections);
+                    console.log('trigger change event');
+                    IdeaBoardz.dispatcher.trigger("change:boardData", IdeaBoardz.Board.instance);
+                },
+
+                error:function(data){
+                    console.log('error retrieving board data');
+                    var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
+                    IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
+                }
+            })
+        },
+
+        renderSectionsList: function(){
+            console.log('render the section list');
+            this.customizeMenuLinks();
             var html = this.template({boardName:this.boardName});
-            $(this.el).find('#container').html(html);  // Replace the view's element with the result
+            $(this.el).find(this.container).html(html);
 
             var sectionListHtml = "";
             for (i = 0; i < this.sections.length; i++) {
                 sectionListHtml += this.sectionTemplate({sectionName:this.sections[i].name, sectionId:this.sections[i].id, boardName:this.boardName, boardId:this.boardID });
             }
-            ;
-            $('#container').find('#sectionsList').html(sectionListHtml);
-            return this;
+            $(this.container).find('#sectionsList').html(sectionListHtml);
+        },
+
+        updateBoardDetails:function(board){
+            console.log('update board details');
+            this.boardID = board.id;
+            this.boardName = board.boardName;
+            this.sections = board.sections;
+
+            // data received, unregister event
+            IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
+
+            this.renderSectionsList();
         },
 
         customizeMenuLinks:function () {
+            console.log('customize menu link');
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
             $(this.el).find('#logo').attr("href", "#for/" + this.boardName + "/" + this.boardID);
             $(this.el).find('#commentBtn').attr("href", "#for/" + this.boardName + "/" + this.boardID + "/comment");

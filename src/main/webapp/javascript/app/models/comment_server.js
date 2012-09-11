@@ -22,51 +22,16 @@ IdeaBoardz.CommentServer.prototype = {
         });
     },
 
-    getComments:function (boardID, callbacks) {
+    getComments:function(boardID, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function () {
         };
-        var error = callbacks.error || function () {
-        };
-        globalDomain=this.domain,
-
-
-        (function poll() {
-            setTimeout(function(){
-                $.ajax({
-                    type:'GET',
-                    url:globalDomain + '/mib/getComments',
-                    data:'board_id=' + encodeURIComponent(boardID),
-                    dataType:'json',
-                    success:function (data) {
-                        for (i = 0; i < data.comments.length; i++) {
-                            console.log("comment?" + data.comments[i].comment);
-                            new IdeaBoardz.CommentView(data.comments[i].comment);
-                        }
-                    },
-                    error:function (xhr, type) {
-                    }
-                });
-        },1000);
-        })();
-
-
 
         $.ajax({
             type:'GET',
             url:this.domain + '/mib/getComments',
-            data:'board_id=' + encodeURIComponent(boardID),
-            dataType:'json',
-            async:false,
-            success:function (data) {
-                for (i = 0; i < data.comments.length; i++) {
-                    comment = new IdeaBoardz.Comment(data.comments[i]);
-                }
-            },
-            error:function (xhr, type) {
-            }
+            success:success
         })
-
     }
 
 

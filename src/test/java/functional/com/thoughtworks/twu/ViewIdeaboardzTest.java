@@ -11,19 +11,24 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 @Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/6";
+    public static final String INVALID_BOARD_URL = "http://m.ideaboardz.local/#for/invalidboard/9999";
     public static final String BOARD_NAME = "test";
-    public static final int TIME_OUT_IN_SECONDS = 1000;
+    public static final int TIME_OUT_IN_SECONDS = 5;
 
     private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
@@ -52,7 +57,7 @@ public class ViewIdeaboardzTest {
     }
 
     @Test
-    public void shouldDisplayNamesOfAllSections(){
+    public void shouldDisplayNamesOfAllSectionsIfBoardURLValid(){
         List<String> sectionNameList = new ArrayList<String>();
         sectionNameList.add("What went well");
         sectionNameList.add("What can be improved");
@@ -90,6 +95,14 @@ public class ViewIdeaboardzTest {
         assertMenuLinkCustomization(menuLinks, menuIcons);
     }
 
+    @Test
+    public void shouldShowErrorForInvalidBoardURL(){
+        webDriver.get(INVALID_BOARD_URL);
+        waitForElement(By.id("alert-area"));
+        assertTrue(webDriver.getPageSource().contains("No such board exists"));
+
+    }
+
     private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
         int index = 0;
         for(WebElement element:menuIcons){
@@ -114,12 +127,20 @@ public class ViewIdeaboardzTest {
 
     private void navigateToMainBoardPage() {
         webDriver.get(BOARD_URL);
-        try{
-        waitForBoardNameToAppear(webDriver);
-        }
-        catch(Exception e){
-            System.out.println("Timeout for Board Name to appear on screen");
-        }
+        waitForElement(By.id("boardName"));
+    }
+
+    private void waitForElement(final By elementSelector) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return !input.findElements(elementSelector).isEmpty();
+            }
+        });
+    }
+
+    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
+        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
     private static class FirefoxPreference {
@@ -130,25 +151,5 @@ public class ViewIdeaboardzTest {
             this.name = name;
             this.value = value;
         }
-    }
-
-
-
-    public void waitForBoardNameToAppear(WebDriver driver) throws Exception {
-        for (int second = 0;; second++) {
-            if (second >= 30) break;
-            try {
-                if (isElementActive(By.id("boardName"), driver))
-                    break;
-            } catch (Exception e) {}
-            Thread.sleep(1000);
-        }
-    }
-
-    private boolean isElementActive(By id, WebDriver driver) {
-        WebElement we =  driver.findElement(id);
-        if(we.isEnabled())
-            return true;
-        return false;
     }
 }

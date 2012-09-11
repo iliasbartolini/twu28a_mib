@@ -37,6 +37,19 @@ body {
     -moz-box-shadow: 1px 1px 3px #888;
 }
 
+.alert-main {
+    margin-top:10px;
+}
+
+/* PLACE HOLDER VIEW
+---------------------------------------------------- */
+
+.mib_content h2.loading {
+    background: url("../images/ajax-loader.gif") center left no-repeat;
+    padding-left: 40px;
+    font-size: 1.3em;
+}
+
 /* IDEAS VIEW STYLE
 ---------------------------------------------------- */
 
