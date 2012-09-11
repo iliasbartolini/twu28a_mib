@@ -101,9 +101,7 @@ describe("Web IdeaBoardz", function() {
             options.success(fakeJSON);
         });
 
-        spyOn(IdeaBoardz.dispatcher, 'trigger').andCallFake(function(options){
-            console.log("test");
-        });
+        spyOn(IdeaBoardz.dispatcher, 'trigger');
 
         IdeaBoardz.WebIdeaBoardz.instance.getIdeas(IdeaBoardz.Board.instance.id);
 

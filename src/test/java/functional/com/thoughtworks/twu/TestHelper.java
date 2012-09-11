@@ -14,16 +14,13 @@ import javax.annotation.Nullable;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TestHelper
-{
+public class TestHelper {
     public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/MIBTEST/4";
     public static final int TIME_OUT_IN_SECONDS = 5;
     private WebDriver webDriver;
 
 
-
-    public TestHelper(FirefoxPreference firefoxPreference)
-    {
+    public TestHelper(FirefoxPreference firefoxPreference) {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference(firefoxPreference.getName(), firefoxPreference.getValue());
         this.webDriver = new FirefoxDriver(firefoxProfile);
@@ -43,25 +40,33 @@ public class TestHelper
         (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
-    public void makeGetRequestForTheBoard()
-    {
+    public void makeGetRequestForTheBoard() {
         webDriver.get(this.BOARD_URL);
     }
 
-    public void clickElement(String idString)
-    {
+    public void clickElement(String idString) {
         webDriver.findElement(By.id(idString)).click();
     }
 
+    public WebElement findElement(String idString) {
+        return webDriver.findElement(By.id(idString));
 
+    }
 
-    public String getUrl()
-    {
+    public void navigateToCreateIdeaView() {
+        this.makeGetRequestForTheBoard();
+        By createIdeaButtonSelector = By.id("createIdeaBtn");
+
+        this.waitForElement(createIdeaButtonSelector);
+
+        this.clickElement("createIdeaBtn");
+    }
+
+    public String getUrl() {
         return webDriver.getCurrentUrl();
     }
 
-    public void closeWebDriver()
-    {
+    public void closeWebDriver() {
         webDriver.close();
     }
 
@@ -88,6 +93,10 @@ public class TestHelper
                 return input.getPageSource().contains(text);
             }
         });
+    }
+
+    public WebElement findElementByTagName(String tagName) {
+        return webDriver.findElement(By.tagName(tagName));
     }
 }
 
