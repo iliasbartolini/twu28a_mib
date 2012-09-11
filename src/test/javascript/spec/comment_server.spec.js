@@ -26,7 +26,7 @@ describe("Comment Sever", function(){
         IdeaBoardz.CommentServer.instance.getComments(boardID, {success : callback});
 
         expect(($.ajax).mostRecentCall.args[0].type).toBe('GET');
-        expect(($.ajax).mostRecentCall.args[0].url).toBe(IdeaBoardz.CommentServer.instance.domain + '/mib/getComments');
+        expect(($.ajax).mostRecentCall.args[0].url).toBe(IdeaBoardz.CommentServer.instance.domain + '/mib/getComments?board_id=' + boardID);
         expect(callback).toHaveBeenCalled();
     })
 });

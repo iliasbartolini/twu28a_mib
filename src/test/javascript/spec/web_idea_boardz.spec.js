@@ -1,4 +1,3 @@
-
 describe("Web IdeaBoardz", function() {
 
     it("should make ajax POST request with message in URL", function(){
@@ -107,5 +106,4 @@ describe("Web IdeaBoardz", function() {
         expect(ideaCollection.ideas[1].id).toBe(53876);
         expect(ideaCollection.ideas.length).toBe(2);
     });
-
 });
