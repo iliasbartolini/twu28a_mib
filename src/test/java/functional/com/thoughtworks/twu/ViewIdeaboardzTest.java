@@ -20,13 +20,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
+//@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/6";
+    public static final String INVALID_BOARD_URL = "http://m.ideaboardz.local/#for/invalidboard/9999";
     public static final String BOARD_NAME = "test";
-    public static final int TIME_OUT_IN_SECONDS = 1000;
+    public static final int TIME_OUT_IN_SECONDS = 5;
 
     private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
@@ -55,7 +57,7 @@ public class ViewIdeaboardzTest {
     }
 
     @Test
-    public void shouldDisplayNamesOfAllSections(){
+    public void shouldDisplayNamesOfAllSectionsIfBoardURLValid(){
         List<String> sectionNameList = new ArrayList<String>();
         sectionNameList.add("What went well");
         sectionNameList.add("What can be improved");
@@ -91,6 +93,14 @@ public class ViewIdeaboardzTest {
         menuIcons.add(webDriver.findElement(By.id("commentBtn")));
         menuIcons.add(webDriver.findElement(By.id("createIdeaBtn")));
         assertMenuLinkCustomization(menuLinks, menuIcons);
+    }
+
+    @Test
+    public void shouldShowErrorForInvalidBoardURL(){
+        webDriver.get(INVALID_BOARD_URL);
+        waitForElement(By.id("alert-area"));
+        assertTrue(webDriver.getPageSource().contains("No such board exists"));
+
     }
 
     private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
