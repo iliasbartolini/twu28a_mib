@@ -28,6 +28,7 @@ $(document).ready(function() {
 
         },
 
+
         resetBinding:function(){
             console.log("In Reset Binding");
             $(this.el).undelegate('#submitBtn', 'click');
@@ -60,16 +61,16 @@ $(document).ready(function() {
         },
 
         showSuccess: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘success-msg’ class='alert alert-success'><p>Your idea has been posted.</p></div>"));
+            $(this.el).find("#alert-area").html($("<div id=‘success-msg’ class='alert alert-success'>Your idea has been posted.</div>"));
             $(this.el).find("#ideaText").val("");
         },
 
         showError: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘error-msg’ class='alert alert-error'><p>Failed to submit. Please try again in some time.</p></div>"));
+            $(this.el).find("#alert-area").html($("<div id=‘error-msg’ class='alert alert-error'>Failed to submit. Please try again in some time.</div>"));
         },
 
         showEmptyError: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ class='alert alert-error'><p>Please enter some text.</p></div>"));
+            $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ class='alert alert-error'>Please enter some text.</div>"));
         },
 
         toString: function(){

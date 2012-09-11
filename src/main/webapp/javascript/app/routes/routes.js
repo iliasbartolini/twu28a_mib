@@ -22,10 +22,11 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
 
     ideasList: function(boardName, bid, sid){
         console.log("in view ideas of section");
+        var ideasView = new IdeaBoardz.IdeasView("#container", boardName, bid);
 
-        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
-            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            new IdeaBoardz.IdeasView(board, sid)}})
+//        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
+//            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
+//            new IdeaBoardz.IdeasView(board, sid)}})
     },
 
     createIdea: function(boardName, bid){
