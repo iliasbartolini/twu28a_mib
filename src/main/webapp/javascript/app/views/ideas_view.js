@@ -14,32 +14,41 @@ $(document).ready(function () {
         initialize:function (container, boardName, boardId, sectionId) {
 
             this.container = container;
-
             this.sectionId = sectionId;
 
             if(IdeaBoardz.Board.instance === undefined) {
-                this.boardName = boardName;
-                this.boardId = boardId;
-                this.render();
+                this.renderPlaceHolder();
+                this.requestBoardData(boardName, boardId);
             } else {
                 clearTimeout(IdeaBoardz.Board.instance.timer);
-                this.updateBoardDetails(IdeaBoardz.Board.instance);
+                this.renderBoard(IdeaBoardz.Board.instance);
             }
         },
 
-        render:function () {
+        renderPlaceHolder:function () {
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
-            this.requestBoardData();
         },
 
-        requestBoardData: function(){
-            //register to listen to event of data come back
-            IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
-            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
-            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardId );
+        renderErrorNotice: function(message) {
+            $(this.el).find('#container').html('<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+message+'</div></div>');
+            this.stopListeningForChangeEventsForGetBoard();
         },
 
-        updateBoardDetails:function(board){
+        requestBoardData: function(boardName, boardId){
+            this.listenForChangeEventsForGetBoard();
+            IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, boardId);
+        },
+
+        pollForIdeas:function () {
+            this.listenToChangeEventsForGetIdeas();
+
+            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
+
+            var currentView = this;     //In setTimeout, 'this' always refers to the global object, so we have to pass the current context as a variable.
+            IdeaBoardz.Board.instance.timer = setTimeout(function(){currentView.pollForIdeas()}, 5000);
+        },
+
+        renderBoard:function(board){
             this.boardId = board.id;
             this.boardName = board.boardName;
 
@@ -53,29 +62,18 @@ $(document).ready(function () {
 
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardId}));
 
-            // data received, unregister event
-            IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
+            IdeaBoardz.Board.instance.currentSection = this.sectionId;
 
-            this.requestIdeasData();
-        },
-
-        requestIdeasData: function(){
-            //register to listen to event of data come back
-            this.doPoll();
+            this.stopListeningForChangeEventsForGetBoard();
+            this.pollForIdeas();
         },
 
         renderIdeasList: function(){
+            this.stopListeningForChangeEventsOfGetIdeas();
 
             var html = this.template({sectionId:this.sectionId, sectionName:this.sectionName});
             $(this.el).find(this.container).html(html);
             this.populateStickies();
-            IdeaBoardz.dispatcher.off("change:ideasData", this.renderIdeasList, this);
-            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
-        },
-
-        renderErrorNotice: function(message) {
-            $(this.el).find('#container').html('<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+message+'</div></div>');
-            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         },
 
         populateStickies:function () {
@@ -90,14 +88,24 @@ $(document).ready(function () {
             $(this.container).find('#ideasList').html(stickyHtml);
         },
 
-        doPoll:function () {
+        listenForChangeEventsForGetBoard:function () {
+            IdeaBoardz.dispatcher.on("change:boardData", this.renderBoard, this);
+            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
+        },
+
+        stopListeningForChangeEventsForGetBoard:function () {
+            IdeaBoardz.dispatcher.off("change:boardData", this.renderBoard, this);
+            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
+        },
+
+        listenToChangeEventsForGetIdeas:function () {
             IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
+        },
 
-            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
-
-            var currentView = this;     //In setTimeout, 'this' always refers to the global object, so we have to pass the current context as a variable.
-            IdeaBoardz.Board.instance.timer = setTimeout(function(){currentView.doPoll()}, 5000);
+        stopListeningForChangeEventsOfGetIdeas:function () {
+            IdeaBoardz.dispatcher.off("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         }
     });
 });
