@@ -21,9 +21,9 @@ $(document).ready(function () {
                 this.boardId = boardId;
                 this.render();
             } else {
+                clearTimeout(IdeaBoardz.Board.instance.timer);
                 this.updateBoardDetails(IdeaBoardz.Board.instance);
             }
-            this.render();
         },
 
         render:function () {
@@ -60,10 +60,7 @@ $(document).ready(function () {
 
         requestIdeasData: function(){
             //register to listen to event of data come back
-            IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
-            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
-
-            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
+            this.doPoll();
         },
 
         renderIdeasList: function(){
@@ -71,8 +68,8 @@ $(document).ready(function () {
             var html = this.template({sectionId:this.sectionId, sectionName:this.sectionName});
             $(this.el).find(this.container).html(html);
             this.populateStickies();
-
-            return this;
+            IdeaBoardz.dispatcher.off("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         },
 
         renderErrorNotice: function(message) {
@@ -93,13 +90,13 @@ $(document).ready(function () {
         },
 
         doPoll:function () {
-            var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
-            this.ideas = ideasCollection.ideas;
+            IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
 
-            this.populateStickies();
+            IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
 
-            var that = this;
-            setTimeout(function(){that.doPoll()}, 5000);
+            var currentView = this;     //In setTimeout, 'this' always refers to the global object, so we have to pass the current context as a variable.
+            IdeaBoardz.Board.instance.timer = setTimeout(function(){currentView.doPoll()}, 5000);
         }
     });
 });
