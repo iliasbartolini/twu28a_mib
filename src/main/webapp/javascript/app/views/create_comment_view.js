@@ -18,7 +18,6 @@ $(document).ready(function() {
 
 
     reRender:function(){
-       console.log("In Reload Elements");
        this.render();
     },
 

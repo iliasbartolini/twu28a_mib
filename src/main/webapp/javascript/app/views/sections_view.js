@@ -18,7 +18,6 @@ $(document).ready(function () {
             if(IdeaBoardz.Board.instance === undefined) {
                 this.render();
             } else {
-                console.log("SOME BOARD IS DEFINED! RENDER DATA DIRECTLY");
                 clearTimeout(IdeaBoardz.Board.instance.timer);
                 this.updateBoardDetails(IdeaBoardz.Board.instance);
             }
@@ -43,7 +42,6 @@ $(document).ready(function () {
         },
 
         updateBoardDetails:function(board){
-            console.log('update board details');
             this.boardID = board.id;
             this.boardName = board.boardName;
             this.sections = board.sections;
