@@ -64,14 +64,14 @@
 
     <script type="text/template" id="template-ideasView">
         <div class="mib_content">
-            <h1><%=sectionName%></h1>
+            <h1 id="sectionName"><%=sectionName%></h1>
             <ul id="ideasList"></ul>
         </div>
     </script>
 
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
-            <div id="alert-area"></div>
+
             <h1><%= boardName %></h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
@@ -80,6 +80,7 @@
                         <option value="20" selected="selected">Section ID #20</option>
                     </select>
                 </p>
+                <div id="alert-area" ></div>
                 <div class="sticky largeSticky">
                     <textarea name="ideaText"  id="ideaText"></textarea>
                 </div>
@@ -106,6 +107,7 @@
     </script>
 
      <script type="text/template" id="template-navigation">
+         <a href="#for/<%=boardName%>/<%=boardId%>" id="sectionsBtn" class="btn btn-small btn-quicklinks"><i class="icon-align-justify icon-white"></i></a>
          <a href="#for/<%=boardName%>/<%=boardId%>/comment"id="commentBtn" class="btn btn-small btn-quicklinks"><i class="icon-comment icon-white"></i></a>
          <a href="#for/<%=boardName%>/<%=boardId%>/createIdea" id="createIdeaBtn" class="btn btn-small btn-quicklinks"><i class="icon-idea"></i></a>
      </script>

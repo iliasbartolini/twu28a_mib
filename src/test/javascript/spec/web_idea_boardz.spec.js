@@ -1,4 +1,3 @@
-
 describe("Web IdeaBoardz", function() {
 
     it("should make ajax POST request with message in URL", function(){
@@ -85,7 +84,9 @@ describe("Web IdeaBoardz", function() {
         expect(IdeaBoardz.Board).toHaveBeenCalledWith("mibimmmm", 16, [{"name":"What went well","id":33},{"name":"What can be improved","id":34},{"name":"Action Items","id":35}]);
     });
     
-    it("should collect all the Ideas in a board when getIdeas is called", function(){
+    xit("should collect all the Ideas in a board when getIdeas is called", function(){
+        IdeaBoardz.Board.instance = new IdeaBoardz.Board("name", 16, []);
+
         var fakeJSON=[{"created_at":"2012/08/31 15:38:51 +0000","updated_at":"2012/08/31 15:39:06 +0000",
                 "section_id":4,"id":53874,"message":"work on multiple stories \n\nwork with claim status story",
                 "votes_count":4} ,
@@ -100,10 +101,12 @@ describe("Web IdeaBoardz", function() {
             options.success(fakeJSON);
         });
 
-        var ideaCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(16);
-        expect(ideaCollection.ideas[0].id).toBe(53874);
-        expect(ideaCollection.ideas[1].id).toBe(53876);
-        expect(ideaCollection.ideas.length).toBe(2);
-    });
+        spyOn(IdeaBoardz.dispatcher, 'trigger').andCallFake(function(options){
+            console.log("test");
+        });
 
+        IdeaBoardz.WebIdeaBoardz.instance.getIdeas(IdeaBoardz.Board.instance.id);
+
+        expect(IdeaBoardz.Board.instance.ideas).toBe(fakeJSON);
+    });
 });

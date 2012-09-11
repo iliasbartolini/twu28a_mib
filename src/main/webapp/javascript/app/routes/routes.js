@@ -11,6 +11,14 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
         "for/:boardName/:bid/:sid": "ideasList" //#for/mibTest/9/1
     },
 
+    initialize: function(){
+        var findSlash = new RegExp("(\/)+$", "g");
+        this.route(/(.*)\/+$/, "trailFix", function (id) {
+            var idWithNoEndingSlash = id.replace(findSlash, '');
+            this.navigate(idWithNoEndingSlash, true);
+        });
+    },
+
     index: function(){
         var indexView = new IdeaBoardz.IndexView();
     },
@@ -20,9 +28,7 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
     },
 
     ideasList: function(boardName, bid, sid){
-        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
-            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            new IdeaBoardz.IdeasView(board, sid)}})
+        var ideasView = new IdeaBoardz.IdeasView("#container", boardName, bid, sid);
     },
 
     createIdea: function(boardName, bid){

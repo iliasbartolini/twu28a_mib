@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         render:function () {
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
-            this.requestData();
+            this.requestBoardData();
         },
 
         renderErrorNotice: function(message) {
@@ -33,22 +33,11 @@ $(document).ready(function () {
             IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         },
 
-        requestData: function(){
+        requestBoardData: function(){
             //register to listen to event of data come back
             IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
-
-            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID, {
-                success:function(data){
-                    IdeaBoardz.Board.instance = new IdeaBoardz.Board(data.name, data.id, data.sections);
-                    IdeaBoardz.dispatcher.trigger("change:boardData", IdeaBoardz.Board.instance);
-                },
-
-                error:function(data){
-                    var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
-                    IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
-                }
-            })
+            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID );
         },
 
         renderSectionsList: function(){

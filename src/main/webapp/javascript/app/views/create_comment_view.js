@@ -7,6 +7,21 @@ $(document).ready(function() {
     _boardID: null,
     container: null,
 
+
+
+    events: {
+        "click #postBtn": "postAComment",
+        "click #createIdeaBtn": "reRender",
+        "click #commentBtn": "reRender",
+        "click #sectionsBtn": "reRender"
+    },
+
+
+    reRender:function(){
+       console.log("In Reload Elements");
+       this.render();
+    },
+
     initialize: function(container, boardName, id) {
         this._boardID = id;
         this._boardName = boardName;
@@ -24,16 +39,15 @@ $(document).ready(function() {
     },
 
     render: function(){
-        $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
+        $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
+        $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
+        $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
+        $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
 
         var html = this.template({ boardName: this._boardName });
 
         $(this.el).find(this.container).html(html);
         return this;
-    },
-
-    events: {
-        "click #postBtn": "postAComment"
     },
 
 

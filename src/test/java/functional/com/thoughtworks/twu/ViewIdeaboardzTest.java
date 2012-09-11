@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 @Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/6";
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3";
     public static final String INVALID_BOARD_URL = "http://m.ideaboardz.local/#for/invalidboard/9999";
     public static final String BOARD_NAME = "test";
     public static final int TIME_OUT_IN_SECONDS = 5;
