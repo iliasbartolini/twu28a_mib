@@ -70,6 +70,14 @@ public class TestHelper {
         webDriver.close();
     }
 
+    public void navigateToView(String boardUrl) {
+        webDriver.get(boardUrl);
+
+        By postCommentButtonSelector = By.id("postBtn");
+        waitForElement(postCommentButtonSelector);
+
+        webDriver.findElement(postCommentButtonSelector).click();
+    }
 
     public void assertDisplayedMessageIs(String message) {
         By alertAreaSelector = By.id("alert-area");
