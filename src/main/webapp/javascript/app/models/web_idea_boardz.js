@@ -11,7 +11,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    createIdea: function(message, callbacks) {
+    createIdea: function(sectionId, message, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
@@ -20,7 +20,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             context : context,
-            url : this.domain + '/points.json?point[section_id]=1&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]='+encodeURIComponent(sectionId)+'&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });
@@ -30,14 +30,11 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         callbacks = callbacks || {};
 
         var success = callbacks.success || function(data){
-            console.log('data returned success');
             IdeaBoardz.Board.instance = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            console.log('trigger change event');
             IdeaBoardz.dispatcher.trigger("change:boardData", IdeaBoardz.Board.instance);
         };
 
         var error = callbacks.error || function(data){
-            console.log('error retrieving board data');
             var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
             IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
         };
@@ -55,14 +52,11 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         callbacks = callbacks || {};
 
         var success = callbacks.success || function(data){
-            console.log('idea data returned success');
             IdeaBoardz.Board.instance.ideas = data;
-            console.log('trigger change event for ideas');
             IdeaBoardz.dispatcher.trigger("change:ideasData");
         };
 
         var error = callbacks.error || function(data){
-            console.log('error retrieving board data');
             var errorMsg = "<h4>Cannot get ideas</h4>";
             IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
         };

@@ -3,13 +3,14 @@ IdeaBoardz.CommentView = Backbone.View.extend({
     message: null,
 
     initialize: function(message){
-        console.log("in initialize of comment_view");
         this.message=message;
+
+        clearTimeout(IdeaBoardz.Board.instance.timer);
+
         this.render();
     },
 
     render: function(){
-        console.log("in render of comment_view");
         $(this.el).find("#commentsList").prepend('<li><span class="username">anonymous: </span>'+this.message+'</li>');
     }
 

@@ -1,3 +1,10 @@
+
+function updateQuickLinks(element) {
+    $(element.el).find('#commentBtn').attr("href", "#for/" + element._boardName + "/" + element._boardID + "/comment");
+    $(element.el).find('#createIdeaBtn').attr("href", "#for/" + element._boardName + "/" + element._boardID + "/createIdea");
+    $(element.el).find('#sectionsBtn').attr("href", "#for/" + element._boardName + "/" + element._boardID);
+}
+
 $(document).ready(function() {
     IdeaBoardz.CreateIdeaView = Backbone.View.extend({
         el: $("#viewWrapper"),
@@ -15,50 +22,44 @@ $(document).ready(function() {
         },
 
         reRender:function(){
-            console.log("In Reload Elements");
             this.render();
         },
 
         initialize: function(container, boardName, id) {
-            console.log("in initialize");
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
+            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
             _.bindAll(this,"resetBinding");
             this.resetBinding();
             this.render();
-
         },
 
-
         resetBinding:function(){
-            console.log("In Reset Binding");
             $(this.el).undelegate('#submitBtn', 'click');
         },
 
         render: function(){
-            console.log("in render");
-
-            $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
-            $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
-            $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
-
+            updateQuickLinks(this);
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
-            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
+            var html = this.template({ boardName: this._boardName, boardId: this._boardID });
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
+            var boardInstance = IdeaBoardz.Board.instance;
+            for (i = 0; i < boardInstance.sections.length; i++) {
+                $(this.el).find("#sectionId").append('<option value='+ boardInstance.sections[i].id +' >'+boardInstance.sections[i].name+'</option>');
+            }
             $(this.el).find("#ideaText").focus();
             return this;
         },
 
         submitIdea: function(event){
-            console.log("in submitIdea before call to createIdea");
             var message = $(this.el).find("#ideaText").val();
             message = this.trim(message);
-            console.log("Trimmed Message: " + message);
+            var sectionId=$(this.el).find("#sectionId").val();
             if (message == '') this.showEmptyError();
             else {
-                IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );
+                IdeaBoardz.WebIdeaBoardz.instance.createIdea(sectionId,message, {success: this.showSuccess, error: this.showError, context: this} );
             }
             $(this.el).find("#ideaText").focus();
             return false;

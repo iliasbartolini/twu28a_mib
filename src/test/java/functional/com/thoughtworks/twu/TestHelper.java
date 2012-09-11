@@ -10,22 +10,20 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
+
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TestHelper
-{
+public class TestHelper {
     public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/test/2";
-    public static final int TIME_OUT_IN_SECONDS = 5;
+    public static final int TIME_OUT_IN_SECONDS = 30;
     public static final String BOARD_NAME = "test";
     private WebDriver webDriver;
 
 
-
-    public TestHelper(FirefoxPreference firefoxPreference)
-    {
+    public TestHelper(FirefoxPreference firefoxPreference) {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference(firefoxPreference.getName(), firefoxPreference.getValue());
         this.webDriver = new FirefoxDriver(firefoxProfile);
@@ -45,28 +43,24 @@ public class TestHelper
         (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
-    public void makeGetRequestForTheBoard(String boardUrl)
-    {
+    public void makeGetRequestForTheBoard(String boardUrl) {
         webDriver.get(boardUrl);
     }
 
-    public void clickElement(String idString)
-    {
+    public void clickElement(String idString) {
         webDriver.findElement(By.id(idString)).click();
     }
-    public WebElement findElement(String idString)
-    {
-       return webDriver.findElement(By.id(idString));
+
+    public WebElement findElement(String idString) {
+        return webDriver.findElement(By.id(idString));
 
     }
 
-    public void navigateToCreateIdeaView()
-    {
+    public void navigateToCreateIdeaView() {
         this.makeGetRequestForTheBoard(BOARD_URL);
         By createIdeaButtonSelector = By.id("createIdeaBtn");
 
         this.waitForElement(createIdeaButtonSelector);
-
 
         this.clickElement("createIdeaBtn");
     }
@@ -76,18 +70,22 @@ public class TestHelper
         waitForElement(By.id("boardName"));
     }
 
-
-
-    public String getUrl()
-    {
+    public String getUrl() {
         return webDriver.getCurrentUrl();
     }
 
-    public void closeWebDriver()
-    {
+    public void closeWebDriver() {
         webDriver.close();
     }
 
+    public void navigateToView(String boardUrl) {
+        webDriver.get(boardUrl);
+
+        By postCommentButtonSelector = By.id("postBtn");
+        waitForElement(postCommentButtonSelector);
+
+        webDriver.findElement(postCommentButtonSelector).click();
+    }
 
     public void assertDisplayedMessageIs(String message) {
         By alertAreaSelector = By.id("alert-area");
@@ -105,9 +103,8 @@ public class TestHelper
         });
     }
 
-    public WebElement findElementByTagName(String tagName)
-    {
-        return webDriver.findElement(By.tagName(tagName));  //To change body of created methods use File | Settings | File Templates.
+    public WebElement findElementByTagName(String tagName) {
+        return webDriver.findElement(By.tagName(tagName));
     }
 
     List<WebElement> findElements()
