@@ -28,6 +28,7 @@ $(document).ready(function() {
 
         },
 
+
         resetBinding:function(){
             console.log("In Reset Binding");
             $(this.el).undelegate('#submitBtn', 'click');
@@ -37,6 +38,7 @@ $(document).ready(function() {
             console.log("in render");
             $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
             $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
+
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
@@ -63,6 +65,7 @@ $(document).ready(function() {
         },
 
         showSuccess: function(event){
+
             $(this.el).find("#alert-area").html($("<div id=‘success-msg’ align='center'  class='alert alert-success'><p>Your idea has been posted.</p></div>"));
             $(this.el).find("#ideaText").val("");
         },
@@ -74,6 +77,7 @@ $(document).ready(function() {
         showEmptyError: function(event){
             $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'><p>Please enter some text.</p></div>"));
         },
+
 
         toString: function(){
             return "A CreateIdeaView";

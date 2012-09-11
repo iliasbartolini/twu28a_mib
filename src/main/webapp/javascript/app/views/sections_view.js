@@ -44,21 +44,7 @@ $(document).ready(function () {
             //register to listen to event of data come back
             IdeaBoardz.dispatcher.on("change:boardData", this.updateBoardDetails, this);
             IdeaBoardz.dispatcher.on("error:ajaxError", this.renderErrorNotice, this);
-
-            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID, {
-                success:function(data){
-                    console.log('data returned success');
-                    IdeaBoardz.Board.instance = new IdeaBoardz.Board(data.name, data.id, data.sections);
-                    console.log('trigger change event');
-                    IdeaBoardz.dispatcher.trigger("change:boardData", IdeaBoardz.Board.instance);
-                },
-
-                error:function(data){
-                    console.log('error retrieving board data');
-                    var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
-                    IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
-                }
-            })
+            IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID );
         },
 
         renderSectionsList: function(){
