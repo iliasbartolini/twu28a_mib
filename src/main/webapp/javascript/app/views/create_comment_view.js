@@ -18,7 +18,6 @@ $(document).ready(function() {
 
 
     reRender:function(){
-       console.log("In Reload Elements");
        this.render();
     },
 
@@ -26,6 +25,8 @@ $(document).ready(function() {
         this._boardID = id;
         this._boardName = boardName;
         this.container=container;
+
+        if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
 
         _.bindAll(this,"resetBinding");
         this.resetBinding();
@@ -35,12 +36,10 @@ $(document).ready(function() {
     },
 
     resetBinding:function(){
-        console.log("In resetBinding");
         $(this.el).undelegate('#postBtn', 'click');
     },
 
     render: function(){
-        console.log("in render");
         $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
         $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
         $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
@@ -54,12 +53,19 @@ $(document).ready(function() {
 
 
     postAComment: function(event){
-        console.log("in post comment");
         var message = $(this.el).find("#commentText").val();
         $(this.el).find("#commentText").val("");
+        if(message == '') {
+            this.showEmptyError();
+            return false;
+        }
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
         new IdeaBoardz.CommentView(message);
         return false;
+    },
+
+    showEmptyError: function(){
+        $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'><p>Please enter a message</p></div>"));
     }
 
     });

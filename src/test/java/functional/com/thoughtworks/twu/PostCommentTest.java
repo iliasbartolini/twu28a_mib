@@ -1,30 +1,19 @@
 package functional.com.thoughtworks.twu;
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(Parameterized.class)
-
-public class TopBarTest {
-
+public class PostCommentTest {
     private TestHelper testHelper;
     private FirefoxPreference firefoxPreference;
+    private static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3/comment";
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -36,34 +25,26 @@ public class TopBarTest {
         );
     }
 
-    public TopBarTest(FirefoxPreference firefoxPreference) {
-        this.firefoxPreference = firefoxPreference;
-    }
 
     @Before
     public void setUp(){
+        testHelper=new TestHelper(this.firefoxPreference);
+    }
 
-         testHelper=new TestHelper(this.firefoxPreference);
-
-
+    public PostCommentTest(FirefoxPreference firefoxPreference) {
+        this.firefoxPreference = firefoxPreference;
     }
 
     @Test
-    public void shouldNavigateToCreateIdeaView()
-    {
-        testHelper.navigateToCreateIdeaView();
-
-        String currentUrl= testHelper.getUrl();
-
-        assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
+    public void shouldShowErrorMessageWhenPostEmptyComment() {
+        testHelper.navigateToView(BOARD_URL);
+        testHelper.clickElement("postBtn");
+        testHelper.assertDisplayedMessageIs("Please enter a message");
     }
 
-
-
     @After
-    public void tearDown()
-    {
-       testHelper.closeWebDriver();
+    public void tearDown() {
+        testHelper.closeWebDriver();
     }
 
 }
