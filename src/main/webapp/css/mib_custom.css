@@ -1,3 +1,11 @@
+
+@font-face {
+    font-family: "Handlee";
+    src: url("Handlee-Regular.ttf");
+}
+
+
+
 /* COMMON STYLES
 ---------------------------------------------------- */
 
@@ -294,3 +302,5 @@ body {
 #commentText {
     width: 75%;
 }
+
+
