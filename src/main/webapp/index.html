@@ -64,7 +64,7 @@
 
     <script type="text/template" id="template-ideasView">
         <div class="mib_content">
-            <h1><%=sectionName%></h1>
+            <h1 id="sectionName"><%=sectionName%></h1>
             <ul id="ideasList"></ul>
         </div>
     </script>
@@ -120,7 +120,9 @@
             <div id="navigation" class="quick-links pull-right"></div>
         </div>
 
-        <div id="container"><div class="mib_content"> <h1>Page Loading...</h1></div></div>
+        <div id="container">
+            <div class="mib_content"><h2 class="loading">Page Loading...</h2></div>
+        </div>
 
     </div>
 </div>

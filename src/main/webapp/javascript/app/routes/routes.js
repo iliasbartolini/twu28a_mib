@@ -1,4 +1,8 @@
-var AppRouter = Backbone.Router.extend({
+
+// Initialize Global Dispatcher
+IdeaBoardz.dispatcher = _.clone(Backbone.Events);
+
+IdeaBoardz.AppRouter = Backbone.Router.extend({
     routes: {
         "": "index", // http://localhost/
         "for/:boardName/:bid": "sectionsList", //#for/mibTest/9
@@ -13,17 +17,16 @@ var AppRouter = Backbone.Router.extend({
 
     sectionsList: function(boardName, bid){
         console.log("hey open board");
-        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
-            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            new IdeaBoardz.SectionsView(board)}})
+        var sectionsView = new IdeaBoardz.SectionsView("#container", boardName, bid);
     },
 
     ideasList: function(boardName, bid, sid){
         console.log("in view ideas of section");
+        var ideasView = new IdeaBoardz.IdeasView("#container", boardName, bid);
 
-        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
-            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
-            new IdeaBoardz.IdeasView(board, sid)}})
+//        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, bid, {success:function(data){
+//            board = new IdeaBoardz.Board(data.name, data.id, data.sections);
+//            new IdeaBoardz.IdeasView(board, sid)}})
     },
 
     createIdea: function(boardName, bid){
