@@ -17,6 +17,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class CreateIdeaTest {
 
+    public static final By IDEA_TEXT_SELECTOR = By.id("ideaText");
+    public static final By SUBMIT_BUTTON_SELECTOR = By.id("submitBtn");
+
     private FirefoxPreference firefoxPreference;
     private TestHelper testHelper;
 
@@ -53,15 +56,8 @@ public class CreateIdeaTest {
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
         testHelper.navigateToCreateIdeaView();
 
-        testHelper.waitForElement(By.id("ideaText"));
-
         addIdeaText("Functional test idea!");
-
-        testHelper.waitForElement(By.id("submitBtn"));
-
         submitIdea();
-
-        testHelper.waitForElement(By.id("alert-area"));
 
         testHelper.assertDisplayedMessageIs("Your idea has been posted.");
     }
@@ -71,12 +67,9 @@ public class CreateIdeaTest {
         testHelper.navigateToCreateIdeaView();
         submitIdea();
 
-        String currentUrl = testHelper.getUrl();
+        assertEquals(testHelper.BOARD_URL + "/createIdea", testHelper.getCurrentUrl());
 
-        assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
-
-        testHelper.waitForElement(By.id("ideaText"));
-        WebElement ideaTextBox = testHelper.findElement("ideaText");
+        WebElement ideaTextBox = testHelper.findElement(IDEA_TEXT_SELECTOR);
         assertEquals("", ideaTextBox.getText());
     }
 
@@ -85,9 +78,7 @@ public class CreateIdeaTest {
         testHelper.navigateToCreateIdeaView();
 
         WebElement boardName = testHelper.findElementByTagName("h1");
-
         assertEquals("test", boardName.getText());
-
     }
 
     @After
@@ -96,13 +87,12 @@ public class CreateIdeaTest {
     }
 
     private void addIdeaText(String ideaText) {
-
-        WebElement message = testHelper.findElement("ideaText");
+        WebElement message = testHelper.findElement(IDEA_TEXT_SELECTOR);
         message.sendKeys(ideaText);
     }
 
     public void submitIdea() {
-        WebElement button = testHelper.findElement("submitBtn");
+        WebElement button = testHelper.findElement(SUBMIT_BUTTON_SELECTOR);
         button.click();
     }
 
@@ -112,7 +102,6 @@ public class CreateIdeaTest {
         testHelper.navigateToCreateIdeaView();
 
         addIdeaText("Functional test idea!");
-
         submitIdea();
 
         testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");

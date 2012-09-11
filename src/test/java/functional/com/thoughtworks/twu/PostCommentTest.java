@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.List;
 public class PostCommentTest {
     private TestHelper testHelper;
     private FirefoxPreference firefoxPreference;
-    private static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3/comment";
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -24,7 +24,6 @@ public class PostCommentTest {
                 }
         );
     }
-
 
     @Before
     public void setUp(){
@@ -37,8 +36,8 @@ public class PostCommentTest {
 
     @Test
     public void shouldShowErrorMessageWhenPostEmptyComment() {
-        testHelper.navigateToView(BOARD_URL);
-        testHelper.clickElement("postBtn");
+        testHelper.navigateToCommentView();
+        testHelper.clickElement(By.id("postBtn"));
         testHelper.assertDisplayedMessageIs("Please enter a message");
     }
 

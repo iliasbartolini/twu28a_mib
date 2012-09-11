@@ -17,9 +17,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class TestHelper {
-    public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/test/2";
-    public static final int TIME_OUT_IN_SECONDS = 30;
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
+    public static final int TIME_OUT_IN_SECONDS = 15;
     public static final String BOARD_NAME = "test";
+
     private WebDriver webDriver;
 
 
@@ -44,33 +45,49 @@ public class TestHelper {
     }
 
     public void makeGetRequestForTheBoard(String boardUrl) {
+        navigateToUrl(boardUrl);
+    }
+
+    public void navigateToUrl(String boardUrl) {
         webDriver.get(boardUrl);
     }
 
-    public void clickElement(String idString) {
-        webDriver.findElement(By.id(idString)).click();
+    public void clickElement(By selector) {
+        webDriver.findElement(selector).click();
     }
 
-    public WebElement findElement(String idString) {
-        return webDriver.findElement(By.id(idString));
-
+    public WebElement findElement(By selector) {
+        return webDriver.findElement(selector);
     }
 
     public void navigateToCreateIdeaView() {
-        this.makeGetRequestForTheBoard(BOARD_URL);
-        By createIdeaButtonSelector = By.id("createIdeaBtn");
+        navigateToMainBoardView();
 
-        this.waitForElement(createIdeaButtonSelector);
+        By createIdeaButton = By.id("createIdeaBtn");
+        waitForElement(createIdeaButton);
+        clickElement(createIdeaButton);
 
-        this.clickElement("createIdeaBtn");
+        waitForElement(By.id("ideaText"));
     }
 
-    public void navigateToMainBoardPage() {
-        webDriver.get(BOARD_URL);
+    public void navigateToMainBoardView() {
+        navigateToUrl(BOARD_URL);
         waitForElement(By.id("boardName"));
     }
 
-    public String getUrl() {
+    public void navigateToSectionView(String sectionId) {
+        navigateToUrl(BOARD_URL + "/" + sectionId);
+        waitForElement(By.id("sectionName"));
+    }
+
+    public void navigateToCommentView() {
+        navigateToMainBoardView();
+        By commentButton = By.id("commentBtn");
+        waitForElement(commentButton);
+        findElement(commentButton).click();
+    }
+
+    public String getCurrentUrl() {
         return webDriver.getCurrentUrl();
     }
 
@@ -78,17 +95,9 @@ public class TestHelper {
         webDriver.close();
     }
 
-    public void navigateToView(String boardUrl) {
-        webDriver.get(boardUrl);
-
-        By postCommentButtonSelector = By.id("postBtn");
-        waitForElement(postCommentButtonSelector);
-
-        webDriver.findElement(postCommentButtonSelector).click();
-    }
-
     public void assertDisplayedMessageIs(String message) {
         By alertAreaSelector = By.id("alert-area");
+        waitForElement(alertAreaSelector);
         waitForText(message);
         WebElement alertArea = webDriver.findElement(alertAreaSelector);
         assertThat(alertArea.getText(), is(message));
@@ -107,13 +116,11 @@ public class TestHelper {
         return webDriver.findElement(By.tagName(tagName));
     }
 
-    List<WebElement> findElements()
-    {
+    List<WebElement> findElements() {
         return webDriver.findElements(By.cssSelector("#sectionsList li a"));
     }
 
-    public boolean contains(String string)
-    {
+    public boolean contains(String string) {
         return webDriver.getPageSource().contains(string);
     }
 }
