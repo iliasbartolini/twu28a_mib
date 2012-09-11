@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 @Ignore("ignored due to Firefox problems")
 public class ViewSectionTest {
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/Test/2";
     public static final String SECTION_URL = "http://m.ideaboardz.local/#for/Test/2/4/";
     public static final String SECTION_NAME = "What can be improved";
     public static final int TIME_OUT_IN_SECONDS = 1000;
@@ -68,7 +69,6 @@ public class ViewSectionTest {
     private void navigateToSectionPage() {
         webDriver.get(SECTION_URL);
         try{
-            waitForSectionNameToAppear(webDriver);
         }
         catch(Exception e){
             System.out.println("Timeout for Board Name to appear on screen");
@@ -87,22 +87,6 @@ public class ViewSectionTest {
 
 
 
-    public void waitForSectionNameToAppear(WebDriver driver) throws Exception {
-        for (int second = 0;; second++) {
-            if (second >= 30) break;
-            try {
-                if (isElementActive(By.id("sectionName"), driver))
-                    break;
-            } catch (Exception e) {}
-            Thread.sleep(1000);
-        }
-    }
 
-    private boolean isElementActive(By id, WebDriver driver) {
-        WebElement we =  driver.findElement(id);
-        if(we.isEnabled())
-            return true;
-        return false;
-    }
 }
 

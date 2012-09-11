@@ -28,12 +28,14 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
 
     getBoard: function(boardName, boardId, callbacks) {
         callbacks = callbacks || {};
+
         var success = callbacks.success || function(data){
             console.log('data returned success');
             IdeaBoardz.Board.instance = new IdeaBoardz.Board(data.name, data.id, data.sections);
             console.log('trigger change event');
             IdeaBoardz.dispatcher.trigger("change:boardData", IdeaBoardz.Board.instance);
         };
+
         var error = callbacks.error || function(data){
             console.log('error retrieving board data');
             var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
@@ -49,22 +51,30 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    getIdeas : function(boardID){
-        var ideas;
+    getIdeas : function(boardID, callbacks){
+        callbacks = callbacks || {};
+
+        var success = callbacks.success || function(data){
+            console.log('idea data returned success');
+            IdeaBoardz.Board.instance.ideas = data;
+            console.log('trigger change event for ideas');
+            IdeaBoardz.dispatcher.trigger("change:ideasData");
+        };
+
+        var error = callbacks.error || function(data){
+            console.log('error retrieving board data');
+            var errorMsg = "<h4>Cannot get ideas</h4>";
+            IdeaBoardz.dispatcher.trigger("error:ajaxError", errorMsg);
+        };
+
         $.ajax({
             type: 'GET',
             url : this.domain + '/retros/' + boardID + '/points.json',
             dataType : 'json',
-            async: false,
-            success : function(data){
-                console.log("in getIdeas Method");
-                console.log(data);
-                ideas = new IdeaBoardz.IdeaCollection(data);
-                console.log(ideas);
-            }
+            success : success,
+            error: error
         });
 
-        return ideas;
     }
 }
 
