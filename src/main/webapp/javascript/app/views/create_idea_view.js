@@ -9,7 +9,9 @@ $(document).ready(function() {
 
         events: {
             "click #submitBtn": "submitIdea",
-            "click #createIdeaBtn": "reRender"
+            "click #createIdeaBtn": "reRender",
+            "click #commentBtn": "reRender",
+            "click #sectionsBtn": "reRender"
         },
 
         reRender:function(){
@@ -35,6 +37,12 @@ $(document).ready(function() {
         },
 
         render: function(){
+            console.log("in render");
+
+            $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
+            $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
+            $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
+
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
@@ -61,17 +69,19 @@ $(document).ready(function() {
         },
 
         showSuccess: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘success-msg’ class='alert alert-success'>Your idea has been posted.</div>"));
+
+            $(this.el).find("#alert-area").html($("<div id=‘success-msg’ align='center'  class='alert alert-success'><p>Your idea has been posted.</p></div>"));
             $(this.el).find("#ideaText").val("");
         },
 
         showError: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘error-msg’ class='alert alert-error'>Failed to submit. Please try again in some time.</div>"));
+            $(this.el).find("#alert-area").html($("<div id=‘error-msg’ align='center'  class='alert alert-error'><p>Failed to submit. Please try again in some time.</p></div>"));
         },
 
         showEmptyError: function(event){
-            $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ class='alert alert-error'>Please enter some text.</div>"));
+            $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'><p>Please enter some text.</p></div>"));
         },
+
 
         toString: function(){
             return "A CreateIdeaView";

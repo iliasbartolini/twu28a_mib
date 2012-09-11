@@ -29,7 +29,7 @@ $(document).ready(function () {
         render:function () {
             console.log('render place holder text');
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
-            this.requestData();
+            this.requestBoardData();
         },
 
         renderErrorNotice: function(message) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
             IdeaBoardz.dispatcher.off("error:ajaxError", this.renderErrorNotice, this);
         },
 
-        requestData: function(){
+        requestBoardData: function(){
             console.log('request board data');
 
             //register to listen to event of data come back
