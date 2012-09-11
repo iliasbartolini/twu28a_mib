@@ -9,7 +9,7 @@ describe("Web IdeaBoardz", function() {
         expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]=1&point[message]=some");
     });
 
-    it("should escape special symbols when creating URL",function(){
+    it("should escape special symbols when creating Idea",function(){
         spyOn($, 'ajax');
         IdeaBoardz.WebIdeaBoardz.instance.createIdea("lalala/&fjf! ??&");
 
@@ -29,6 +29,42 @@ describe("Web IdeaBoardz", function() {
         // act
 
         IdeaBoardz.WebIdeaBoardz.instance.createIdea("lalala/&fjf! ??&", {
+            error: callback
+        });
+
+        // assert
+        expect(callback).toHaveBeenCalled();
+    });
+
+    it("should call ajax with error callback if empty Idea is submitted",function(){
+        // arrange
+        spyOn($, 'ajax').andCallFake(function(options) {
+            options.error();
+        });
+
+        var callback = jasmine.createSpy();
+
+        // act
+
+        IdeaBoardz.WebIdeaBoardz.instance.createIdea("", {
+            error: callback
+        });
+
+        // assert
+        expect(callback).toHaveBeenCalled();
+    });
+
+    it("should call ajax with error callback if white spaces are submitted",function(){
+        // arrange
+        spyOn($, 'ajax').andCallFake(function(options) {
+            options.error();
+        });
+
+        var callback = jasmine.createSpy();
+
+        // act
+
+        IdeaBoardz.WebIdeaBoardz.instance.createIdea("              ", {
             error: callback
         });
 
@@ -103,7 +139,6 @@ describe("Web IdeaBoardz", function() {
         });
 
         spyOn(IdeaBoardz.dispatcher, 'trigger').andCallFake(function(options){
-            console.log("test");
         });
 
         IdeaBoardz.WebIdeaBoardz.instance.getIdeas(IdeaBoardz.Board.instance.id);

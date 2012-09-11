@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 
     reRender:function(){
-       console.log("In Reload Elements");
+       this.render();
        this.render();
     },
 
@@ -35,15 +35,11 @@ $(document).ready(function() {
     },
 
     resetBinding:function(){
-        console.log("In resetBinding");
         $(this.el).undelegate('#postBtn', 'click');
     },
 
     render: function(){
-        console.log("in render");
-        $(this.el).find('#commentBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/comment");
-        $(this.el).find('#createIdeaBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID + "/createIdea");
-        $(this.el).find('#sectionsBtn').attr("href", "#for/" + this._boardName + "/" + this._boardID);
+        updateQuickLinks(this);
         $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
 
         var html = this.template({ boardName: this._boardName });
@@ -54,7 +50,6 @@ $(document).ready(function() {
 
 
     postAComment: function(event){
-        console.log("in post comment");
         var message = $(this.el).find("#commentText").val();
         $(this.el).find("#commentText").val("");
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
