@@ -54,7 +54,6 @@ $(document).ready(function () {
         },
 
         doPoll:function () {
-            console.log("Polling every 5 seconds");
             var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
             this.ideas = ideasCollection.ideas;
 

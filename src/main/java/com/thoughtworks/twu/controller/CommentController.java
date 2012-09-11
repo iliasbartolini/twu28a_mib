@@ -14,24 +14,21 @@ import java.util.List;
 @Controller
 public class CommentController {
     ICommentService iCommentService;
-    public CommentController(){
 
+    public CommentController(){
+        this(new CommentService());
     }
+
     public CommentController(ICommentService iCommentService)
     {
          this.iCommentService = iCommentService;
     }
 
-    public void setICommentService(ICommentService iCommentService) {
-        this.iCommentService = iCommentService;
-    }
-
     @RequestMapping(value = "/mib/getComments",method = RequestMethod.GET)
     public @ResponseBody String getComments(@RequestParam(value = "board_id")Integer boardID) {
-        setICommentService(new CommentService());
         List<Comment> comments = iCommentService.getAllComments(boardID);
         if(comments.size()<=0)
-            return "{}";
+            return "{'comments': []}";
         return commentsToJson(comments);
     }
 
@@ -48,7 +45,6 @@ public class CommentController {
     @RequestMapping(value = "/mib/postComment",method = RequestMethod.POST)
     public @ResponseBody String postComment(@RequestParam(value = "board_id")Integer boardID,@RequestParam(value = "name")
                                 String name,@RequestParam(value = "comment") String comment) {
-         setICommentService(new CommentService());
         return createComment(boardID,name,comment);
     }
 

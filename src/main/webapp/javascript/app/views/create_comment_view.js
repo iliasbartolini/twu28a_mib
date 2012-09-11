@@ -20,15 +20,16 @@ $(document).ready(function() {
     },
 
     resetBinding:function(){
-        console.log("In Cancel");
+        console.log("In resetBinding");
         $(this.el).undelegate('#postBtn', 'click');
     },
 
-            render: function(){
+    render: function(){
         console.log("in render");
         $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
 
         var html = this.template({ boardName: this._boardName });
+
         $(this.el).find(this.container).html(html);
         return this;
     },
@@ -36,6 +37,7 @@ $(document).ready(function() {
     events: {
         "click #postBtn": "postAComment"
     },
+
 
     postAComment: function(event){
         console.log("in post comment");
