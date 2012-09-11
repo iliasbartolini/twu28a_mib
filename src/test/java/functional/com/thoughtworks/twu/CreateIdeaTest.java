@@ -27,9 +27,9 @@ public class CreateIdeaTest {
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
         return Arrays.asList(
-                new Object[][]{
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
+                new Object[][] {
+                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1") },
+                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5") }
                 }
         );
     }
@@ -53,6 +53,17 @@ public class CreateIdeaTest {
     }
 
     @Test
+    @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
+    public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
+        testHelper.navigateToCreateIdeaView();
+
+        addIdeaText("Functional test idea!");
+        submitIdea();
+
+        testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+    }
+    
+    @Test
     public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
         testHelper.navigateToCreateIdeaView();
 
@@ -74,7 +85,7 @@ public class CreateIdeaTest {
     }
 
     @Test
-    public void shouldSeeContributIdeaPageWithCorrectBoardName() {
+    public void shouldSeeContributeIdeaPageWithCorrectBoardName() {
         testHelper.navigateToCreateIdeaView();
 
         WebElement boardName = testHelper.findElementByTagName("h1");
@@ -95,16 +106,4 @@ public class CreateIdeaTest {
         WebElement button = testHelper.findElement(SUBMIT_BUTTON_SELECTOR);
         button.click();
     }
-
-    @Test
-    @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
-    public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        testHelper.navigateToCreateIdeaView();
-
-        addIdeaText("Functional test idea!");
-        submitIdea();
-
-        testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
-    }
-
 }
