@@ -62,6 +62,8 @@ $(document).ready(function () {
 
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardId}));
 
+            IdeaBoardz.Board.instance.currentSection = this.sectionId;
+
             this.stopListeningForChangeEventsForGetBoard();
             this.pollForIdeas();
         },

@@ -7,26 +7,38 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
+@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class CreateIdeaTest {
 
-    private FirefoxPreference firefoxPreference;
-    private TestHelper testHelper;
+    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3";
 
+    public static final int TIME_OUT_IN_SECONDS = 5;
+
+
+    private WebDriver webDriver;
+    private FirefoxPreference firefoxPreference;
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
         return Arrays.asList(
-                new Object[][]{
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
+                new Object[][] {
+                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1") },
+                        { new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5") }
                 }
         );
     }
@@ -36,86 +48,106 @@ public class CreateIdeaTest {
     }
 
     @Before
-    public void setUp() {
-        testHelper = new TestHelper(this.firefoxPreference);
+    public void setUp(){
+        FirefoxProfile firefoxProfile = new FirefoxProfile();
+        firefoxProfile.setPreference(firefoxPreference.name, firefoxPreference.value);
+
+        webDriver = new FirefoxDriver(firefoxProfile);
     }
 
     @Test
     public void shouldDisplayErrorOnEmptyIdea() {
-        testHelper.navigateToCreateIdeaView();
+        navigateToCreateIdeaView();
 
         submitIdea();
 
-        testHelper.assertDisplayedMessageIs("Please enter some text.");
-    }
-
-    @Test
-    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        testHelper.navigateToCreateIdeaView();
-
-        testHelper.waitForElement(By.id("ideaText"));
-
-        addIdeaText("Functional test idea!");
-
-        testHelper.waitForElement(By.id("submitBtn"));
-
-        submitIdea();
-
-        testHelper.waitForElement(By.id("alert-area"));
-
-        testHelper.assertDisplayedMessageIs("Your idea has been posted.");
-    }
-
-    @Test
-    public void shouldRemainOnCreateIdeaPageAfterSubmitting() {
-        testHelper.navigateToCreateIdeaView();
-        submitIdea();
-
-        String currentUrl = testHelper.getUrl();
-
-        assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
-
-        testHelper.waitForElement(By.id("ideaText"));
-        WebElement ideaTextBox = testHelper.findElement("ideaText");
-        assertEquals("", ideaTextBox.getText());
-    }
-
-    @Test
-    public void shouldSeeContributIdeaPageWithCorrectBoardName() {
-        testHelper.navigateToCreateIdeaView();
-
-        WebElement boardName = testHelper.findElementByTagName("h1");
-
-        assertEquals("MIBTEST", boardName.getText());
-
-    }
-
-    @After
-    public void tearDown() {
-        testHelper.closeWebDriver();
-    }
-
-    private void addIdeaText(String ideaText) {
-
-        WebElement message = testHelper.findElement("ideaText");
-        message.sendKeys(ideaText);
-    }
-
-    public void submitIdea() {
-        WebElement button = testHelper.findElement("submitBtn");
-        button.click();
+        assertDisplayedMessageIs("Please enter some text.");
     }
 
     @Test
     @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        testHelper.navigateToCreateIdeaView();
+        navigateToCreateIdeaView();
 
         addIdeaText("Functional test idea!");
 
         submitIdea();
 
-        testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+        assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+    }
+
+    @Test
+    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
+        navigateToCreateIdeaView();
+
+        addIdeaText("Functional test idea!");
+
+        submitIdea();
+
+        assertDisplayedMessageIs("Your idea has been posted.");
+    }
+
+    @After
+    public void tearDown(){
+        webDriver.close();
+    }
+
+    private void navigateToCreateIdeaView() {
+        webDriver.get(BOARD_URL);
+
+        By createIdeaButtonSelector = By.id("createIdeaBtn");
+        waitForElement(createIdeaButtonSelector);
+
+        webDriver.findElement(createIdeaButtonSelector).click();
+    }
+
+    private void submitIdea() {
+        WebElement button = webDriver.findElement(By.id("submitBtn"));
+        button.click();
+    }
+
+    private void addIdeaText(String ideaText) {
+        WebElement message = webDriver.findElement(By.id("ideaText"));
+        message.sendKeys(ideaText);
+    }
+
+    private void assertDisplayedMessageIs(String message) {
+        By alertAreaSelector = By.id("alert-area");
+        waitForText(message);
+        WebElement alertArea = webDriver.findElement(alertAreaSelector);
+        assertThat(alertArea.getText(), is(message));
+    }
+
+    private void waitForElement(final By elementSelector) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return !input.findElements(elementSelector).isEmpty();
+            }
+        });
+    }
+
+    private void waitForText(final String text) {
+        waitForCondition(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(@Nullable WebDriver input) {
+                return input.getPageSource().contains(text);
+            }
+        });
+    }
+
+    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
+        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
+    }
+
+    private static class FirefoxPreference {
+        private String name;
+        private String value;
+
+        private FirefoxPreference(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
     }
 
 }
