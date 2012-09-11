@@ -11,7 +11,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         });
     },
 
-    createIdea: function(message, callbacks) {
+    createIdea: function(sectionId, message, callbacks) {
         callbacks = callbacks || {};
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
@@ -20,7 +20,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         $.ajax({
             type : 'POST',
             context : context,
-            url : this.domain + '/points.json?point[section_id]=1&point[message]=' + encodeURIComponent(message),
+            url : this.domain + '/points.json?point[section_id]='+encodeURIComponent(sectionId)+'&point[message]=' + encodeURIComponent(message),
             success : success,
             error : error
         });
