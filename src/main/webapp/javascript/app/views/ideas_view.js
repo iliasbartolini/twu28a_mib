@@ -12,6 +12,7 @@ $(document).ready(function () {
         sectionName: null,
 
         initialize:function (container, boardName, boardId, sectionId) {
+
             this.container = container;
 
             this.sectionId = sectionId;

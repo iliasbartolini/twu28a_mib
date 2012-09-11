@@ -25,6 +25,7 @@ $(document).ready(function () {
         },
 
         render:function () {
+            updateQuickLinks(this)
             $(this.el).find('#container').html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
             this.requestBoardData();
         },
@@ -46,7 +47,6 @@ $(document).ready(function () {
             this.boardName = board.boardName;
             this.sections = board.sections;
 
-            // data received, unregister event
             IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
 
             this.renderSectionsList();
