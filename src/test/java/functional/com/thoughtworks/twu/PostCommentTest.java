@@ -41,6 +41,20 @@ public class PostCommentTest {
         testHelper.assertDisplayedMessageIs("Please enter a message");
     }
 
+    @Test
+    public void shouldShowCreatedComments() {
+        testHelper.navigateToMainBoardView();
+        String comment = String.valueOf(System.currentTimeMillis());
+        testHelper.addText("commentText", comment);
+
+        testHelper.clickElement(By.id("postBtn"));
+
+        testHelper.assertContent("commentArea", comment);
+
+        testHelper.refreshWebPage();
+        testHelper.assertContent("commentArea", comment);
+    }
+
     @After
     public void tearDown() {
         testHelper.closeWebDriver();

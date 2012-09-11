@@ -13,8 +13,8 @@ import javax.annotation.Nullable;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 public class TestHelper {
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
@@ -92,11 +92,14 @@ public class TestHelper {
     }
 
     public void assertDisplayedMessageIs(String message) {
-        By alertAreaSelector = By.id("alert-area");
-        waitForElement(alertAreaSelector);
+        assertContent("alert-area", message);
+    }
+
+    public void assertContent(String id, String message) {
+        By alertAreaSelector = By.id(id);
         waitForText(message);
         WebElement alertArea = webDriver.findElement(alertAreaSelector);
-        assertThat(alertArea.getText(), is(message));
+        assertThat(alertArea.getText(), containsString(message));
     }
 
     private void waitForText(final String text) {
@@ -112,7 +115,18 @@ public class TestHelper {
         return webDriver.findElement(By.tagName(tagName));
     }
 
-    List<WebElement> findElements() {
+    public void addText(String elementId, String ideaText) {
+        WebElement message = findElement(By.id(elementId));
+        message.sendKeys(ideaText);
+    }
+
+    public void refreshWebPage() {
+        webDriver.navigate().refresh();
+    }
+
+
+    List<WebElement> findElements()
+    {
         return webDriver.findElements(By.cssSelector("#sectionsList li a"));
     }
 
