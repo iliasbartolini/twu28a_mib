@@ -14,7 +14,6 @@ $(document).ready(function () {
         initialize:function (board, sectionId) {
             var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(board.id);
             this.ideas = ideasCollection.ideas;
-            console.log('in initialize of ideas view');
             this.boardName = board.boardName;
             this.boardId = board.id;
             this.sectionId = sectionId;
@@ -41,8 +40,6 @@ $(document).ready(function () {
         },
 
         populateStickies:function () {
-            console.log("in populateStickies");
-
             var sticky_html = "";
             for (var index = 0; index < this.ideas.length; index++) {
                 var idea = this.ideas[index];
@@ -54,7 +51,6 @@ $(document).ready(function () {
         },
 
         doPoll:function () {
-            console.log("Polling every 5 seconds");
             var ideasCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(this.boardId);
             this.ideas = ideasCollection.ideas;
 

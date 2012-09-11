@@ -13,12 +13,10 @@ $(document).ready(function() {
         },
 
         reRender:function(){
-            console.log("In Reload Elements");
             this.render();
         },
 
         initialize: function(container, boardName, id) {
-            console.log("in initialize");
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
@@ -29,12 +27,10 @@ $(document).ready(function() {
         },
 
         resetBinding:function(){
-            console.log("In Reset Binding");
             $(this.el).undelegate('#submitBtn', 'click');
         },
 
         render: function(){
-            console.log("in render");
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this.boardName, boardId:this.boardID}));
             var html = this.template({ boardName: this._boardName, boardId: this._boardID });
 
@@ -44,10 +40,8 @@ $(document).ready(function() {
         },
 
         submitIdea: function(event){
-            console.log("in submitIdea before call to createIdea");
             var message = $(this.el).find("#ideaText").val();
             message = this.trim(message);
-            console.log("Trimmed Message: " + message);
             if (message == '') this.showEmptyError();
             else {
                 IdeaBoardz.WebIdeaBoardz.instance.createIdea(message, {success: this.showSuccess, error: this.showError, context: this} );

@@ -101,8 +101,6 @@ describe("Web IdeaBoardz", function() {
         });
 
         var ideaCollection = IdeaBoardz.WebIdeaBoardz.instance.getIdeas(16);
-        console.log("in Test For Ideas");
-        console.log(ideaCollection);
         expect(ideaCollection.ideas[0].id).toBe(53874);
         expect(ideaCollection.ideas[1].id).toBe(53876);
         expect(ideaCollection.ideas.length).toBe(2);
