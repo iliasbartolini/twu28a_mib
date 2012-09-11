@@ -44,10 +44,6 @@ public class TestHelper {
         (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
     }
 
-    public void makeGetRequestForTheBoard(String boardUrl) {
-        navigateToUrl(boardUrl);
-    }
-
     public void navigateToUrl(String boardUrl) {
         webDriver.get(boardUrl);
     }
