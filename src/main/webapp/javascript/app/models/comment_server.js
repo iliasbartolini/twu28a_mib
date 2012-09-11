@@ -29,6 +29,7 @@ IdeaBoardz.CommentServer.prototype = {
 
         $.ajax({
             type:'GET',
+            dataType:'json',
             url:this.domain + '/mib/getComments?board_id=' + boardID,
             success:success
         })

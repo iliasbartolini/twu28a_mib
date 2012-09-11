@@ -11,8 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 public class TestHelper {
     public static final String BOARD_URL = "http://m.qa.ideaboardz.thoughtworks.com/#for/MIBTEST/4";
@@ -72,18 +72,17 @@ public class TestHelper {
 
     public void navigateToView(String boardUrl) {
         webDriver.get(boardUrl);
-
-        By postCommentButtonSelector = By.id("postBtn");
-        waitForElement(postCommentButtonSelector);
-
-        webDriver.findElement(postCommentButtonSelector).click();
     }
 
     public void assertDisplayedMessageIs(String message) {
-        By alertAreaSelector = By.id("alert-area");
+        assertContent("alert-area", message);
+    }
+
+    public void assertContent(String id, String message) {
+        By alertAreaSelector = By.id(id);
         waitForText(message);
         WebElement alertArea = webDriver.findElement(alertAreaSelector);
-        assertThat(alertArea.getText(), is(message));
+        assertThat(alertArea.getText(), containsString(message));
     }
 
     private void waitForText(final String text) {
@@ -98,6 +97,16 @@ public class TestHelper {
     public WebElement findElementByTagName(String tagName) {
         return webDriver.findElement(By.tagName(tagName));
     }
+
+    public void addText(String elementId, String ideaText) {
+        WebElement message = findElement(elementId);
+        message.sendKeys(ideaText);
+    }
+
+    public void refreshWebPage() {
+        webDriver.navigate().refresh();
+    }
+
 }
 
 
