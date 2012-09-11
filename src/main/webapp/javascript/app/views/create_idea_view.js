@@ -24,10 +24,10 @@ $(document).ready(function() {
             this.container = container;
             this._boardName = boardName;
             this._boardID = id;
+            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
             _.bindAll(this,"resetBinding");
             this.resetBinding();
             this.render();
-
         },
 
 

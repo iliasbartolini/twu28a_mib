@@ -21,6 +21,7 @@ $(document).ready(function () {
                 this.render();
             } else {
                 console.log("SOME BOARD IS DEFINED! RENDER DATA DIRECTLY");
+                clearTimeout(IdeaBoardz.Board.instance.timer);
                 this.updateBoardDetails(IdeaBoardz.Board.instance);
             }
 
@@ -47,6 +48,18 @@ $(document).ready(function () {
             IdeaBoardz.WebIdeaBoardz.instance.getBoard(this.boardName, this.boardID );
         },
 
+        updateBoardDetails:function(board){
+            console.log('update board details');
+            this.boardID = board.id;
+            this.boardName = board.boardName;
+            this.sections = board.sections;
+
+            // data received, unregister event
+            IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
+
+            this.renderSectionsList();
+        },
+
         renderSectionsList: function(){
             console.log('render the section list');
             this.customizeMenuLinks();
@@ -58,18 +71,6 @@ $(document).ready(function () {
                 sectionListHtml += this.sectionTemplate({sectionName:this.sections[i].name, sectionId:this.sections[i].id, boardName:this.boardName, boardId:this.boardID });
             }
             $(this.container).find('#sectionsList').html(sectionListHtml);
-        },
-
-        updateBoardDetails:function(board){
-            console.log('update board details');
-            this.boardID = board.id;
-            this.boardName = board.boardName;
-            this.sections = board.sections;
-
-            // data received, unregister event
-            IdeaBoardz.dispatcher.off("change:boardData", this.updateBoardDetails, this);
-
-            this.renderSectionsList();
         },
 
         customizeMenuLinks:function () {

@@ -5,6 +5,9 @@ IdeaBoardz.CommentView = Backbone.View.extend({
     initialize: function(message){
         console.log("in initialize of comment_view");
         this.message=message;
+
+        clearTimeout(IdeaBoardz.Board.instance.timer);
+
         this.render();
     },
 
