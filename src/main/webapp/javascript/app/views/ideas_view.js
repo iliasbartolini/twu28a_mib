@@ -12,9 +12,8 @@ $(document).ready(function () {
         sectionName: null,
 
         initialize:function (container, boardName, boardId, sectionId) {
-            console.log('in initialize of ideas view');
-
             this.container = container;
+
             this.sectionId = sectionId;
 
             if(IdeaBoardz.Board.instance === undefined) {
@@ -90,9 +89,7 @@ $(document).ready(function () {
         },
 
         populateStickies:function () {
-            console.log("in populateStickies");
             var ideas = IdeaBoardz.Board.instance.ideas;
-
             var sticky_html = "";
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];

@@ -1,4 +1,3 @@
-
 describe("Web IdeaBoardz", function() {
 
     it("should make ajax POST request with message in URL", function(){
@@ -110,5 +109,4 @@ describe("Web IdeaBoardz", function() {
 
         expect(IdeaBoardz.Board.instance.ideas).toBe(fakeJSON);
     });
-
 });
