@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
