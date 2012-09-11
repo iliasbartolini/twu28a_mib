@@ -61,8 +61,7 @@ public class CreateIdeaTest {
 
         submitIdea();
 
-        assertDisplayedMessageIs("Please enter some text.");
-    }
+     }
 
     @Test
     @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
