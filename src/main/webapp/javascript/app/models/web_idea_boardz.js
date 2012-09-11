@@ -35,7 +35,8 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
             type: 'GET',
             url : this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json',
             dataType : 'json',
-            success: success
+            success: success,
+            error: error
         });
     },
 
