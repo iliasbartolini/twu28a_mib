@@ -108,7 +108,7 @@ public class CreateIdeaTest {
 
         WebElement boardName = testHelper.findElementByTagName("h1");
 
-        assertEquals("MIBTEST", boardName.getText());
+        assertEquals("test", boardName.getText());
 
     }
 

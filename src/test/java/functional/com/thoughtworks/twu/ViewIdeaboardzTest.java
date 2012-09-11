@@ -7,14 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,13 +19,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 @Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3";
     public static final String INVALID_BOARD_URL = "http://m.ideaboardz.local/#for/invalidboard/9999";
-    public static final String BOARD_NAME = "test";
-    public static final int TIME_OUT_IN_SECONDS = 5;
 
-    private WebDriver webDriver;
+
     private FirefoxPreference firefoxPreference;
+    private TestHelper testHelper;
+
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -49,10 +42,7 @@ public class ViewIdeaboardzTest {
 
     @Before
     public void setUp(){
-        FirefoxProfile firefoxProfile = new FirefoxProfile();
-        firefoxProfile.setPreference(firefoxPreference.name, firefoxPreference.value);
-
-        webDriver = new FirefoxDriver(firefoxProfile);
+        testHelper=new TestHelper(this.firefoxPreference);
 
     }
 
@@ -63,9 +53,9 @@ public class ViewIdeaboardzTest {
         sectionNameList.add("What can be improved");
         sectionNameList.add("Action Items");
 
-        navigateToMainBoardPage();
+        testHelper.navigateToMainBoardPage();
 
-        List<WebElement> sectionItems = webDriver.findElements(By.cssSelector("#sectionsList li a"));
+        List<WebElement> sectionItems = testHelper.findElements();
 
         assertSectionNamesDisplayedAre(sectionNameList, sectionItems);
 
@@ -73,44 +63,42 @@ public class ViewIdeaboardzTest {
 
     @Test
     public void shouldDisplayBoardName(){
-        navigateToMainBoardPage();
+       testHelper.navigateToMainBoardPage();
 
-        WebElement heading = webDriver.findElement(By.id("boardName"));
+        WebElement heading =testHelper.findElement("boardName");
 
-        assertEquals(BOARD_NAME, heading.getText());
+        assertEquals(TestHelper.BOARD_NAME, heading.getText());
     }
 
     @Test
     public void shouldCustomizeMenuLinksAccordingToTheBoardURL(){
         List<String> menuLinks = new ArrayList<String>();
-        menuLinks.add(BOARD_URL);
-        menuLinks.add(BOARD_URL + "/comment");
-        menuLinks.add(BOARD_URL + "/createIdea");
-        navigateToMainBoardPage();
+        menuLinks.add(testHelper.BOARD_URL);
+        menuLinks.add(testHelper.BOARD_URL + "/comment");
+        menuLinks.add(testHelper.BOARD_URL + "/createIdea");
+        testHelper.navigateToMainBoardPage();
 
         List<WebElement> menuIcons = new ArrayList<WebElement>();
-        menuIcons.add(webDriver.findElement(By.id("logo")));
-        menuIcons.add(webDriver.findElement(By.id("commentBtn")));
-        menuIcons.add(webDriver.findElement(By.id("createIdeaBtn")));
+        menuIcons.add(testHelper.findElement("logo"));
+        menuIcons.add(testHelper.findElement("commentBtn"));
+        menuIcons.add(testHelper.findElement("createIdeaBtn"));
         assertMenuLinkCustomization(menuLinks, menuIcons);
     }
 
     @Test
     public void shouldShowErrorForInvalidBoardURL(){
-        webDriver.get(INVALID_BOARD_URL);
-        waitForElement(By.id("alert-area"));
-        assertTrue(webDriver.getPageSource().contains("No such board exists"));
+        testHelper.makeGetRequestForTheBoard(INVALID_BOARD_URL);
+        testHelper.waitForElement(By.id("alert-area"));
+        assertTrue(testHelper.contains("No such board exists"));
 
     }
 
-    private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
-        int index = 0;
-        for(WebElement element:menuIcons){
-            assertEquals(menuLinks.get(index), element.getAttribute("href"));
-            index++;
-        }
-    }
 
+    //@After
+    public void tearDown()
+    {
+        testHelper.closeWebDriver();
+    }
     private void assertSectionNamesDisplayedAre(List<String> expected, List<WebElement> actual) {
         int index = 0;
         for(WebElement element:actual){
@@ -120,36 +108,30 @@ public class ViewIdeaboardzTest {
 
     }
 
-    @After
-    public void tearDown(){
-        webDriver.close();
-    }
 
-    private void navigateToMainBoardPage() {
-        webDriver.get(BOARD_URL);
-        waitForElement(By.id("boardName"));
-    }
-
-    private void waitForElement(final By elementSelector) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return !input.findElements(elementSelector).isEmpty();
-            }
-        });
-    }
-
-    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
-    }
-
-    private static class FirefoxPreference {
-        private String name;
-        private String value;
-
-        private FirefoxPreference(String name, String value) {
-            this.name = name;
-            this.value = value;
+    private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
+        int index = 0;
+        for(WebElement element:menuIcons){
+            assertEquals(menuLinks.get(index), element.getAttribute("href"));
+            index++;
         }
     }
+
+    /*
+
+
+
+
+
+
+
+
+
+
+
+    */
+
+
+
+
 }
