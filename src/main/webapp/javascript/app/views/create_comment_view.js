@@ -17,7 +17,14 @@ $(document).ready(function() {
             this._boardName = boardName;
             this.container=container;
 
+<<<<<<< HEAD
+    events: {
+        "click #postBtn": "postAComment",
+        "click #commentBtn": "reRender"
+    },
+=======
             if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
+>>>>>>> e7eb21acb45e98d93de744c036211f170ff6e956
 
             _.bindAll(this,"resetBinding");
             this.resetBinding();

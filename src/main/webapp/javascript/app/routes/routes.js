@@ -20,18 +20,22 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
     },
 
     sectionsList: function(boardName, bid){
+        boardName=decodeURIComponent(boardName);
         var sectionsView = new IdeaBoardz.SectionsView("#container", boardName, bid);
     },
 
     ideasList: function(boardName, bid, sid){
+        boardName=decodeURIComponent(boardName);
         var ideasView = new IdeaBoardz.IdeasView("#container", boardName, bid, sid);
     },
 
     createIdea: function(boardName, bid){
+        boardName=decodeURIComponent(boardName);
         var createIdeaView = new IdeaBoardz.CreateIdeaView("#container", boardName, bid);
     },
 
     postComment: function (boardName, bid){
+        boardName=decodeURIComponent(boardName);
         var createCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
     }
 });
