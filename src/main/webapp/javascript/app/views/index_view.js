@@ -19,8 +19,6 @@ $(document).ready(function () {
         render:function () {
             $(this.el).find("#navigation").empty();
             $(this.el).find("#container").html(this.template());
-
-            return this;
         }
     });
 });

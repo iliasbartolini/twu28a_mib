@@ -82,16 +82,14 @@
             <h1><%= boardName %></h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
-                    <label for="sectionId">Add Idea to:</label>
-                    <select name="sectionId" id="sectionId">
-                    </select>
+                    <select name="sectionId" id="sectionId"></select>
                 </p>
                 <div id="alert-area" ></div>
                 <div class="sticky largeSticky">
                     <textarea name="ideaText"  id="ideaText"></textarea>
                 </div>
                 <div class="form_action">
-                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-primary btn-block">Submit Idea</button>
+                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
                 </div>
             </form>
         </div>
@@ -99,6 +97,7 @@
 
     <script type="text/template" id="template-comment">
         <div class="mib_content">
+            <h1 id="boardName"><%= boardName %></h1>
             <div id="alert-area" ></div>
             <form name="commentForm" action="" method="" class="postCommentForm">
                 <div class="comment_action">
@@ -124,8 +123,8 @@
 <div id="appWrapper">
     <div id="viewWrapper">
 
-        <div id="menu" class="mib_header navbar-fixed-top clearfix">
-            <a href="#" id="logo">IdeaBoardz</a>
+        <div id="menu" class="mib_header clearfix navbar-fixed-top">
+            <a href="#" id="logo" class="pull-left">IdeaBoardz</a>
             <div id="navigation" class="quick-links pull-right"></div>
         </div>
 
@@ -148,6 +147,7 @@
         .script("javascript/app/models/web_idea_boardz.js")
         .script("javascript/app/models/comment_server.js")
         .script("javascript/app/models/board.js")
+        .script("javascript/app/views/view_helper.js")
         .script("javascript/app/views/create_idea_view.js")
         .script("javascript/app/views/create_comment_view.js")
         .script("javascript/app/views/ideas_view.js")
