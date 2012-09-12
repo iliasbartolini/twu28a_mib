@@ -75,7 +75,6 @@ $(document).ready(function () {
         },
 
         renderIdeasList:function(ideas){
-            console.log("in render idea");
             var stickyHtml = "";
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];
@@ -85,7 +84,6 @@ $(document).ready(function () {
         },
 
         renderEmptySectionMessage:function(){
-            console.log("in empty message");
             var emptyMessageHtml = "<li class='emptyMessage'><a href='#for/"+this.board.name+"/"+this.board.id+"/createIdea'>Got any ideas?</a></li>";
             $(this.container).find('#ideasList').html(emptyMessageHtml);
         },
