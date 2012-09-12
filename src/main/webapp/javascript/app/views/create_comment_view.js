@@ -28,14 +28,20 @@ $(document).ready(function() {
                 success: this.successFunc
             });
 
+            this.doCommentsPoll();
+
+        },
+
+        doCommentsPoll : function(){
             var temp_boardID = this._boardID;
             var temp_pollForComments = this.pollSuccessFunc;
             this.timer = setInterval(function(){
-
-                IdeaBoardz.CommentServer.instance.getComments(temp_boardID, {success: temp_pollForComments})}
+                    IdeaBoardz.CommentServer.instance.getComments(temp_boardID, {success: temp_pollForComments})}
                 , 2000);
 
         },
+
+
 
         resetBinding:function(){
             $(this.el).undelegate('#postBtn', 'click');
