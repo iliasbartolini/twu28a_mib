@@ -91,6 +91,7 @@ public class TestHelper {
         By commentButton = By.id("commentBtn");
         waitForElement(commentButton);
         findElement(commentButton).click();
+        waitForElement(By.id("postBtn"));
     }
 
     public String getCurrentUrl() {

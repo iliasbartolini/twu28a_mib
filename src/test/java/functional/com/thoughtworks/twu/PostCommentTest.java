@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import java.util.Arrays;
 import java.util.List;
 
-@Ignore("Pending until Ankit/King can take a better look and fix")
 public class PostCommentTest {
     private TestHelper testHelper;
 
@@ -29,10 +28,11 @@ public class PostCommentTest {
 
     @Test
     public void shouldShowCreatedComments() {
-        testHelper.navigateToMainBoardView();
-        String comment = String.valueOf(System.currentTimeMillis());
-        testHelper.addText("commentText", comment);
+        testHelper.navigateToCommentView();
 
+        String comment = String.valueOf(System.currentTimeMillis());
+
+        testHelper.addText("commentText", comment);
         testHelper.clickElement(By.id("postBtn"));
 
         testHelper.assertContent("commentArea", comment);
