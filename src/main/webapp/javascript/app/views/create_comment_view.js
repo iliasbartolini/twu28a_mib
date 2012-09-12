@@ -29,7 +29,7 @@ $(document).ready(function() {
         _.bindAll(this,"resetBinding");
         this.resetBinding();
         this.render();
-        IdeaBoardz.CommentServer.instance.getComments(this._boardID);
+        IdeaBoardz.CommentServer.instance.getComments(this._boardID, {success: this.successFunc});
 
     },
 
@@ -62,8 +62,12 @@ $(document).ready(function() {
 
     showEmptyError: function(){
         $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'><p>Please enter a message</p></div>"));
-    }
+    },
 
+        successFunc: function (data) {
+            for(i = 0; i < data.comments.length; i++) {
+                new IdeaBoardz.CommentView(data.comments[i].comment);
+            }
+        }
     });
-
 });

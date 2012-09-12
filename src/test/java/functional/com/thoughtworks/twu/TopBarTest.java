@@ -6,14 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,29 +34,22 @@ public class TopBarTest {
     }
 
     @Before
-    public void setUp(){
-
-         testHelper=new TestHelper(this.firefoxPreference);
-
-
+    public void setUp() {
+        testHelper = new TestHelper(this.firefoxPreference);
     }
 
     @Test
-    public void shouldNavigateToCreateIdeaView()
-    {
+    public void shouldNavigateToCreateIdeaView() {
         testHelper.navigateToCreateIdeaView();
 
-        String currentUrl= testHelper.getUrl();
+        String currentUrl = testHelper.getCurrentUrl();
 
         assertEquals(testHelper.BOARD_URL + "/createIdea", currentUrl);
     }
 
-
-
     @After
-    public void tearDown()
-    {
-       testHelper.closeWebDriver();
+    public void tearDown() {
+        testHelper.closeWebDriver();
     }
 
 }
