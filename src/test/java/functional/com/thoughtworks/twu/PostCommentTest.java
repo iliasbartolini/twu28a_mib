@@ -11,29 +11,13 @@ import org.openqa.selenium.By;
 import java.util.Arrays;
 import java.util.List;
 
-@RunWith(Parameterized.class)
 @Ignore("Pending until Ankit/King can take a better look and fix")
 public class PostCommentTest {
     private TestHelper testHelper;
-    private FirefoxPreference firefoxPreference;
-
-    @Parameterized.Parameters
-    public static List<Object[]> firefoxPreferences() {
-        return Arrays.asList(
-                new Object[][]{
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
-                }
-        );
-    }
 
     @Before
     public void setUp(){
-        testHelper=new TestHelper(this.firefoxPreference);
-    }
-
-    public PostCommentTest(FirefoxPreference firefoxPreference) {
-        this.firefoxPreference = firefoxPreference;
+        testHelper = new TestHelper(FirefoxPreference.ANDROID_FIREFOX_PREFERENCE);
     }
 
     @Test

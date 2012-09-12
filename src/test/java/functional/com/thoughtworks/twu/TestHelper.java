@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertThat;
@@ -29,6 +30,15 @@ public class TestHelper {
         firefoxProfile.setPreference(firefoxPreference.getName(), firefoxPreference.getValue());
         this.webDriver = new FirefoxDriver(firefoxProfile);
 
+    }
+
+    public static List<Object[]> getFirefoxPreferences() {
+        return Arrays.asList(
+                new Object[][]{
+                        {FirefoxPreference.ANDROID_FIREFOX_PREFERENCE},
+                        {FirefoxPreference.IOS_FIREFOX_PREFERENCE}
+                }
+        );
     }
 
     public void waitForElement(final By elementSelector) {
