@@ -2,6 +2,7 @@ package functional.com.thoughtworks.twu;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -58,7 +59,7 @@ public class ViewIdeaboardzTest {
         testHelper.navigateToMainBoardView();
 
         List<WebElement> menuIcons = new ArrayList<WebElement>();
-        menuIcons.add(testHelper.findElement(By.id("logo")));
+        menuIcons.add(testHelper.findElement(By.id("sectionsBtn")));
         menuIcons.add(testHelper.findElement(By.id("commentBtn")));
         menuIcons.add(testHelper.findElement(By.id("createIdeaBtn")));
         assertMenuLinkCustomization(menuLinks, menuIcons);
