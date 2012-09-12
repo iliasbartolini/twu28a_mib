@@ -17,7 +17,9 @@ $(document).ready(function() {
             this._boardName = boardName;
             this.container=container;
 
-            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
+            if (IdeaBoardz.Board.instance) {
+                clearTimeout(IdeaBoardz.Board.instance.timer);
+            }
 
             _.bindAll(this,"resetBinding");
             this.resetBinding();
