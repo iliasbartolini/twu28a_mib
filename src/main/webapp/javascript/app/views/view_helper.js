@@ -4,6 +4,7 @@ IdeaBoardz.dispatcher = _.clone(Backbone.Events);
 IdeaBoardz.ViewHelper = function(currentView, renderBoardCallback) {
     this.currentView = currentView;
     this.renderBoardCallback = renderBoardCallback;
+    this.helperContext = this;
 }
 
 IdeaBoardz.ViewHelper.prototype = {
@@ -12,7 +13,7 @@ IdeaBoardz.ViewHelper.prototype = {
     getBoardForCurrentView: function(boardName, boardId){
         var board = IdeaBoardz.Board.instance;
 
-        if(board == undefined || board.name != boardName || board.id != boardId) {
+        if(board === undefined || board.name != boardName || board.id != boardId) {
             IdeaBoardz.Board.instance = null;
             this.renderPlaceHolder();
             this.requestBoardData(boardName, boardId);
@@ -28,7 +29,7 @@ IdeaBoardz.ViewHelper.prototype = {
             success: function(data){
                 IdeaBoardz.dispatcher.trigger('success:boardData', data);
             },
-            error: function(messsage){
+            error: function(message){
                 IdeaBoardz.dispatcher.trigger('error:boardData');
             }
         });
@@ -66,6 +67,8 @@ IdeaBoardz.ViewHelper.prototype = {
                 boardId:board.id
             })
         );
+        $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
+        $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
     },
 
     startListeningToGetBoardEvents: function(){

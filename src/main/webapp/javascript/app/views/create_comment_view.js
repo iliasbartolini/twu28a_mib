@@ -18,8 +18,9 @@ $(document).ready(function() {
             this._boardID = id;
             this._boardName = boardName;
             this.container=container;
-
-            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
+            if (IdeaBoardz.Board.instance) {
+                clearTimeout(IdeaBoardz.Board.instance.timer);
+            }
 
             _.bindAll(this,"resetBinding");
             this.resetBinding();
@@ -49,10 +50,14 @@ $(document).ready(function() {
 
         render: function(){
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
+            $(this.el).find(this.container).html(html);
+
+            // change top menu to be not-fixed
+            $(this.el).find('#menu').removeClass('navbar-fixed-top');
+            $(this.el).find('.mib_content').addClass('content-pull-up');
 
             var html = this.template({ boardName: this._boardName });
 
-            $(this.el).find(this.container).html(html);
             return this;
         },
 
@@ -64,8 +69,10 @@ $(document).ready(function() {
                 this.showEmptyError();
                 return false;
             }
+
         IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
             return false;
+
         },
 
         showEmptyError: function(){

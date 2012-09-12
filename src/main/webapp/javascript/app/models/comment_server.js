@@ -41,4 +41,4 @@ IdeaBoardz.CommentServer.prototype = {
 }
 
 
-IdeaBoardz.CommentServer.instance = new IdeaBoardz.CommentServer("http://m.ideaboardz.local/commentapi");
+IdeaBoardz.CommentServer.instance = new IdeaBoardz.CommentServer("/commentapi");

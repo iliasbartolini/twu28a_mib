@@ -43,12 +43,12 @@ $(document).ready(function () {
         },
 
         startListeningToGetIdeasEvents:function () {
-            IdeaBoardz.dispatcher.on("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.on("change:ideasData", this.renderSection, this);
             IdeaBoardz.dispatcher.on("error:ideasData", this.renderIdeasErrorNotice, this);
         },
 
         stopListeningToGetIdeasEvents:function () {
-            IdeaBoardz.dispatcher.off("change:ideasData", this.renderIdeasList, this);
+            IdeaBoardz.dispatcher.off("change:ideasData", this.renderSection, this);
             IdeaBoardz.dispatcher.off("error:ideasData", this.renderIdeasErrorNotice, this);
         },
 
@@ -61,17 +61,44 @@ $(document).ready(function () {
             }
         },
 
-        renderIdeasList:function () {
-            this.stopListeningToGetIdeasEvents();
+        getIdeasListForThisSection: function(){
             var ideas = IdeaBoardz.Board.instance.ideas;
-            var stickyHtml = "";
+            var ideasInThisSection = [];
+
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];
                 if (idea.section_id == this.sectionId) {
-                    stickyHtml = this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count}) + stickyHtml;
+                    ideasInThisSection.push(idea);
                 }
             }
+            return ideasInThisSection;
+        },
+
+        renderIdeasList:function(ideas){
+            console.log("in render idea");
+            var stickyHtml = "";
+            for (var index = 0; index < ideas.length; index++) {
+                var idea = ideas[index];
+                stickyHtml += this.ideaTemplate({ideaText:idea.message, vote_count:idea.votes_count});
+            }
             $(this.container).find('#ideasList').html(stickyHtml);
+        },
+
+        renderEmptySectionMessage:function(){
+            console.log("in empty message");
+            var emptyMessageHtml = "<li class='emptyMessage'><a href='#for/"+this.board.name+"/"+this.board.id+"/createIdea'>Got any ideas?</a></li>";
+            $(this.container).find('#ideasList').html(emptyMessageHtml);
+        },
+
+        renderSection:function () {
+            this.stopListeningToGetIdeasEvents();
+            var ideasInThisSection = this.getIdeasListForThisSection();
+
+            if (ideasInThisSection.length == 0){
+                this.renderEmptySectionMessage();
+            } else {
+                this.renderIdeasList(ideasInThisSection);
+            }
         },
 
         renderIdeasErrorNotice: function() {
