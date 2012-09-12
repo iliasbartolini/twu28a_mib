@@ -32,8 +32,10 @@ IdeaBoardz.CommentServer.prototype = {
             dataType:'json',
             url:this.domain + '/mib/getComments?board_id=' + boardID,
             success:success
-        })
+        });
     }
+
+
 
 
 }
