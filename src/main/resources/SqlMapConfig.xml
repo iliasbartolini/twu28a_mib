@@ -11,8 +11,8 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql://localhost:3306/ideaboardz"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="username" value="retro"/>
+                <property name="password" value=""/>
             </dataSource>
         </environment>
     </environments>
