@@ -17,7 +17,6 @@ IdeaBoardz.ViewHelper.prototype = {
             this.renderPlaceHolder();
             this.requestBoardData(boardName, boardId);
         } else {
-            console.log("board defined");
             clearTimeout(IdeaBoardz.Board.instance.timer);
             this.renderView();
         }
