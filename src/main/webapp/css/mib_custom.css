@@ -4,12 +4,16 @@
     src: url("Handlee-Regular.ttf");
 }
 
+@font-face {
+    font-family: "Handwritten";
+    src: url("Handwritten_Crystal_v2.ttf");
+}
 /* COMMON STYLES
 ---------------------------------------------------- */
 
 body {
     font-family:'Handlee', helvetica, cursive;
-    font-size:120%;
+    font-size:125%;
     padding: 0;
     margin: 0;
 }
@@ -37,6 +41,8 @@ body {
     border-radius: 5px 5px 20px 5px;
     -moz-border-radius: 4px 4px 15px 4px;
     -webkit-border-radius: 4px 4px 15px 4px;
+    padding-left: 15px;
+    margin: 10px;
 }
 
 .small-sticky {
@@ -49,10 +55,17 @@ body {
     margin-top:10px;
 }
 
-.alert-error {
+.alert-error{
+    background-color: pink;
+    color: red;
+}
+.index-board {
     background-color: #ffffff;
     border: #696969 solid 5px;
+    border-radius: 15px 15px 15px 15px;
     color: #000000;
+    font-family: Handwritten;
+    font-size: 120%;
 }
 
 /* PLACE HOLDER VIEW
@@ -124,7 +137,10 @@ body {
 .template_index .sticky {
     cursor: default;
 }
-
+.template_index li{
+    line-height: 23px;
+    font-weight: normal;
+}
 .largeSticky {
     min-height: 80px;
     padding: 10px;
@@ -145,7 +161,6 @@ body {
     border: none;
     box-shadow: none;
 }
-
 
 /* HEADER - FIXED TOP MENU
 ---------------------------------------------------- */
