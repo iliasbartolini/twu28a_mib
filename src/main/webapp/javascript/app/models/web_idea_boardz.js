@@ -61,5 +61,5 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
     }
 }
 
-IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://m.ideaboardz.local/api");
+IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("/api");
 
