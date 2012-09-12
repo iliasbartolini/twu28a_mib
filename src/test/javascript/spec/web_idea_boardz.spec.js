@@ -145,4 +145,11 @@ describe("Web IdeaBoardz", function() {
 
         expect(IdeaBoardz.Board.instance.ideas).toBe(fakeJSON);
     });
+
+
+
+    it("should make ajax GET request with spaces in Ideaboard Name on the URL",function(){
+
+
+    });
 });
