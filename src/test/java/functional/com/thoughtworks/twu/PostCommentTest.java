@@ -2,6 +2,7 @@ package functional.com.thoughtworks.twu;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(Parameterized.class)
+@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class PostCommentTest {
     private TestHelper testHelper;
     private FirefoxPreference firefoxPreference;

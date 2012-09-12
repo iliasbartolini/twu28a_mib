@@ -79,7 +79,7 @@ public class ViewIdeaboardzTest {
         testHelper.navigateToMainBoardPage();
 
         List<WebElement> menuIcons = new ArrayList<WebElement>();
-        menuIcons.add(testHelper.findElement("logo"));
+        menuIcons.add(testHelper.findElement("sectionsBtn"));
         menuIcons.add(testHelper.findElement("commentBtn"));
         menuIcons.add(testHelper.findElement("createIdeaBtn"));
         assertMenuLinkCustomization(menuLinks, menuIcons);
