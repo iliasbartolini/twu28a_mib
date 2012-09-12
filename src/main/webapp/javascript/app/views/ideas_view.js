@@ -3,6 +3,7 @@ $(document).ready(function () {
     IdeaBoardz.IdeasView = Backbone.View.extend({
         el:$('#viewWrapper'),
         template:_.template($('#template-ideasView').html()),
+        navigationTemplate:_.template($("#template-navigation").html()),
         ideaTemplate:_.template($('#template-stickyView').html()),
         container: null,
         board: null,
