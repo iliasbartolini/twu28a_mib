@@ -2,7 +2,7 @@ IdeaBoardz.WebIdeaBoardz = function(domain,comments) {
     this.domain = domain;
 }
 
-function ajaxGetRequest(type,context, url, dataType, success, error) {
+function ajaxGetRequest(type, context, url, dataType, success, error) {
     $.ajax({
         type:type,
         context:context,
@@ -31,6 +31,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
 
         var url = this.domain + '/points.json?point[section_id]='+encodeURIComponent(sectionId)+'&point[message]=' + encodeURIComponent(message);
         var type = 'POST';
+
         ajaxPostRequest(type, context, url, success, error);
     },
 
@@ -44,6 +45,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         var url = this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json';
         var type = 'GET';
         var dataType = 'json';
+
         ajaxGetRequest(type, context, url, dataType, success, error);
     },
 
