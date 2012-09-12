@@ -124,32 +124,6 @@ describe("Web IdeaBoardz", function() {
         spyOn(IdeaBoardz, 'Board');
         expect(IdeaBoardz.Board).toHaveBeenCalledWith("mibimmmm", 16, [{"name":"What went well","id":33},{"name":"What can be improved","id":34},{"name":"Action Items","id":35}]);
     });
-    
-    xit("should collect all the Ideas in a board when getIdeas is called", function(){
-        IdeaBoardz.Board.instance = new IdeaBoardz.Board("name", 16, []);
-
-        var fakeJSON=[{"created_at":"2012/08/31 15:38:51 +0000","updated_at":"2012/08/31 15:39:06 +0000",
-                "section_id":4,"id":53874,"message":"work on multiple stories \n\nwork with claim status story",
-                "votes_count":4} ,
-
-            {"created_at":"2012/08/31 15:39:45 +0000",
-                "updated_at":"2012/08/31 16:05:39 +0000","section_id":4,"id":53876,
-                "message":"good communication wiht BO grooming is good","votes_count":3}]  ;
-
-
-
-        spyOn($, 'ajax').andCallFake(function(options){
-            options.success(fakeJSON);
-        });
-
-        spyOn(IdeaBoardz.dispatcher, 'trigger').andCallFake(function(options){
-        });
-        IdeaBoardz.WebIdeaBoardz.instance.getIdeas(IdeaBoardz.Board.instance.id);
-
-        expect(IdeaBoardz.Board.instance.ideas).toBe(fakeJSON);
-    });
-
-
 
     it("should make ajax GET request with spaces in Ideaboard Name on the URL",function(){
         //arrange
@@ -178,5 +152,7 @@ describe("Web IdeaBoardz", function() {
         expect(($.ajax).mostRecentCall.args[0].type).toEqual("GET");
         expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain+"/for/Funcky!!!!%20Style***%20Board%24%24%24%20Name%40%40/1.json" );
     });
+
+
 
 });
