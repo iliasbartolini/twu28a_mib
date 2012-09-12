@@ -7,32 +7,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class CreateIdeaTest {
 
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3";
+    public static final By IDEA_TEXT_SELECTOR = By.id("ideaText");
+    public static final By SUBMIT_BUTTON_SELECTOR = By.id("submitBtn");
 
-    public static final int TIME_OUT_IN_SECONDS = 5;
-
-
-    private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
+    private TestHelper testHelper;
+
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -49,106 +39,71 @@ public class CreateIdeaTest {
     }
 
     @Before
-    public void setUp(){
-        FirefoxProfile firefoxProfile = new FirefoxProfile();
-        firefoxProfile.setPreference(firefoxPreference.name, firefoxPreference.value);
-
-        webDriver = new FirefoxDriver(firefoxProfile);
+    public void setUp() {
+        testHelper = new TestHelper(this.firefoxPreference);
     }
 
     @Test
     public void shouldDisplayErrorOnEmptyIdea() {
-        navigateToCreateIdeaView();
+        testHelper.navigateToCreateIdeaView();
 
         submitIdea();
 
-        assertDisplayedMessageIs("Please enter some text.");
+        testHelper.assertDisplayedMessageIs("Please enter some text.");
     }
 
     @Test
     @Ignore("ignored because we cannot control making the IdeaBoardz app fail")
     public void shouldShowErrorMessageAfterFailedSubmission() throws Exception {
-        navigateToCreateIdeaView();
+        testHelper.navigateToCreateIdeaView();
 
         addIdeaText("Functional test idea!");
-
         submitIdea();
 
-        assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+        testHelper.assertDisplayedMessageIs("Failed to submit. Please try again in some time.");
+    }
+    
+    @Test
+    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
+        testHelper.navigateToCreateIdeaView();
+
+        addIdeaText("Functional test idea!");
+        submitIdea();
+
+        testHelper.assertDisplayedMessageIs("Your idea has been posted.");
     }
 
     @Test
-    public void shouldShowCreatedMessageAfterSubmissionOfIdea() {
-        navigateToCreateIdeaView();
-
-        addIdeaText("Functional test idea!");
-
+    public void shouldRemainOnCreateIdeaPageAfterSubmitting() {
+        testHelper.navigateToCreateIdeaView();
         submitIdea();
 
-        assertDisplayedMessageIs("Your idea has been posted.");
+        assertEquals(testHelper.BOARD_URL + "/createIdea", testHelper.getCurrentUrl());
+
+        WebElement ideaTextBox = testHelper.findElement(IDEA_TEXT_SELECTOR);
+        assertEquals("", ideaTextBox.getText());
+    }
+
+    @Test
+    public void shouldSeeContributeIdeaPageWithCorrectBoardName() {
+        testHelper.navigateToCreateIdeaView();
+
+        WebElement boardName = testHelper.findElementByTagName("h1");
+        assertEquals("test", boardName.getText());
     }
 
     @After
-    public void tearDown(){
-        webDriver.close();
-    }
-
-    private void navigateToCreateIdeaView() {
-        webDriver.get(BOARD_URL);
-
-        By createIdeaButtonSelector = By.id("createIdeaBtn");
-        waitForElement(createIdeaButtonSelector);
-
-        webDriver.findElement(createIdeaButtonSelector).click();
-    }
-
-    private void submitIdea() {
-        WebElement button = webDriver.findElement(By.id("submitBtn"));
-        button.click();
+    public void tearDown() {
+        testHelper.closeWebDriver();
     }
 
     private void addIdeaText(String ideaText) {
-        WebElement message = webDriver.findElement(By.id("ideaText"));
+        WebElement message = testHelper.findElement(IDEA_TEXT_SELECTOR);
         message.sendKeys(ideaText);
     }
 
-    private void assertDisplayedMessageIs(String message) {
-        By alertAreaSelector = By.id("alert-area");
-        waitForText(message);
-        WebElement alertArea = webDriver.findElement(alertAreaSelector);
-        assertThat(alertArea.getText(), is(message));
+    public void submitIdea() {
+        WebElement button = testHelper.findElement(SUBMIT_BUTTON_SELECTOR);
+        button.click();
     }
-
-    private void waitForElement(final By elementSelector) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return !input.findElements(elementSelector).isEmpty();
-            }
-        });
-    }
-
-    private void waitForText(final String text) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return input.getPageSource().contains(text);
-            }
-        });
-    }
-
-    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
-    }
-
-    private static class FirefoxPreference {
-        private String name;
-        private String value;
-
-        private FirefoxPreference(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
-    }
-
 }
