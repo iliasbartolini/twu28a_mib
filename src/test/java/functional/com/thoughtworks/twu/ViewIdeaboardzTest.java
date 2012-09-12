@@ -16,31 +16,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(Parameterized.class)
 public class ViewIdeaboardzTest {
 
-    private FirefoxPreference firefoxPreference;
     private TestHelper testHelper;
 
 
-    @Parameterized.Parameters
-    public static List<Object[]> firefoxPreferences() {
-        return Arrays.asList(
-                new Object[][]{
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1")},
-                        {new FirefoxPreference("general.useragent.override", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5")}
-                }
-        );
-    }
-
-    public ViewIdeaboardzTest(FirefoxPreference firefoxPreference) {
-        this.firefoxPreference = firefoxPreference;
-    }
-
     @Before
     public void setUp() {
-        testHelper = new TestHelper(this.firefoxPreference);
-
+        testHelper = new TestHelper(FirefoxPreference.ANDROID_FIREFOX_PREFERENCE);
     }
 
     @Test
