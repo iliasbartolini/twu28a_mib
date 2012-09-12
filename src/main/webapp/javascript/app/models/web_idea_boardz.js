@@ -2,6 +2,25 @@ IdeaBoardz.WebIdeaBoardz = function(domain,comments) {
     this.domain = domain;
 }
 
+function ajaxGetRequest(type,context, url, dataType, success, error) {
+    $.ajax({
+        type:type,
+        context:context,
+        url:url,
+        dataType:dataType,
+        success:success,
+        error:error
+    });
+}
+function ajaxPostRequest(type, context, url, success, error) {
+    $.ajax({
+        type:type,
+        context:context,
+        url:url,
+        success:success,
+        error:error
+    });
+}
 IdeaBoardz.WebIdeaBoardz.prototype = {
 
     createIdea: function(sectionId, message, callbacks) {
@@ -10,44 +29,37 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         var error = callbacks.error || function() {};
         var context = callbacks.context;
 
-        $.ajax({
-            type : 'POST',
-            url : this.domain + '/points.json?point[section_id]='+encodeURIComponent(sectionId)+'&point[message]=' + encodeURIComponent(message),
-            context : context,
-            success : success,
-            error : error
-        });
+        var url = this.domain + '/points.json?point[section_id]='+encodeURIComponent(sectionId)+'&point[message]=' + encodeURIComponent(message);
+        var type = 'POST';
+        ajaxPostRequest(type, context, url, success, error);
     },
 
     getBoard: function(boardName, boardId, callbacks) {
         callbacks = callbacks || {};
+        var context = callbacks.context;
+
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
 
-        $.ajax({
-            type: 'GET',
-            url : this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json',
-            dataType : 'json',
-            success: success,
-            error: error
-        });
+        var url = this.domain + '/for/' + encodeURIComponent(boardName) + '/' + boardId + '.json';
+        var type = 'GET';
+        var dataType = 'json';
+        ajaxGetRequest(type, context, url, dataType, success, error);
     },
 
-    getIdeas : function(boardID, callbacks){
+    getIdeas : function(boardID, callbacks){    0
         callbacks = callbacks || {};
+        var context = callbacks.context;
+
         var success = callbacks.success || function() {};
         var error = callbacks.error || function() {};
 
-        $.ajax({
-            type: 'GET',
-            url : this.domain + '/retros/' + boardID + '/points.json',
-            dataType : 'json',
-            success : success,
-            error: error
-        });
-
+        var url = this.domain + '/retros/' + boardID + '/points.json';
+        var type = 'GET';
+        var dataType = 'json';
+        ajaxGetRequest(type, context, url, dataType, success, error);
     }
 }
 
-IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("http://m.ideaboardz.local/api");
+IdeaBoardz.WebIdeaBoardz.instance = new IdeaBoardz.WebIdeaBoardz("/api");
 
