@@ -33,6 +33,21 @@ IdeaBoardz.CommentServer.prototype = {
             url:this.domain + '/mib/getComments?board_id=' + boardID,
             success:success
         })
+    },
+
+    getCommentsCount:function(boardID, callbacks) {
+        callbacks = callbacks || {};
+        var returnVal;
+
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url:this.domain + '/mib/getCommentsCount?board_id=' + boardID,
+            success: function(data) {
+                returnVal = data.count;
+            }
+        })
+        return returnVal;
     }
 
 

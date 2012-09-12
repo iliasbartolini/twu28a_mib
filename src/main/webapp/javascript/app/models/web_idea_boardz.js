@@ -47,7 +47,7 @@ IdeaBoardz.WebIdeaBoardz.prototype = {
         ajaxGetRequest(type, context, url, dataType, success, error);
     },
 
-    getIdeas : function(boardID, callbacks){    0
+    getIdeas : function(boardID, callbacks){
         callbacks = callbacks || {};
         var context = callbacks.context;
 
