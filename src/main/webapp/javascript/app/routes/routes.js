@@ -1,7 +1,3 @@
-
-// Initialize Global Dispatcher
-IdeaBoardz.dispatcher = _.clone(Backbone.Events);
-
 IdeaBoardz.AppRouter = Backbone.Router.extend({
     routes: {
         "": "index", // http://localhost/
