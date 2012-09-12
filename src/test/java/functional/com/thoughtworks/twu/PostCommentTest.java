@@ -6,16 +6,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
+@Ignore("Pending until Ankit/King can take a better look and fix")
 public class PostCommentTest {
     private TestHelper testHelper;
     private FirefoxPreference firefoxPreference;
-    private static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/3/comment";
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -26,7 +26,6 @@ public class PostCommentTest {
                 }
         );
     }
-
 
     @Before
     public void setUp(){
@@ -39,9 +38,23 @@ public class PostCommentTest {
 
     @Test
     public void shouldShowErrorMessageWhenPostEmptyComment() {
-        testHelper.navigateToView(BOARD_URL);
-        testHelper.clickElement("postBtn");
+        testHelper.navigateToCommentView();
+        testHelper.clickElement(By.id("postBtn"));
         testHelper.assertDisplayedMessageIs("Please enter a message");
+    }
+
+    @Test
+    public void shouldShowCreatedComments() {
+        testHelper.navigateToMainBoardView();
+        String comment = String.valueOf(System.currentTimeMillis());
+        testHelper.addText("commentText", comment);
+
+        testHelper.clickElement(By.id("postBtn"));
+
+        testHelper.assertContent("commentArea", comment);
+
+        testHelper.refreshWebPage();
+        testHelper.assertContent("commentArea", comment);
     }
 
     @After

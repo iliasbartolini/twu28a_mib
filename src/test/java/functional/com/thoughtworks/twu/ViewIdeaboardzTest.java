@@ -17,10 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewIdeaboardzTest {
-    public static final String INVALID_BOARD_URL = "http://m.ideaboardz.local/#for/invalidboard/9999";
-
 
     private FirefoxPreference firefoxPreference;
     private TestHelper testHelper;
@@ -41,19 +38,19 @@ public class ViewIdeaboardzTest {
     }
 
     @Before
-    public void setUp(){
-        testHelper=new TestHelper(this.firefoxPreference);
+    public void setUp() {
+        testHelper = new TestHelper(this.firefoxPreference);
 
     }
 
     @Test
-    public void shouldDisplayNamesOfAllSectionsIfBoardURLValid(){
+    public void shouldDisplayNamesOfAllSectionsIfBoardURLValid() {
         List<String> sectionNameList = new ArrayList<String>();
-        sectionNameList.add("What went well");
-        sectionNameList.add("What can be improved");
+        sectionNameList.add("Went Well");
+        sectionNameList.add("Didn't Go Well");
         sectionNameList.add("Action Items");
 
-        testHelper.navigateToMainBoardPage();
+        testHelper.navigateToMainBoardView();
 
         List<WebElement> sectionItems = testHelper.findElements();
 
@@ -62,76 +59,57 @@ public class ViewIdeaboardzTest {
     }
 
     @Test
-    public void shouldDisplayBoardName(){
-       testHelper.navigateToMainBoardPage();
+    public void shouldDisplayBoardName() {
+        testHelper.navigateToMainBoardView();
 
-        WebElement heading =testHelper.findElement("boardName");
+        WebElement heading = testHelper.findElement(By.id("boardName"));
 
         assertEquals(TestHelper.BOARD_NAME, heading.getText());
     }
 
     @Test
-    public void shouldCustomizeMenuLinksAccordingToTheBoardURL(){
+    public void shouldCustomizeMenuLinksAccordingToTheBoardURL() {
         List<String> menuLinks = new ArrayList<String>();
         menuLinks.add(testHelper.BOARD_URL);
         menuLinks.add(testHelper.BOARD_URL + "/comment");
         menuLinks.add(testHelper.BOARD_URL + "/createIdea");
-        testHelper.navigateToMainBoardPage();
+        testHelper.navigateToMainBoardView();
 
         List<WebElement> menuIcons = new ArrayList<WebElement>();
-        menuIcons.add(testHelper.findElement("sectionsBtn"));
-        menuIcons.add(testHelper.findElement("commentBtn"));
-        menuIcons.add(testHelper.findElement("createIdeaBtn"));
+        menuIcons.add(testHelper.findElement(By.id("sectionsBtn")));
+        menuIcons.add(testHelper.findElement(By.id("commentBtn")));
+        menuIcons.add(testHelper.findElement(By.id("createIdeaBtn")));
         assertMenuLinkCustomization(menuLinks, menuIcons);
     }
 
     @Test
-    public void shouldShowErrorForInvalidBoardURL(){
-        testHelper.makeGetRequestForTheBoard(INVALID_BOARD_URL);
+    public void shouldShowErrorForInvalidBoardURL() {
+        testHelper.navigateToUrl(testHelper.BOARD_URL + "99999abcde");
         testHelper.waitForElement(By.id("alert-area"));
         assertTrue(testHelper.contains("No such board exists"));
 
     }
 
-
-    //@After
-    public void tearDown()
-    {
+    @After
+    public void tearDown() {
         testHelper.closeWebDriver();
     }
+
     private void assertSectionNamesDisplayedAre(List<String> expected, List<WebElement> actual) {
         int index = 0;
-        for(WebElement element:actual){
+        for (WebElement element : actual) {
             assertEquals(expected.get(index), element.getText());
             index++;
         }
 
     }
 
-
     private void assertMenuLinkCustomization(List<String> menuLinks, List<WebElement> menuIcons) {
         int index = 0;
-        for(WebElement element:menuIcons){
+        for (WebElement element : menuIcons) {
             assertEquals(menuLinks.get(index), element.getAttribute("href"));
             index++;
         }
     }
-
-    /*
-
-
-
-
-
-
-
-
-
-
-
-    */
-
-
-
 
 }

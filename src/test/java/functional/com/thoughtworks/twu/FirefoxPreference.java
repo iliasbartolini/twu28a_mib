@@ -1,24 +1,21 @@
 package functional.com.thoughtworks.twu;
 
 
-public class FirefoxPreference
-{
+public class FirefoxPreference {
 
-        private String name;
-        private String value;
+    private String name;
+    private String value;
 
-    public String getValue()
-    {
+    public String getValue() {
         return value;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
     public FirefoxPreference(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
+        this.name = name;
+        this.value = value;
+    }
 }

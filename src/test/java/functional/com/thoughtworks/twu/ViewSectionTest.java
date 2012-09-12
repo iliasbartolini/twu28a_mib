@@ -9,8 +9,6 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,15 +19,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-@Ignore("ignored until apache and virtual hosts are setup on CI")
 public class ViewSectionTest {
-    public static final String BOARD_URL = "http://m.ideaboardz.local/#for/functional_test/4";
-    public static final String SECTION_URL = "http://m.ideaboardz.local/#for/functional_test/4/9";
-    public static final String SECTION_NAME = "First Section";
-    public static final int TIME_OUT_IN_SECONDS = 1000;
+    public static final String SECTION_ID = "1";
+    public static final String SECTION_NAME = "Went Well";
+    public static final By SECTION_HEADING_SELECTOR = By.id("sectionName");
 
-    private WebDriver webDriver;
     private FirefoxPreference firefoxPreference;
+    private TestHelper testHelper;
+
 
     @Parameterized.Parameters
     public static List<Object[]> firefoxPreferences() {
@@ -46,73 +43,41 @@ public class ViewSectionTest {
     }
 
     @Before
-    public void setUp(){
-        FirefoxProfile firefoxProfile = new FirefoxProfile();
-        firefoxProfile.setPreference(firefoxPreference.getName(), firefoxPreference.getValue());
-
-        webDriver = new FirefoxDriver(firefoxProfile);
+    public void setUp() {
+        testHelper = new TestHelper(this.firefoxPreference);
     }
 
     @Test
-    public void shouldDisplaySectionNameWhenGoingThroughBoardPage(){
+    public void shouldDisplaySectionNameWhenGoingThroughBoardPage() {
         navigateToSectionPage();
 
-        WebElement sectionHeading = webDriver.findElement(By.id("sectionName"));
-
+        WebElement sectionHeading = testHelper.findElement(SECTION_HEADING_SELECTOR);
         assertEquals(SECTION_NAME, sectionHeading.getText());
     }
 
     @Test
-    public void shouldDisplaySectionNameWhenGoingDirectlyToSectionPage(){
+    public void shouldDisplaySectionNameWhenGoingDirectlyToSectionPage() {
         goDirectlyToSectionPage();
 
-        WebElement sectionHeading = webDriver.findElement(By.id("sectionName"));
-
+        WebElement sectionHeading = testHelper.findElement(SECTION_HEADING_SELECTOR);
         assertEquals(SECTION_NAME, sectionHeading.getText());
     }
 
-
-
     @After
-    public void tearDown(){
-        webDriver.close();
+    public void tearDown() {
+        testHelper.closeWebDriver();
     }
 
-    private void goDirectlyToSectionPage(){
-        webDriver.get(SECTION_URL);
-        waitForElement(By.id("sectionName"));
+    private void goDirectlyToSectionPage() {
+        testHelper.navigateToSectionView(SECTION_ID);
+        testHelper.waitForElement(SECTION_HEADING_SELECTOR);
     }
 
     private void navigateToSectionPage() {
-        webDriver.get(BOARD_URL);
-        waitForElement(By.id("boardName"));
-
-        webDriver.findElement(By.linkText(SECTION_NAME)).click();
-        waitForElement(By.id("sectionName"));
+        testHelper.navigateToMainBoardView();
+        testHelper.findElement(By.linkText(SECTION_NAME)).click();
+        testHelper.waitForElement(SECTION_HEADING_SELECTOR);
     }
-
-    private void waitForElement(final By elementSelector) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return !input.findElements(elementSelector).isEmpty();
-            }
-        });
-    }
-
-    private void waitForText(final String text) {
-        waitForCondition(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return input.getPageSource().contains(text);
-            }
-        });
-    }
-
-    private void waitForCondition(ExpectedCondition<Boolean> expectedCondition) {
-        (new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS)).until(expectedCondition);
-    }
-
 
 }
 

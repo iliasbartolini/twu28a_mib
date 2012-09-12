@@ -2,7 +2,9 @@ $(document).ready(function() {
     IdeaBoardz.CreateCommentsView = Backbone.View.extend({
         el: $("#viewWrapper"),
         template: _.template($("#template-comment").html()),
-        board: null,
+        navigationTemplate: _.template($("#template-navigation").html()),
+        _boardName: null,
+        _boardID: null,
         container: null,
 
         events: {
@@ -10,14 +12,18 @@ $(document).ready(function() {
             "click #commentBtn": "render"
         },
 
-        initialize: function(container, boardName, boardId) {
+        initialize: function(container, boardName, id) {
+            this._boardID = id;
+            this._boardName = boardName;
             this.container=container;
-            this.resetBinding();
-            this.container = container;
-            this.resetBinding();
 
-            var createViewHelper = new IdeaBoardz.ViewHelper(this, this.render);
-            createViewHelper.getBoardForCurrentView(boardName, boardId);
+            if (IdeaBoardz.Board.instance) clearTimeout(IdeaBoardz.Board.instance.timer);
+
+            _.bindAll(this,"resetBinding");
+            this.resetBinding();
+            this.render();
+            IdeaBoardz.CommentServer.instance.getComments(this._boardID, {success: this.successFunc});
+
         },
 
         resetBinding:function(){
@@ -25,10 +31,14 @@ $(document).ready(function() {
         },
 
         render: function(){
-            var html = this.template({ boardName: this.board.name});
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
+
+            var html = this.template({ boardName: this._boardName });
+
             $(this.el).find(this.container).html(html);
-            IdeaBoardz.CommentServer.instance.getComments(this.board.id);
+            return this;
         },
+
 
         postAComment: function(event){
             var message = $(this.el).find("#commentText").val();
@@ -37,15 +47,16 @@ $(document).ready(function() {
                 this.showEmptyError();
                 return false;
             }
-            IdeaBoardz.CommentServer.instance.postComment(this.board.id,message);
-            new IdeaBoardz.CommentView(message);
-            return false;
         },
 
         showEmptyError: function(){
             $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please enter a message</div>"));
+        },
+
+        successFunc: function(data) {
+            for(i = 0; i < data.comments.length; i++) {
+                new IdeaBoardz.CommentView(data.comments[i].comment);
+            }
         }
-
     });
-
 });
