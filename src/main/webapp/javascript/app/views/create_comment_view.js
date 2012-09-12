@@ -49,6 +49,8 @@ $(document).ready(function() {
                 this.showEmptyError();
                 return false;
             }
+            IdeaBoardz.CommentServer.instance.postComment(this._boardID, message);
+            new IdeaBoardz.CommentView(message);
         },
 
         showEmptyError: function(){
