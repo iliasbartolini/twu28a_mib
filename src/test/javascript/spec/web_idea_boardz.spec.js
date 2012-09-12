@@ -2,13 +2,16 @@ describe("Web IdeaBoardz", function() {
 
     var sectionId = 1;
 
+
     it("should make ajax POST request with message in URL", function(){
-       spyOn($, 'ajax');
+        spyOn($, 'ajax');
         IdeaBoardz.WebIdeaBoardz.instance.createIdea(sectionId,"some");
 
         expect(($.ajax).mostRecentCall.args[0].type).toEqual("POST");
         expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain + "/points.json?point[section_id]="+sectionId+"&point[message]=some");
     });
+
+
 
     it("should escape special symbols when creating Idea",function(){
         spyOn($, 'ajax');
@@ -149,7 +152,31 @@ describe("Web IdeaBoardz", function() {
 
 
     it("should make ajax GET request with spaces in Ideaboard Name on the URL",function(){
+        //arrange
+        var boardName = "Board Name with spaces";
+        var boardId=1;
+        spyOn($,'ajax');
 
+        //act
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, boardId );
 
+        //assert
+        expect(($.ajax).mostRecentCall.args[0].type).toEqual("GET");
+        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain+"/for/Board%20Name%20with%20spaces/1.json" );
     });
+
+    it("should make ajax GET request with space and special characters in Ideaboard Name on the URL",function(){
+        //arrange
+        var boardName = "Funcky!!!! Style*** Board$$$ Name@@";
+        var boardId=1;
+        spyOn($,'ajax');
+
+        //act
+        IdeaBoardz.WebIdeaBoardz.instance.getBoard(boardName, boardId );
+
+        //assert
+        expect(($.ajax).mostRecentCall.args[0].type).toEqual("GET");
+        expect(($.ajax).mostRecentCall.args[0].url).toEqual(IdeaBoardz.WebIdeaBoardz.instance.domain+"/for/Funcky!!!!%20Style***%20Board%24%24%24%20Name%40%40/1.json" );
+    });
+
 });
