@@ -10,6 +10,7 @@ $(document).ready(function() {
 
         events: {
             "click #postBtn": "postAComment",
+            "click #commentBtn": "clearErrorMessage"
         },
 
         pollForComments:function () {
