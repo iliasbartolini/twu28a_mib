@@ -50,13 +50,13 @@ $(document).ready(function() {
 
         render: function(){
             $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
+            var html = this.template({ boardName: this._boardName });
             $(this.el).find(this.container).html(html);
 
             // change top menu to be not-fixed
             $(this.el).find('#menu').removeClass('navbar-fixed-top');
             $(this.el).find('.mib_content').addClass('content-pull-up');
 
-            var html = this.template({ boardName: this._boardName });
 
             return this;
         },
@@ -69,14 +69,18 @@ $(document).ready(function() {
                 this.showEmptyError();
                 return false;
             }
-
-        IdeaBoardz.CommentServer.instance.postComment(this._boardID,message);
+            var temp_showNoServiceError=this.showNoServiceError;
+            IdeaBoardz.CommentServer.instance.postComment(this._boardID,message, {error: temp_showNoServiceError});
             return false;
 
         },
 
         showEmptyError: function(){
             $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please enter a message</div>"));
+        },
+
+        showNoServiceError: function(){
+            $("#viewWrapper").find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please try again</div>"));
         },
 
 
@@ -91,13 +95,13 @@ $(document).ready(function() {
         },
 
         pollSuccessFunc : function(data) {
-            console.log("in pollSuccessFunc");
+            var previousViewTime=IdeaBoardz.CommentServer.instance.lastViewedAt;
+            IdeaBoardz.CommentServer.instance.lastViewedAt =  new Date().getTime();
             for(i = 0; i < data.comments.length; i++) {
-                if(data.comments[i].created_at > IdeaBoardz.CommentServer.instance.lastViewedAt){
+                if(data.comments[i].created_at > previousViewTime){
                     new IdeaBoardz.CommentView(data.comments[i].comment);
                 }
             }
-            IdeaBoardz.CommentServer.instance.lastViewedAt =  new Date().getTime();
 
         }
     });
