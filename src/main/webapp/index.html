@@ -87,18 +87,20 @@
         </form>
     </script>
 
-    <script type="text/template" id="template-comment">
-        <div id="alert-area" ></div>
-        <form name="commentForm"  method="" class="postCommentForm">
-            <div class="comment_action">
-                <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
-            </div>
-            <div id="commentArea">
-                <ul id="commentsList">
-                </ul>
-            </div>
-        </form>
+
+    <script type="text/template"  id="template-comment">
+            <div id="alert-area" ></div>
+            <form name="commentForm" action="" onsubmit="return false;" method="" class="postCommentForm">
+                <div class="comment_action">
+                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+                </div>
+                <div id="commentArea">
+                    <ul id="commentsList">
+                        <div id="noCommentsMessage"></div>
+                    </ul>
+                </div>
+            </form>
     </script>
 
      <script type="text/template" id="template-navigation">
