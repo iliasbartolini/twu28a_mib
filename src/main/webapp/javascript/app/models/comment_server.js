@@ -26,12 +26,14 @@ IdeaBoardz.CommentServer.prototype = {
         callbacks = callbacks || {};
         var success = callbacks.success || function () {
         };
+        var error =callbacks.error || function(){};
 
         $.ajax({
             type:'GET',
             dataType:'json',
             url:this.domain + '/mib/getComments?board_id=' + boardID,
-            success:success
+            success:success,
+            error:error
         });
     }
 
