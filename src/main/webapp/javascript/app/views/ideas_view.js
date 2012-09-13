@@ -34,7 +34,7 @@ $(document).ready(function () {
         },
 
         renderBaseTemplate: function(){
-            var html = this.template({sectionName:this.getSectionName()});
+            var html = this.template({boardName:this.board.name, sectionName:this.getSectionName()});
             $(this.el).find(this.container).html(html);
 
             $(this.container).find('#ideasList').append('<h2 class="loading">Retrieving Ideas</h2>');
