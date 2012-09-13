@@ -1,7 +1,7 @@
-IdeaBoardz.CommentCountHelper = function(currentView){
-    this.currentView = currentView;
+IdeaBoardz.CommentCountHelper = function(id){
     this.timer = null;
-
+    this.boardId = id;
+    this.started = false;
 }
 
 IdeaBoardz.CommentCountHelper.prototype = {
@@ -14,8 +14,12 @@ IdeaBoardz.CommentCountHelper.prototype = {
     },
 
     updateViewWithCommentCount: function(data){
-        IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
-        $(this.currentView.el).find("#commentCount").html(IdeaBoardz.CommentServer.instance.currentCommentCount);
+        var numberOfNewComments = data.count - IdeaBoardz.CommentServer.instance.currentCommentCount;
+        console.log("difference: "+numberOfNewComments);
+        if (numberOfNewComments < 0) numberOfNewComments = 0;
+
+        $("#commentCount").html(numberOfNewComments);
+        //IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
     },
 
     startPollingForNewCommentCount: function() {
@@ -26,12 +30,14 @@ IdeaBoardz.CommentCountHelper.prototype = {
             self.doCommentCountPoll();
         };
 
-        IdeaBoardz.CommentServer.instance.getCommentsCount(IdeaBoardz.Board.instance.id, {success: successFun});
+        IdeaBoardz.CommentServer.instance.getCommentsCount(this.boardId, {success: successFun});
     },
 
     doCommentCountPoll : function(){
+        var id = this.boardId;
         this.timer = setInterval(function(){
-                IdeaBoardz.CommentServer.instance.getCommentsCount(IdeaBoardz.Board.instance.id, {success: function(data) { IdeaBoardz.dispatcher.trigger('success:commentCount',data); }}
+                console.log("inside polling, id is "+id);
+                IdeaBoardz.CommentServer.instance.getCommentsCount(id, {success: function(data) { IdeaBoardz.dispatcher.trigger('success:commentCount',data); }}
                 )}
             , 2000);
     },
@@ -55,6 +61,13 @@ IdeaBoardz.CommentCountHelper.prototype = {
     start: function(){
         this.listenForFirstGetCommentCountEvent();
         this.startPollingForNewCommentCount();
+        this.started = true;
+    },
+
+    stop: function(){
+        this.stopListeningToGetCommentCountEvent();
+        clearTimeout(this.timer);
+        this.started = false;
     }
 
 }

@@ -80,10 +80,8 @@ IdeaBoardz.ViewHelper.prototype = {
         );
 
         // make the top menu bar fixed to top for all views except createIdea & Comments
-        if(typeof this.currentView != IdeaBoardz.CreateIdeaView){
-            $(this.el).find('#menu').removeClass('navbar-fixed-top');
-            $(this.el).find('.mib_content').addClass('content-pull-up');
-        if(typeof this.currentView != IdeaBoardz.CreateIdeaView || typeof this.currentView != IdeaBoardz.CreateCommentsView){
+
+        if (typeof this.currentView != IdeaBoardz.CreateIdeaView || typeof this.currentView != IdeaBoardz.CreateCommentsView) {
             this.makeMenuBarNotFixedToTop();
         } else {
             this.makeMenuBarFixedToTop();
@@ -92,7 +90,8 @@ IdeaBoardz.ViewHelper.prototype = {
         var boardNameURL = '<a href="#for/'+board.name+'/'+board.id+'">'+board.name+'</a>';
         $(this.currentView.el).find('#boardName').html(boardNameURL);
         $(this.currentView.el).find('#boardName').show();
-    }},
+
+    },
 
     startListeningToGetBoardEvents: function(){
         IdeaBoardz.dispatcher.on('success:boardData', this.updateViewWithReturnedBoardData, this);

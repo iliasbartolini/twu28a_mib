@@ -5,6 +5,7 @@ $(document).ready(function() {
         navigationTemplate: _.template($("#template-navigation").html()),
         _boardName: null,
         _boardID: null,
+        board: null,
         container: null,
         timer: 0,
 
@@ -22,6 +23,8 @@ $(document).ready(function() {
                 clearTimeout(IdeaBoardz.Board.instance.timer);
             }
 
+            this.board = IdeaBoardz.Board.instance;
+
             _.bindAll(this,"resetBinding");
             this.resetBinding();
 
@@ -35,6 +38,7 @@ $(document).ready(function() {
                 this.doCommentsPoll();
                 IdeaBoardz.Board.instance.startedPollingForComments=true;
             }
+
 
         },
 
@@ -55,7 +59,9 @@ $(document).ready(function() {
         },
 
         render: function(){
-            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID}));
+            this.board.commentCountHelper.stop();
+
+            $(this.el).find("#navigation").html(this.navigationTemplate({boardName:this._boardName, boardId:this._boardID, commentCount:0}));
             var html = this.template({ boardName: this._boardName });
             $(this.el).find(this.container).html(html);
 
