@@ -70,13 +70,36 @@ body {
     background-color: pink;
     color: red;
 }
+
 .index-board {
     background-color: #ffffff;
     border: #696969 solid 5px;
     border-radius: 15px 15px 15px 15px;
     color: #000000;
     /*font-family: Handwritten;*/
-    font-size: 120%;
+    font-size: 110%;
+}
+
+.index-board ul {
+    margin-right:10px;
+    margin-left:20px;
+}
+
+.index-board p{
+    margin-right:10px;
+    text-align: center;
+}
+
+.index-board .sticky{
+    box-shadow: 1px 1px 3px #888;
+    -webkit-box-shadow: 1px 1px 3px #888;
+    -moz-box-shadow: 1px 1px 3px #888;
+    font-family: 'Delius', helvetica, cursive;
+}
+
+.index-board h3{
+    font-family: 'Handlee', helvetica, cursive;
+    line-height: 1.2;
 }
 
 /* PLACE HOLDER VIEW
