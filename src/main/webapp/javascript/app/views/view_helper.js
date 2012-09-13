@@ -4,6 +4,7 @@ IdeaBoardz.dispatcher = _.clone(Backbone.Events);
 IdeaBoardz.ViewHelper = function(currentView, renderBoardCallback) {
     this.currentView = currentView;
     this.renderBoardCallback = renderBoardCallback;
+    this.timer = null;
 }
 
 IdeaBoardz.ViewHelper.prototype = {
@@ -53,8 +54,15 @@ IdeaBoardz.ViewHelper.prototype = {
     },
 
     updateCommentServerWithCommentCount: function(data){
+        this.doneListeningToFirstGetCommentCountEvent();
+        this.startListeningToGetCommentCountEvent();
         console.log("updating view with comment count; count is "+data.count);
         IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
+    },
+
+    updateViewWithCommentCount: function(data){
+        IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
+        $(this.currentView.el).find("#commentCount").html(IdeaBoardz.CommentServer.instance.currentCommentCount);
     },
 
     renderView:function(){
@@ -73,7 +81,7 @@ IdeaBoardz.ViewHelper.prototype = {
             })
         );
 
-        // make the top menu barr fixed to top for all views except createIdea & Comments
+        // make the top menu bar fixed to top for all views except createIdea & Comments
         if(typeof this.currentView != IdeaBoardz.CreateIdeaView){
             $(this.el).find('#menu').removeClass('navbar-fixed-top');
             $(this.el).find('.mib_content').addClass('content-pull-up');
@@ -83,18 +91,38 @@ IdeaBoardz.ViewHelper.prototype = {
         }
     },
 
-    pollForNewCommentCount: function(boardId) {
-        console.log("in poll for comment count before ajax call");
+    startPollingForNewCommentCount: function(boardId) {
+        var self = this;
         var successFun = function(data){
             console.log("comment count success!");
             IdeaBoardz.dispatcher.trigger('success:commentCount', data);
+            self.doCommentCountPoll(boardId);
         };
 
         IdeaBoardz.CommentServer.instance.getCommentsCount(boardId, {success: successFun});
     },
 
-    startListeningToGetCommentCountEvents: function(){
+    doCommentCountPoll : function(boardId){
+        this.timer = setInterval(function(){
+                IdeaBoardz.CommentServer.instance.getCommentsCount(boardId, {success: function(data) { IdeaBoardz.dispatcher.trigger('success:commentCount',data); }}
+                )}
+            , 2000);
+    },
+
+    listenForFirstGetCommentCountEvent: function(){
         IdeaBoardz.dispatcher.on('success:commentCount', this.updateCommentServerWithCommentCount, this);
+    },
+
+    doneListeningToFirstGetCommentCountEvent: function(){
+        IdeaBoardz.dispatcher.off('success:commentCount', this.updateCommentServerWithCommentCount, this);
+    },
+
+    startListeningToGetCommentCountEvent: function(){
+        IdeaBoardz.dispatcher.on('success:commentCount', this.updateViewWithCommentCount, this);
+    },
+
+    stopListeningToGetCommentCountEvent: function(){
+        IdeaBoardz.dispatcher.off('success:commentCount', this.updateViewWithCommentCount, this);
     },
 
     startListeningToGetBoardEvents: function(){

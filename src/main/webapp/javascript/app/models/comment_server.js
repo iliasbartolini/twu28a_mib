@@ -39,7 +39,6 @@ IdeaBoardz.CommentServer.prototype = {
         callbacks = callbacks || {};
         var success = callbacks.success || function(){console.log("didn't correctly set success function");};
         var error = callbacks.error || function(){};
-        var returnVal=9999;
 
         $.ajax({
             type:'GET',
@@ -47,7 +46,7 @@ IdeaBoardz.CommentServer.prototype = {
             url:this.domain + '/mib/getCommentsCount?board_id=' + boardID,
             success: success,
             error: error
-        })
+        });
     }
 
 }
