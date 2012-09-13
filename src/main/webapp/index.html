@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>IdeaBoardz</title>
@@ -73,24 +73,22 @@
     </script>
 
     <script type="text/template" id="template-newIdea">
-        <div class="mib_content">
-            <form name="ideaForm"  method="" class="addStickyForm">
-                <p>
-                    <select name="sectionId" id="sectionId"></select>
-                </p>
-                <div id="alert-area" ></div>
-                <div class="sticky largeSticky">
-                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
-                </div>
-                <div class="form_action">
-                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
-                </div>
-            </form>
-        </div>
+        <form name="ideaForm"  method="" class="addStickyForm">
+            <p>
+                <select name="sectionId" id="sectionId"></select>
+            </p>
+            <div id="alert-area" ></div>
+            <div class="sticky largeSticky">
+                <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
+            </div>
+            <div class="form_action">
+                <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
+            </div>
+        </form>
     </script>
 
+
     <script type="text/template"  id="template-comment">
-        <div class="mib_content">
             <div id="alert-area" ></div>
             <form name="commentForm" action="" onsubmit="return false;" method="" class="postCommentForm">
                 <div class="comment_action">
@@ -103,7 +101,6 @@
                     </ul>
                 </div>
             </form>
-        </div>
     </script>
 
      <script type="text/template" id="template-navigation">
