@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="css/mib_custom.css"/>
 
     <script type="text/template" id="template-index">
-        <div class="mib_content template_index">
+        <div class="template_index">
             <div class="index-board">
                 <h3 style="text-align:center">WELCOME TO IDEABOARDZ</h3>
-
                 <div class="sticky" style="text-align:left">
                     <h3 style="text-align:center"> HOW </h3>
                     <ul>
@@ -54,11 +53,7 @@
 
 
     <script type="text/template" id="template-sectionsView">
-        <div class="mib_content">
-            <h1 id="boardName"><%= boardName %></h1>
-            <ul class="nav nav-tabs nav-stacked" id="sectionsList">
-            </ul>
-        </div>
+        <ul class="nav nav-tabs nav-stacked" id="sectionsList"></ul>
     </script>
 
     <script type="text/template" id="template-stickyView">
@@ -68,56 +63,46 @@
         </li>
     </script>
 
-
-
     <script type="text/template" id="template-ideasView">
-        <div class="mib_content">
-            <h1 id="sectionName"><%=sectionName%></h1>
-            <ul id="ideasList">
-            </ul>
+        <div class="sectionWrapper">
+        <h2 id="sectionName"><%=sectionName%></h2>
+        <ul id="ideasList"></ul>
         </div>
     </script>
 
     <script type="text/template" id="template-errorView">
-        <div class="mib_content">
-            <div id="alert-area" class="alert alert-error alert-main">
-                <h4>No such page exists.</h4>The provided URL is invalid.<br/> Please check the URL again.
-        </div></div>
+        <div id="alert-area" class="alert alert-error alert-main">
+            <h4>No such page exists.</h4>The provided URL is invalid.<br/> Please check the URL again.
+        </div>
     </script>
 
     <script type="text/template" id="template-newIdea">
-        <div class="mib_content">
-            <h1><%= boardName %></h1>
-            <form name="ideaForm" action="" method="" class="addStickyForm">
-                <p>
-                    <select name="sectionId" id="sectionId"></select>
-                </p>
-                <div id="alert-area" ></div>
-                <div class="sticky largeSticky">
-                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
-                </div>
-                <div class="form_action">
-                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
-                </div>
-            </form>
-        </div>
+        <form name="ideaForm" action="" method="" class="addStickyForm">
+            <p>
+                <select name="sectionId" id="sectionId"></select>
+            </p>
+            <div id="alert-area" ></div>
+            <div class="sticky largeSticky">
+                <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
+            </div>
+            <div class="form_action">
+                <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
+            </div>
+        </form>
     </script>
 
     <script type="text/template" id="template-comment">
-        <div class="mib_content">
-            <h1 id="boardName"><%= boardName %></h1>
-            <div id="alert-area" ></div>
-            <form name="commentForm" action="" method="" class="postCommentForm">
-                <div class="comment_action">
-                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
-                </div>
-                <div id="commentArea">
-                    <ul id="commentsList">
-                    </ul>
-                </div>
-            </form>
-        </div>
+        <div id="alert-area" ></div>
+        <form name="commentForm" action="" method="" class="postCommentForm">
+            <div class="comment_action">
+                <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+            </div>
+            <div id="commentArea">
+                <ul id="commentsList">
+                </ul>
+            </div>
+        </form>
     </script>
 
      <script type="text/template" id="template-navigation">
@@ -136,10 +121,12 @@
             <div id="navigation" class="quick-links pull-right"></div>
         </div>
 
-        <div id="container">
-            <div class="mib_content"><h2 class="loading">Page Loading...</h2></div>
+        <div class="mib_content">
+            <h1 id="boardName"></h1>
+            <div id="container">
+                <h2 class="loading">Page Loading...</h2>
+            </div>
         </div>
-
     </div>
 </div>
 

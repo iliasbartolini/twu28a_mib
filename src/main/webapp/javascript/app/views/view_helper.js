@@ -35,14 +35,15 @@ IdeaBoardz.ViewHelper.prototype = {
     },
 
     renderPlaceHolder:function () {
-        $(this.currentView.el).find(this.currentView.container).html('<div class="mib_content"><h2 class="loading">Retrieving Board Data</h2></div>');
+        $(this.currentView.el).find(this.currentView.container).html('<h2 class="loading">Retrieving Board Data</h2>');
     },
 
     renderBoardErrorNotice: function() {
         this.stopListeningToGetBoardEvents();
+        $(this.currentView.el).find('#boardName').html('').hide();
         var errorMsg = "<h4>No such board exists.</h4>The provided board URL is invalid.<br/> Please check the URL again."
         $(this.currentView.el).find(this.currentView.container).html(
-            '<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div></div>'
+            '<div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div>'
         );
     },
 
@@ -58,6 +59,16 @@ IdeaBoardz.ViewHelper.prototype = {
         this.renderBoardCallback.call(this.currentView);
     },
 
+    makeMenuBarNotFixedToTop:function () {
+        $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
+        $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
+    },
+
+    makeMenuBarFixedToTop:function () {
+        $(this.currentView.el).find('#menu').removeClass('navbar-fixed-top');
+        $(this.currentView.el).find('.mib_content').addClass('content-pull-up');
+    },
+
     customizeMenuLinks:function () {
         var board = this.currentView.board;
         $(this.currentView.el).find("#navigation").html(
@@ -67,14 +78,16 @@ IdeaBoardz.ViewHelper.prototype = {
             })
         );
 
-        // make the top menu barr fixed to top for all views except createIdea & Comments
-        if(typeof this.currentView != IdeaBoardz.CreateIdeaView){
-            $(this.el).find('#menu').removeClass('navbar-fixed-top');
-            $(this.el).find('.mib_content').addClass('content-pull-up');
+        // make the top menu bar fixed to top for all views except createIdea & Comments
+        if(typeof this.currentView != IdeaBoardz.CreateIdeaView || typeof this.currentView != IdeaBoardz.CreateCommentsView){
+            this.makeMenuBarNotFixedToTop();
         } else {
-            $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
-            $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
+            this.makeMenuBarFixedToTop();
         }
+
+        var boardNameURL = '<a href="#for/'+board.name+'/'+board.id+'">'+board.name+'</a>';
+        $(this.currentView.el).find('#boardName').html(boardNameURL);
+        $(this.currentView.el).find('#boardName').show();
     },
 
     startListeningToGetBoardEvents: function(){
