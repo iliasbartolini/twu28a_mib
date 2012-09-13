@@ -19,7 +19,9 @@ $(document).ready(function () {
         },
 
         renderBaseTemplate: function(){
-            if (!this.board.commentCountHelper.started) this.board.commentCountHelper.start();
+            if (!this.board.commentCountHelper.started) {
+                this.board.commentCountHelper.start();
+            }
 
             var html = this.template({ boardName: this.board.name});
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.

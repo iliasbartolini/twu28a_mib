@@ -14,12 +14,12 @@ IdeaBoardz.CommentCountHelper.prototype = {
     },
 
     updateViewWithCommentCount: function(data){
-        var numberOfNewComments = data.count - IdeaBoardz.CommentServer.instance.currentCommentCount;
+        var numberOfNewComments = data.length - IdeaBoardz.CommentServer.instance.currentCommentCount;
+
         console.log("difference: "+numberOfNewComments);
         if (numberOfNewComments < 0) numberOfNewComments = 0;
 
         $("#commentCount").html(numberOfNewComments);
-        //IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
     },
 
     startPollingForNewCommentCount: function() {
