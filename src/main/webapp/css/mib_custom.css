@@ -31,6 +31,7 @@ body {
     padding: 1em;
     border-top:1px solid #ffffff;
     background: #E2E2E2;
+    text-align: center;
 }
 
 .mib_content h1#boardName{
@@ -38,7 +39,6 @@ body {
     font-weight: bold;
     font-size: 1.4em;
     margin: 0 0 10px 0;
-    text-align: center;
     line-height: 1;
 }
 
@@ -53,6 +53,7 @@ body {
     -webkit-border-radius: 4px 4px 15px 4px;
     padding-left: 15px;
     margin: 10px;
+    text-align: left;
 }
 
 .small-sticky {
@@ -76,7 +77,6 @@ body {
     border: #696969 solid 5px;
     border-radius: 15px 15px 15px 15px;
     color: #000000;
-    /*font-family: Handwritten;*/
     font-size: 110%;
 }
 
@@ -109,6 +109,7 @@ body {
     background: url("../images/ajax-loader.gif") center left no-repeat;
     padding-left: 40px;
     font-size: 1.3em;
+    display: inline-block;
 }
 
 /* IDEAS VIEW STYLE
@@ -123,7 +124,7 @@ body {
 .sectionWrapper h2{
     font-size: 1.3em;
     margin:0;
-    text-align: center;
+    display: inline-block;
 }
 
 #ideasList {
@@ -308,6 +309,7 @@ body {
     font-weight: bold;
     padding: 10px;
     color: #2d1f08;
+    text-align: left;
     background-image: -moz-linear-gradient(top, #fff, #ededed);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ededed));
     background-image: -webkit-linear-gradient(top, #fff, #ededed);
@@ -337,6 +339,7 @@ body {
     list-style-type:none;
     padding:10px;
     margin: 0;
+    text-align: left;
 }
 
 #commentsList > li {
@@ -354,6 +357,9 @@ body {
     font-weight:bold;
 }
 
+.postCommentForm {
+    text-align: left;
+}
 .postCommentForm #commentArea{
     text-align: left;
     font-size: 1.1em;
