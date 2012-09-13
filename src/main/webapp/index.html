@@ -73,38 +73,32 @@
     </script>
 
     <script type="text/template" id="template-newIdea">
-        <div class="mib_content">
-            <h1><%= boardName %></h1>
-            <form name="ideaForm"  method="" class="addStickyForm">
-                <p>
-                    <select name="sectionId" id="sectionId"></select>
-                </p>
-                <div id="alert-area" ></div>
-                <div class="sticky largeSticky">
-                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
-                </div>
-                <div class="form_action">
-                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
-                </div>
-            </form>
-        </div>
+        <form name="ideaForm"  method="" class="addStickyForm">
+            <p>
+                <select name="sectionId" id="sectionId"></select>
+            </p>
+            <div id="alert-area" ></div>
+            <div class="sticky largeSticky">
+                <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
+            </div>
+            <div class="form_action">
+                <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
+            </div>
+        </form>
     </script>
 
     <script type="text/template" id="template-comment">
-        <div class="mib_content">
-            <h1 id="boardName"><%= boardName %></h1>
-            <div id="alert-area" ></div>
-            <form name="commentForm"  method="" class="postCommentForm">
-                <div class="comment_action">
-                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
-                </div>
-                <div id="commentArea">
-                    <ul id="commentsList">
-                    </ul>
-                </div>
-            </form>
-        </div>
+        <div id="alert-area" ></div>
+        <form name="commentForm"  method="" class="postCommentForm">
+            <div class="comment_action">
+                <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+            </div>
+            <div id="commentArea">
+                <ul id="commentsList">
+                </ul>
+            </div>
+        </form>
     </script>
 
      <script type="text/template" id="template-navigation">
