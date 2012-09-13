@@ -1,4 +1,4 @@
-IdeaBoardz.WebIdeaBoardz = function(domain,comments) {
+IdeaBoardz.WebIdeaBoardz = function(domain) {
     this.domain = domain;
 }
 
