@@ -28,6 +28,7 @@ $(document).ready(function() {
         renderSectionListInDropdown: function(){
             var sections = this.board.sections;
             for (var i in sections) {
+
                 $(this.el).find("#sectionId").append('<option value='+ sections[i].id +' >' + sections[i].name+'</option>');
             }
 
