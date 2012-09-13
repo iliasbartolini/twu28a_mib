@@ -18,6 +18,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 public class TestHelper {
+    public static final String DOMAIN = "http://m.ideaboardz.local/";
     public static final String BOARD_URL = "http://m.ideaboardz.local/#for/test/1";
     public static final int TIME_OUT_IN_SECONDS = 15;
     public static final String BOARD_NAME = "test";
@@ -136,8 +137,7 @@ public class TestHelper {
     }
 
 
-    List<WebElement> findElements()
-    {
+    List<WebElement> findElements() {
         return webDriver.findElements(By.cssSelector("#sectionsList li a"));
     }
 

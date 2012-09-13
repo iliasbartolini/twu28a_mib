@@ -24,7 +24,9 @@ $(document).ready(function() {
 
             _.bindAll(this,"resetBinding");
             this.resetBinding();
+
             this.render();
+
             IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
                 success: this.successFunc
             });
@@ -80,7 +82,8 @@ $(document).ready(function() {
         },
 
         showNoServiceError: function(){
-            $("#viewWrapper").find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please try again</div>"));
+//            $("#viewWrapper").find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please try again</div>"));
+              $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please try again</div>"));
         },
 
 

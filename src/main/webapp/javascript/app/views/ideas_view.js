@@ -13,8 +13,24 @@ $(document).ready(function () {
             this.container = container;
             this.sectionId = sectionId;
 
-            var ideasViewHelper = new IdeaBoardz.ViewHelper(this, this.renderBaseTemplate);
+            var ideasViewHelper = new IdeaBoardz.ViewHelper(this, this.checkValidityOfSectionId);
             ideasViewHelper.getBoardForCurrentView(boardName, boardId);
+        },
+
+        checkValidityOfSectionId: function(){
+            var sectionName = this.getSectionName();
+            if (sectionName == undefined){
+                this.renderSectionError();
+            } else {
+                this.renderBaseTemplate();
+            }
+        },
+
+        renderSectionError: function(){
+            var errorMsg = "<h4>No such section exists.</h4>The provided URL is invalid.<br/> Please check the URL again."
+            $(this.el).find(this.container).html(
+                '<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div></div>'
+            );
         },
 
         renderBaseTemplate: function(){
@@ -75,7 +91,6 @@ $(document).ready(function () {
         },
 
         renderIdeasList:function(ideas){
-            console.log("in render idea");
             var stickyHtml = "";
             for (var index = 0; index < ideas.length; index++) {
                 var idea = ideas[index];
@@ -85,8 +100,7 @@ $(document).ready(function () {
         },
 
         renderEmptySectionMessage:function(){
-            console.log("in empty message");
-            var emptyMessageHtml = "<li class='emptyMessage'><a href='#for/"+this.board.name+"/"+this.board.id+"/createIdea'>Got any ideas?</a></li>";
+            var emptyMessageHtml = "<li><a id='emptyMessage' href='#for/"+this.board.name+"/"+this.board.id+"/createIdea'>Got any ideas?</a></li>";
             $(this.container).find('#ideasList').html(emptyMessageHtml);
         },
 
