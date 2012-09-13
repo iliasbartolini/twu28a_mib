@@ -2,7 +2,7 @@ IdeaBoardz.CommentServer = function(domain){
     this.domain=domain;
 }
 
-var globalDomain;
+
 IdeaBoardz.CommentServer.prototype = {
 
     postComment:function (boardID, comment, callbacks) {

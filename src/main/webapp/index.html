@@ -3,7 +3,7 @@
 <head>
     <title>IdeaBoardz</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link href="images/favicon.ico" rel="shortcut icon">
 
@@ -73,33 +73,39 @@
     </script>
 
     <script type="text/template" id="template-newIdea">
-        <form name="ideaForm" action="" method="" class="addStickyForm">
-            <p>
-                <select name="sectionId" id="sectionId"></select>
-            </p>
-            <div id="alert-area" ></div>
-            <div class="sticky largeSticky">
-                <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
-            </div>
-            <div class="form_action">
-                <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
-            </div>
-        </form>
+        <div class="mib_content">
+            <h1><%= boardName %></h1>
+            <form name="ideaForm"  method="" class="addStickyForm">
+                <p>
+                    <select name="sectionId" id="sectionId"></select>
+                </p>
+                <div id="alert-area" ></div>
+                <div class="sticky largeSticky">
+                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
+                </div>
+                <div class="form_action">
+                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
+                </div>
+            </form>
+        </div>
     </script>
 
     <script type="text/template" id="template-comment">
-        <div id="alert-area" ></div>
-        <form name="commentForm" action="" method="" class="postCommentForm">
-            <div class="comment_action">
-                <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
-                <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
-            </div>
-            <div id="commentArea">
-                <ul id="commentsList">
-                    <div id="noCommentsMessage"></div>
-                </ul>
-            </div>
-        </form>
+        <div class="mib_content">
+            <h1 id="boardName"><%= boardName %></h1>
+            <div id="alert-area" ></div>
+            <form name="commentForm"  method="" class="postCommentForm">
+                <div class="comment_action">
+                    <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
+                    <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
+                </div>
+                <div id="commentArea">
+                    <ul id="commentsList">
+                        <div id="noCommentsMessage"></div>
+                    </ul>
+                </div>
+            </form>
+        </div>
     </script>
 
      <script type="text/template" id="template-navigation">
