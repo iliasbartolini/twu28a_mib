@@ -41,16 +41,6 @@ $(document).ready(function() {
 
             this.render();
 
-            IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
-                success: this.successFunc
-            });
-
-            if(IdeaBoardz.Board.instance.startedPollingForComments==false){
-                this.doCommentsPoll();
-                IdeaBoardz.Board.instance.startedPollingForComments=true;
-            }
-
-
             this.pollForComments();
         },
 
