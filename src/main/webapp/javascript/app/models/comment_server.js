@@ -37,7 +37,7 @@ IdeaBoardz.CommentServer.prototype = {
 
     getCommentsCount:function(boardID, callbacks) {
         callbacks = callbacks || {};
-        var returnVal;
+        var returnVal=9999;
 
         $.ajax({
             type:'GET',
@@ -47,9 +47,9 @@ IdeaBoardz.CommentServer.prototype = {
                 returnVal = data.count;
             }
         })
+        console.log(returnVal);
         return returnVal;
     }
-
 
 }
 

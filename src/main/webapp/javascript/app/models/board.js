@@ -6,6 +6,6 @@ IdeaBoardz.Board = function(name, id, sections) {
     this.timer = null;
     this.currentCommentCount = 0;
     this.currentCommentCount = IdeaBoardz.CommentServer.instance.getCommentsCount(this.id);
-    console.log(this.currentCommentCount);
+    console.log("current comment count: "+this.currentCommentCount);
 }
 

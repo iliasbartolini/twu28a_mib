@@ -4,7 +4,8 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
         "for/:boardName/:bid": "sectionsList", //#for/mibTest/9
         "for/:boardName/:bid/createIdea": "createIdea", // #for/mibTest/9/createIdea
         "for/:boardName/:bid/comment": "postComment",  //#for/mibTest/9/comment
-        "for/:boardName/:bid/:sid": "ideasList" //#for/mibTest/9/1
+        "for/:boardName/:bid/:sid": "ideasList", //#for/mibTest/9/1
+        "*actions":"error"
     },
 
     initialize: function(){
@@ -37,5 +38,9 @@ IdeaBoardz.AppRouter = Backbone.Router.extend({
     postComment: function (boardName, bid){
         boardName=decodeURIComponent(boardName);
         var createCommentView = new IdeaBoardz.CreateCommentsView("#container",boardName,bid);
+    },
+
+    error: function(actions){
+        var errorView = new IdeaBoardz.ErrorView();
     }
 });

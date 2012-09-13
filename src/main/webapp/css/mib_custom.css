@@ -94,6 +94,16 @@ body {
     color: black;
 }
 
+#ideasList li.emptyMessage a, #ideasList li.emptyMessage a:hover {
+    font-weight:bold;
+    font-size: 1.5em;
+    display:block;
+    text-align: center;
+    margin:0;
+    line-height: 2em;
+    color:#bd5400;
+}
+
 
 /* CREATE IDEA STYLE
 ---------------------------------------------------- */
@@ -133,13 +143,18 @@ body {
 .addStickyForm textarea {
     text-align: left;
     width: 95%;
-    min-height: 120px;
+    min-height: 80px;
     font-size: 1.1em;
     border-radius: 0;
     color: #000000;
     outline: none;
     border: none;
     box-shadow: none;
+}
+
+.content-pull-up{
+    margin-top: 0;
+    padding-top: 5px;
 }
 
 
@@ -154,6 +169,7 @@ body {
     text-shadow:    0    /*{a-bar-shadow-x}*/   0   /*{a-bar-shadow-y}*/   0   /*{a-bar-shadow-radius}*/   #000000   /*{a-bar-shadow-color}*/;
     padding: 2px 20px;
     box-shadow: 0px 2px 5px #888;
+    margin-bottom: 5px;
 }
 
 .mib_header #logo {
@@ -162,10 +178,7 @@ body {
     height:18px;
     background: url("../images/ideaBoardzLogo.png") no-repeat top left;
     text-indent: -1000em;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 1px;
-    margin-left: 5px;
+    margin: 10px 1px 10px 5px;
 
 }
 
