@@ -11,14 +11,7 @@ $(document).ready(function() {
 
         events: {
             "click #postBtn": "postAComment",
-            "click #commentBtn": "reRender"
         },
-
-        reRender: function(){
-            this.render();
-            this.pollForComments();
-        },
-
 
         pollForComments:function () {
             IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
