@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>IdeaBoardz</title>
@@ -73,29 +73,31 @@
     </script>
 
     <script type="text/template" id="template-newIdea">
-            <form name="ideaForm"  method="" class="addStickyForm">
-                <p>
-                    <select name="sectionId" id="sectionId"></select>
-                </p>
-                <div id="alert-area" ></div>
-                <div class="sticky largeSticky">
-                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
-                </div>
-                <div class="form_action">
-                    <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
-                </div>
-            </form>
+        <form name="ideaForm"  method="" class="addStickyForm">
+            <p>
+                <select name="sectionId" id="sectionId"></select>
+            </p>
+            <div id="alert-area" ></div>
+            <div class="sticky largeSticky">
+                <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
+            </div>
+            <div class="form_action">
+                <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>
+            </div>
+        </form>
     </script>
 
-    <script type="text/template" id="template-comment">
+
+    <script type="text/template"  id="template-comment">
             <div id="alert-area" ></div>
-            <form name="commentForm"  method="" class="postCommentForm">
+            <form name="commentForm" action="" onsubmit="return false;" method="" class="postCommentForm">
                 <div class="comment_action">
                     <input type="text" id="commentText" value="" placeholder="Enter Comment"/>
                     <button id="postBtn" type="button" class="btn btn-success btn-primary">Post</button>
                 </div>
                 <div id="commentArea">
                     <ul id="commentsList">
+                        <div id="noCommentsMessage"></div>
                     </ul>
                 </div>
             </form>

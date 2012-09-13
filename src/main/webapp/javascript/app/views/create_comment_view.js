@@ -11,11 +11,28 @@ $(document).ready(function() {
 
         events: {
             "click #postBtn": "postAComment",
-            "click #commentBtn": "render"
+            "click #commentBtn": "reRender"
+        },
+
+        reRender: function(){
+            this.render();
+            this.pollForComments();
+        },
+
+
+        pollForComments:function () {
+            IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
+                success:this.successFunc,
+                error:this.renderNoCommentsMessage()
+            });
+
+            if (IdeaBoardz.Board.instance.startedPollingForComments == false) {
+                this.doCommentsPoll();
+                IdeaBoardz.Board.instance.startedPollingForComments = true;
+            }
         },
 
         initialize: function(container, boardName, id) {
-            console.log("in initialize Create Comments View");
             this._boardID = id;
             this._boardName = boardName;
             this.container=container;
@@ -40,6 +57,7 @@ $(document).ready(function() {
             }
 
 
+            this.pollForComments();
         },
 
         doCommentsPoll : function(){
@@ -69,7 +87,6 @@ $(document).ready(function() {
             $(this.el).find('#menu').removeClass('navbar-fixed-top');
             $(this.el).find('.mib_content').addClass('content-pull-up');
 
-
             return this;
         },
 
@@ -77,7 +94,7 @@ $(document).ready(function() {
         postAComment: function(event){
             var message = $(this.el).find("#commentText").val();
             $(this.el).find("#commentText").val("");
-            if(message == '') {
+            if(message.trim() == '') {
                 this.showEmptyError();
                 return false;
             }
@@ -102,24 +119,31 @@ $(document).ready(function() {
 
 
         successFunc: function(data) {
-           IdeaBoardz.CommentServer.instance.lastViewedAt =  new Date().getTime();
+           $("#viewWrapper").find('#noCommentsMessage').html("");
+           IdeaBoardz.CommentServer.instance.lastViewedAt = 0;
 
             for(i = 0; i < data.comments.length; i++) {
-
                 new IdeaBoardz.CommentView(data.comments[i].comment);
             }
 
+            IdeaBoardz.CommentServer.instance.lastViewedAt=data.comments[(data.comments.length)-1].created_at;
+
         },
 
+        renderNoCommentsMessage:function(){
+            IdeaBoardz.CommentServer.instance.lastViewedAt = 0;
+            $("#viewWrapper").find('#noCommentsMessage').html("There are no comments to display.");
+        },
+
+
         pollSuccessFunc : function(data) {
-            var previousViewTime=IdeaBoardz.CommentServer.instance.lastViewedAt;
+            $("#viewWrapper").find('#noCommentsMessage').html("");
             for(i = 0; i < data.comments.length; i++) {
-                if(data.comments[i].created_at > previousViewTime){
+                if(data.comments[i].created_at > IdeaBoardz.CommentServer.instance.lastViewedAt){
                     new IdeaBoardz.CommentView(data.comments[i].comment);
                 }
-            IdeaBoardz.CommentServer.instance.lastViewedAt=data.comments[(data.comments.length)-1].created_at;
             }
-
+            IdeaBoardz.CommentServer.instance.lastViewedAt=data.comments[(data.comments.length)-1].created_at;
         }
     });
 });
