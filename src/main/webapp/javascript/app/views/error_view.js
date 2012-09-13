@@ -7,7 +7,6 @@ $(document).ready(function () {
             if (IdeaBoardz.Board.instance){
                 clearTimeout(IdeaBoardz.Board.instance.timer);
             }
-
             this.render();
         },
 
