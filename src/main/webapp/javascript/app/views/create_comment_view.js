@@ -10,7 +10,25 @@ $(document).ready(function() {
 
         events: {
             "click #postBtn": "postAComment",
-            "click #commentBtn": "render"
+            "click #commentBtn": "reRender"
+        },
+
+        reRender: function(){
+            this.render();
+            this.pollForComments();
+        },
+
+
+        pollForComments:function () {
+            IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
+                success:this.successFunc,
+                error:this.renderNoCommentsMessage()
+            });
+
+            if (IdeaBoardz.Board.instance.startedPollingForComments == false) {
+                this.doCommentsPoll();
+                IdeaBoardz.Board.instance.startedPollingForComments = true;
+            }
         },
 
         initialize: function(container, boardName, id) {
@@ -25,17 +43,7 @@ $(document).ready(function() {
             this.resetBinding();
 
             this.render();
-
-            IdeaBoardz.CommentServer.instance.getComments(this._boardID, {
-                success: this.successFunc,
-                error : this.renderNoCommentsMessage()
-            });
-
-            if(IdeaBoardz.Board.instance.startedPollingForComments==false){
-                this.doCommentsPoll();
-                IdeaBoardz.Board.instance.startedPollingForComments=true;
-            }
-
+            this.pollForComments();
         },
 
         doCommentsPoll : function(){
@@ -62,7 +70,6 @@ $(document).ready(function() {
             // change top menu to be not-fixed
             $(this.el).find('#menu').removeClass('navbar-fixed-top');
             $(this.el).find('.mib_content').addClass('content-pull-up');
-
 
             return this;
         },
