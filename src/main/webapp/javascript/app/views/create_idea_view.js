@@ -21,6 +21,8 @@ $(document).ready(function() {
         renderBaseTemplate: function(){
             var html = this.template({ boardName: this.board.name});
             $(this.el).find(this.container).html(html);  // Append the result to the view's element.
+            $(this.el).find('#menu').removeClass('navbar-fixed-top');
+            $(this.el).find('.mib_content').addClass('content-pull-up');
         },
 
         renderSectionListInDropdown: function(){

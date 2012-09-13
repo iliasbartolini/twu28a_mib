@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="images/favicon.ico" rel="shortcut icon">
+
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/mib_custom.css"/>
 
@@ -74,6 +76,13 @@
             <ul id="ideasList">
             </ul>
         </div>
+    </script>
+
+    <script type="text/template" id="template-errorView">
+        <div class="mib_content">
+            <div id="alert-area" class="alert alert-error alert-main">
+                <h4>No such page exists.</h4>The provided board URL is invalid.<br/> Please check the URL again.
+        </div></div>
     </script>
 
     <script type="text/template" id="template-newIdea">
@@ -153,6 +162,7 @@
         .script("javascript/app/views/sections_view.js")
         .script("javascript/app/views/comment_view.js")
         .script("javascript/app/views/index_view.js")
+        .script("javascript/app/views/error_view.js")
         .script("javascript/app/routes/routes.js")
         .script("javascript/app/mib.js");
     </script>
