@@ -13,6 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
+import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -64,5 +65,16 @@ public class CommentControllerTest {
         assertThat(commentsJSON, containsString("\"board_id\":" + boardID));
         assertThat(commentsJSON, containsString("\"name\":\"name\""));
         assertThat(commentsJSON, containsString("\"comment\":\"message\""));
+    }
+
+    @Test
+    public void shouldReturnNumberOfCommentsAsJSON(){
+        Integer boardID = 1;
+        Integer commentCount = 4;
+        when(mockedCommentService.getCommentsCount(boardID)).thenReturn(commentCount);
+        String countJSON = commentController.getCommentsCount(boardID);
+
+        assertThat(countJSON, containsString("{\"count\":\"" + commentCount + "\"}"));
+
     }
 }

@@ -42,6 +42,13 @@ public class CommentController {
         return commentsInJson;
     }
 
+    @RequestMapping(value = "/mib/getCommentsCount",method = RequestMethod.GET)
+    public @ResponseBody String getCommentsCount(@RequestParam(value = "board_id")Integer boardID) {
+        Integer count = iCommentService.getCommentsCount(boardID);
+        String countInJson =  "{\"count\":\"" + count + "\"}";
+        return countInJson;
+    }
+
     @RequestMapping(value = "/mib/postComment",method = RequestMethod.POST)
     public @ResponseBody String postComment(@RequestParam(value = "board_id")Integer boardID,@RequestParam(value = "name")
                                 String name,@RequestParam(value = "comment") String comment) {

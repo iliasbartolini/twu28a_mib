@@ -35,10 +35,22 @@ IdeaBoardz.CommentServer.prototype = {
             success:success,
             error:error
         });
+    },
+
+
+    getCommentsCount:function(boardID, callbacks) {
+        callbacks = callbacks || {};
+        var success = callbacks.success || function(){console.log("didn't correctly set success function");};
+        var error = callbacks.error || function(){};
+
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url:this.domain + '/mib/getCommentsCount?board_id=' + boardID,
+            success: success,
+            error: error
+        });
     }
-
-
-
 
 }
 

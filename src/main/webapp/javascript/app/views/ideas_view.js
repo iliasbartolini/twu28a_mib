@@ -34,6 +34,8 @@ $(document).ready(function () {
         },
 
         renderBaseTemplate: function(){
+            if (!this.board.commentCountHelper.started) this.board.commentCountHelper.start();
+
             var html = this.template({boardName:this.board.name, sectionName:this.getSectionName()});
             $(this.el).find(this.container).html(html);
 

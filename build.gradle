@@ -44,7 +44,7 @@ dependencies {
 
 jettyRun {
     contextPath = 'mib'
-    httpPort = 9092 // Warren request to change port
+    httpPort = 9876 // Warren request to change port
 }
 
 test {

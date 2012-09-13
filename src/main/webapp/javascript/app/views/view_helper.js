@@ -74,12 +74,14 @@ IdeaBoardz.ViewHelper.prototype = {
         $(this.currentView.el).find("#navigation").html(
             this.navigationTemplate({
                 boardName:board.name,
-                boardId:board.id
+                boardId:board.id,
+                commentCount:0
             })
         );
 
         // make the top menu bar fixed to top for all views except createIdea & Comments
-        if(typeof this.currentView != IdeaBoardz.CreateIdeaView || typeof this.currentView != IdeaBoardz.CreateCommentsView){
+
+        if (typeof this.currentView != IdeaBoardz.CreateIdeaView || typeof this.currentView != IdeaBoardz.CreateCommentsView) {
             this.makeMenuBarNotFixedToTop();
         } else {
             this.makeMenuBarFixedToTop();
@@ -88,6 +90,7 @@ IdeaBoardz.ViewHelper.prototype = {
         var boardNameURL = '<a href="#for/'+board.name+'/'+board.id+'">'+board.name+'</a>';
         $(this.currentView.el).find('#boardName').html(boardNameURL);
         $(this.currentView.el).find('#boardName').show();
+
     },
 
     startListeningToGetBoardEvents: function(){
