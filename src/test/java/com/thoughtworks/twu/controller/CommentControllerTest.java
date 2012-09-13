@@ -74,7 +74,7 @@ public class CommentControllerTest {
         when(mockedCommentService.getCommentsCount(boardID)).thenReturn(commentCount);
         String countJSON = commentController.getCommentsCount(boardID);
 
-        assertThat(countJSON, containsString("{'count': "+commentCount+"}"));
+        assertThat(countJSON, containsString("{\"count\":\"" + commentCount + "\"}"));
 
     }
 }

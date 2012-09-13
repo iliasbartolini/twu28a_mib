@@ -52,6 +52,11 @@ IdeaBoardz.ViewHelper.prototype = {
         this.renderView();
     },
 
+    updateCommentServerWithCommentCount: function(data){
+        console.log("updating view with comment count; count is "+data.count);
+        IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
+    },
+
     renderView:function(){
         this.currentView.board = IdeaBoardz.Board.instance;
         this.customizeMenuLinks();
@@ -63,7 +68,8 @@ IdeaBoardz.ViewHelper.prototype = {
         $(this.currentView.el).find("#navigation").html(
             this.navigationTemplate({
                 boardName:board.name,
-                boardId:board.id
+                boardId:board.id,
+                commentCount:IdeaBoardz.CommentServer.instance.currentCommentCount
             })
         );
 
@@ -75,6 +81,20 @@ IdeaBoardz.ViewHelper.prototype = {
             $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
             $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
         }
+    },
+
+    pollForNewCommentCount: function(boardId) {
+        console.log("in poll for comment count before ajax call");
+        var successFun = function(data){
+            console.log("comment count success!");
+            IdeaBoardz.dispatcher.trigger('success:commentCount', data);
+        };
+
+        IdeaBoardz.CommentServer.instance.getCommentsCount(boardId, {success: successFun});
+    },
+
+    startListeningToGetCommentCountEvents: function(){
+        IdeaBoardz.dispatcher.on('success:commentCount', this.updateCommentServerWithCommentCount, this);
     },
 
     startListeningToGetBoardEvents: function(){

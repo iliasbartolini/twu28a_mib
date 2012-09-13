@@ -37,18 +37,17 @@ IdeaBoardz.CommentServer.prototype = {
 
     getCommentsCount:function(boardID, callbacks) {
         callbacks = callbacks || {};
+        var success = callbacks.success || function(){console.log("didn't correctly set success function");};
+        var error = callbacks.error || function(){};
         var returnVal=9999;
 
         $.ajax({
             type:'GET',
             dataType:'json',
             url:this.domain + '/mib/getCommentsCount?board_id=' + boardID,
-            success: function(data) {
-                returnVal = data.count;
-            }
+            success: success,
+            error: error
         })
-        console.log(returnVal);
-        return returnVal;
     }
 
 }

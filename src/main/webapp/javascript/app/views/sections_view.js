@@ -11,6 +11,8 @@ $(document).ready(function () {
             this.container = container;
             var sectionsViewHelper = new IdeaBoardz.ViewHelper(this, this.render);
             sectionsViewHelper.getBoardForCurrentView(boardName, boardId);
+            sectionsViewHelper.startListeningToGetCommentCountEvents();
+            sectionsViewHelper.pollForNewCommentCount(boardId);
         },
 
         render: function(){
