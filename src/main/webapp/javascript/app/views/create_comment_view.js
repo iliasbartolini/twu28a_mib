@@ -31,13 +31,17 @@ $(document).ready(function() {
                 success: this.successFunc
             });
 
-            this.doCommentsPoll();
+            if(IdeaBoardz.Board.instance.startedPollingForComments==false){
+                this.doCommentsPoll();
+                IdeaBoardz.Board.instance.startedPollingForComments=true;
+            }
 
         },
 
         doCommentsPoll : function(){
             var temp_boardID = this._boardID;
             var temp_pollForComments = this.pollSuccessFunc;
+            var timeStamp = new Date().getTime()
             this.timer = setInterval(function(){
                     IdeaBoardz.CommentServer.instance.getComments(temp_boardID, {success: temp_pollForComments})}
                 , 2000);
@@ -72,10 +76,15 @@ $(document).ready(function() {
                 return false;
             }
             var temp_showNoServiceError=this.showNoServiceError;
-            IdeaBoardz.CommentServer.instance.postComment(this._boardID,message, {error: temp_showNoServiceError});
+            IdeaBoardz.CommentServer.instance.postComment(this._boardID,message, {error: temp_showNoServiceError, success: this.clearErrorMessage});
             return false;
 
         },
+
+        clearErrorMessage: function(){
+            $("#viewWrapper").find("#alert-area").html("");
+        },
+
 
         showEmptyError: function(){
             $(this.el).find("#alert-area").html($("<div id=‘empty-msg’ align='center' class='alert alert-error'>Please enter a message</div>"));
@@ -98,11 +107,11 @@ $(document).ready(function() {
 
         pollSuccessFunc : function(data) {
             var previousViewTime=IdeaBoardz.CommentServer.instance.lastViewedAt;
-            IdeaBoardz.CommentServer.instance.lastViewedAt =  new Date().getTime();
             for(i = 0; i < data.comments.length; i++) {
                 if(data.comments[i].created_at > previousViewTime){
                     new IdeaBoardz.CommentView(data.comments[i].comment);
                 }
+            IdeaBoardz.CommentServer.instance.lastViewedAt=data.comments[(data.comments.length)-1].created_at;
             }
 
         }

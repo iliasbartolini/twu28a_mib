@@ -46,9 +46,8 @@ public class ViewSectionTest {
     }
 
     @Test
-    @Ignore
     public void shouldDisplayErrorMessageIfProvideInvalidSectionId(){
-        testHelper.navigateToSectionView("99999");
+        testHelper.navigateToUrl(TestHelper.BOARD_URL + "/" + "999999");
         testHelper.waitForElement(By.id("alert-area"));
         assertTrue(testHelper.contains("No such section exists"));
     }

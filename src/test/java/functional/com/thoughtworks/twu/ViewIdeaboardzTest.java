@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ViewIdeaboardzTest {
@@ -69,8 +70,8 @@ public class ViewIdeaboardzTest {
     public void shouldShowErrorForInvalidBoardURL() {
         testHelper.navigateToUrl(testHelper.BOARD_URL + "99999abcde");
         testHelper.waitForElement(By.id("alert-area"));
+        assertFalse(testHelper.contains(TestHelper.BOARD_NAME));
         assertTrue(testHelper.contains("No such board exists"));
-
     }
 
     @After
