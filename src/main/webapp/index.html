@@ -12,19 +12,19 @@
 
     <script type="text/template" id="template-index">
         <div class="mib_content template_index">
-            <div class="alert alert-error">
-                <h3 style="text-align:center">Welcome to IdeaBoardz</h3>
+            <div class="index-board">
+                <h3 style="text-align:center">WELCOME TO IDEABOARDZ</h3>
 
                 <div class="sticky" style="text-align:left">
-                    <h3 style="text-align:center"> How? </h3>
+                    <h3 style="text-align:center"> HOW </h3>
                     <ul>
                         <li>Ask the facilitator for the URL of an IdeaBoard</li>
                         <li>Enter the URL in your browser to start reading and editing ideas</li>
                     </ul>
                 </div>
                 <p></p>
-                <div class="sticky" style="text-align:left">
-                    <h3 style="text-align:center"> Why? </h3>
+                <div class="sticky orange" style="text-align:left">
+                    <h3 style="text-align:center"> WHY? </h3>
                     <ul>
                         <li>Add ideas on the go</li>
                         <li>Never miss a retro</li>
@@ -32,10 +32,10 @@
                     </ul>
                 </div>
                 <p></p>
-                <div class="sticky" style="text-align:left">
-                    <h3 style="text-align:center"> Get Started </h3>
+                <div class="sticky green" style="text-align:left">
+                    <h3 style="text-align:center"> GET STARTED </h3>
                     <ul>
-                        <li>Enter the URL for your board in your browser to get started</li>
+                        <li class="blue">Enter the URL for your board in your browser to get started</li>
                     </ul>
                 </div>
                 <p></p>
@@ -81,13 +81,12 @@
     <script type="text/template" id="template-errorView">
         <div class="mib_content">
             <div id="alert-area" class="alert alert-error alert-main">
-                <h4>No such page exists.</h4>The provided board URL is invalid.<br/> Please check the URL again.
+                <h4>No such page exists.</h4>The provided URL is invalid.<br/> Please check the URL again.
         </div></div>
     </script>
 
     <script type="text/template" id="template-newIdea">
         <div class="mib_content">
-
             <h1><%= boardName %></h1>
             <form name="ideaForm" action="" method="" class="addStickyForm">
                 <p>
@@ -95,7 +94,7 @@
                 </p>
                 <div id="alert-area" ></div>
                 <div class="sticky largeSticky">
-                    <textarea name="ideaText"  id="ideaText"></textarea>
+                    <textarea name="ideaText"  id="ideaText" rows="2"></textarea>
                 </div>
                 <div class="form_action">
                     <button id="submitBtn" type="button" class="btn btn-large btn-success btn-block">Submit Idea</button>

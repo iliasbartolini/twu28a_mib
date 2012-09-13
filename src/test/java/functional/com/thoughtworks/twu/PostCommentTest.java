@@ -10,7 +10,7 @@ import org.openqa.selenium.By;
 
 import java.util.Arrays;
 import java.util.List;
-@Ignore("fail on CI")
+//@Ignore("fail on CI")
 public class PostCommentTest {
     private TestHelper testHelper;
 
@@ -27,6 +27,7 @@ public class PostCommentTest {
     }
 
     @Test
+    @Ignore ("Need to wait for the comment polling before assert")
     public void shouldShowCreatedComments() {
         testHelper.navigateToCommentView();
 

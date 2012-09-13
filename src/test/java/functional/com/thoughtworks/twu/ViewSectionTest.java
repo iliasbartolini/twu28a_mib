@@ -4,19 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ViewSectionTest {
     public static final String SECTION_ID = "1";
@@ -32,18 +25,32 @@ public class ViewSectionTest {
 
     @Test
     public void shouldDisplaySectionNameWhenGoingThroughBoardPage() {
-        navigateToSectionPage();
+        navigateToSectionPage(SECTION_NAME);
 
         WebElement sectionHeading = testHelper.findElement(SECTION_HEADING_SELECTOR);
-        assertEquals(SECTION_NAME, sectionHeading.getText());
+        assertThat(sectionHeading.getText(), is(SECTION_NAME));
     }
 
     @Test
     public void shouldDisplaySectionNameWhenGoingDirectlyToSectionPage() {
-        goDirectlyToSectionPage();
+        goDirectlyToSectionPage(SECTION_ID);
 
         WebElement sectionHeading = testHelper.findElement(SECTION_HEADING_SELECTOR);
-        assertEquals(SECTION_NAME, sectionHeading.getText());
+        assertThat(sectionHeading.getText(), is(SECTION_NAME));
+    }
+
+    @Test
+    public void shouldDisplayNoticeIfSectionIsEmpty() {
+        navigateToSectionPage("Action Items");
+        testHelper.assertContent("emptyMessage", "Got any ideas?");
+    }
+
+    @Test
+    @Ignore
+    public void shouldDisplayErrorMessageIfProvideInvalidSectionId(){
+        testHelper.navigateToSectionView("99999");
+        testHelper.waitForElement(By.id("alert-area"));
+        assertTrue(testHelper.contains("No such section exists"));
     }
 
     @After
@@ -51,14 +58,14 @@ public class ViewSectionTest {
         testHelper.closeWebDriver();
     }
 
-    private void goDirectlyToSectionPage() {
-        testHelper.navigateToSectionView(SECTION_ID);
+    private void goDirectlyToSectionPage(String sectionId) {
+        testHelper.navigateToSectionView(sectionId);
         testHelper.waitForElement(SECTION_HEADING_SELECTOR);
     }
 
-    private void navigateToSectionPage() {
+    private void navigateToSectionPage(String sectionName) {
         testHelper.navigateToMainBoardView();
-        testHelper.findElement(By.linkText(SECTION_NAME)).click();
+        testHelper.findElement(By.linkText(sectionName)).click();
         testHelper.waitForElement(SECTION_HEADING_SELECTOR);
     }
 

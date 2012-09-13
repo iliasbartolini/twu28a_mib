@@ -4,7 +4,6 @@ IdeaBoardz.dispatcher = _.clone(Backbone.Events);
 IdeaBoardz.ViewHelper = function(currentView, renderBoardCallback) {
     this.currentView = currentView;
     this.renderBoardCallback = renderBoardCallback;
-    this.helperContext = this;
 }
 
 IdeaBoardz.ViewHelper.prototype = {
@@ -67,8 +66,15 @@ IdeaBoardz.ViewHelper.prototype = {
                 boardId:board.id
             })
         );
-        $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
-        $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
+
+        // make the top menu barr fixed to top for all views except createIdea & Comments
+        if(typeof this.currentView != IdeaBoardz.CreateIdeaView){
+            $(this.el).find('#menu').removeClass('navbar-fixed-top');
+            $(this.el).find('.mib_content').addClass('content-pull-up');
+        } else {
+            $(this.currentView.el).find('#menu').addClass('navbar-fixed-top');
+            $(this.currentView.el).find('.mib_content').removeClass('content-pull-up');
+        }
     },
 
     startListeningToGetBoardEvents: function(){
