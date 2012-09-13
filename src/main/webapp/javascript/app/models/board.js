@@ -4,5 +4,6 @@ IdeaBoardz.Board = function(name, id, sections) {
     this.sections = sections;
     this.ideas = null;
     this.timer = null;
+    this.startedPollingForComments = false;
 }
 

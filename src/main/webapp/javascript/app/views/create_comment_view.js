@@ -31,7 +31,10 @@ $(document).ready(function() {
                 success: this.successFunc
             });
 
-            this.doCommentsPoll();
+            if(IdeaBoardz.Board.instance.startedPollingForComments==false){
+                this.doCommentsPoll();
+                IdeaBoardz.Board.instance.startedPollingForComments=true;
+            }
 
         },
 
