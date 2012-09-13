@@ -79,7 +79,7 @@ public class TestHelper {
 
     public void navigateToMainBoardView() {
         navigateToUrl(BOARD_URL);
-        waitForElement(By.id("boardName"));
+        waitForElement(By.cssSelector("#boardName a"));
     }
 
     public void navigateToSectionView(String sectionId) {

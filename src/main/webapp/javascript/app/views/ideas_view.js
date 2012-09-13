@@ -29,7 +29,7 @@ $(document).ready(function () {
         renderSectionError: function(){
             var errorMsg = "<h4>No such section exists.</h4>The provided URL is invalid.<br/> Please check the URL again."
             $(this.el).find(this.container).html(
-                '<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div></div>'
+                '<div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div>'
             );
         },
 
@@ -119,8 +119,8 @@ $(document).ready(function () {
             this.stopListeningToGetIdeasEvents();
             var errorMsg = "<h4>Problem retrieving ideas.</h4> Please check your URL or section id."
             $(this.currentView.el).find(this.currentView.container).html(
-                '<div class="mib_content"><div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div></div>'
+                '<div id="alert-area" class="alert alert-error alert-main">'+ errorMsg +'</div>'
             );
-        },
+        }
     });
 });
