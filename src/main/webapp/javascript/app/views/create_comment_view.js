@@ -9,10 +9,14 @@ $(document).ready(function() {
         timer: 0,
 
         events: {
+            "onkeydown": "submitOnEnter",
             "click #postBtn": "postAComment",
             "click #commentBtn": "render"
         },
 
+        submitOnEnter: function(event){
+            console.log(event.key);
+        },
         initialize: function(container, boardName, id) {
             console.log("in initialize Create Comments View");
             this._boardID = id;
