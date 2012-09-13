@@ -4,7 +4,6 @@ IdeaBoardz.dispatcher = _.clone(Backbone.Events);
 IdeaBoardz.ViewHelper = function(currentView, renderBoardCallback) {
     this.currentView = currentView;
     this.renderBoardCallback = renderBoardCallback;
-    this.timer = null;
 }
 
 IdeaBoardz.ViewHelper.prototype = {
@@ -54,18 +53,6 @@ IdeaBoardz.ViewHelper.prototype = {
         this.renderView();
     },
 
-    updateCommentServerWithCommentCount: function(data){
-        this.doneListeningToFirstGetCommentCountEvent();
-        this.startListeningToGetCommentCountEvent();
-        console.log("updating view with comment count; count is "+data.count);
-        IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
-    },
-
-    updateViewWithCommentCount: function(data){
-        IdeaBoardz.CommentServer.instance.currentCommentCount = data.count;
-        $(this.currentView.el).find("#commentCount").html(IdeaBoardz.CommentServer.instance.currentCommentCount);
-    },
-
     renderView:function(){
         this.currentView.board = IdeaBoardz.Board.instance;
         this.customizeMenuLinks();
@@ -88,7 +75,7 @@ IdeaBoardz.ViewHelper.prototype = {
             this.navigationTemplate({
                 boardName:board.name,
                 boardId:board.id,
-                commentCount:IdeaBoardz.CommentServer.instance.currentCommentCount
+                commentCount:0
             })
         );
 
@@ -106,40 +93,6 @@ IdeaBoardz.ViewHelper.prototype = {
         $(this.currentView.el).find('#boardName').html(boardNameURL);
         $(this.currentView.el).find('#boardName').show();
     }},
-
-    startPollingForNewCommentCount: function(boardId) {
-        var self = this;
-        var successFun = function(data){
-            console.log("comment count success!");
-            IdeaBoardz.dispatcher.trigger('success:commentCount', data);
-            self.doCommentCountPoll(boardId);
-        };
-
-        IdeaBoardz.CommentServer.instance.getCommentsCount(boardId, {success: successFun});
-    },
-
-    doCommentCountPoll : function(boardId){
-        this.timer = setInterval(function(){
-                IdeaBoardz.CommentServer.instance.getCommentsCount(boardId, {success: function(data) { IdeaBoardz.dispatcher.trigger('success:commentCount',data); }}
-                )}
-            , 2000);
-    },
-
-    listenForFirstGetCommentCountEvent: function(){
-        IdeaBoardz.dispatcher.on('success:commentCount', this.updateCommentServerWithCommentCount, this);
-    },
-
-    doneListeningToFirstGetCommentCountEvent: function(){
-        IdeaBoardz.dispatcher.off('success:commentCount', this.updateCommentServerWithCommentCount, this);
-    },
-
-    startListeningToGetCommentCountEvent: function(){
-        IdeaBoardz.dispatcher.on('success:commentCount', this.updateViewWithCommentCount, this);
-    },
-
-    stopListeningToGetCommentCountEvent: function(){
-        IdeaBoardz.dispatcher.off('success:commentCount', this.updateViewWithCommentCount, this);
-    },
 
     startListeningToGetBoardEvents: function(){
         IdeaBoardz.dispatcher.on('success:boardData', this.updateViewWithReturnedBoardData, this);

@@ -9,10 +9,14 @@ $(document).ready(function () {
 
         initialize: function(container, boardName, boardId) {
             this.container = container;
-            var sectionsViewHelper = new IdeaBoardz.ViewHelper(this, this.render);
+            var sectionsViewHelper = new IdeaBoardz.ViewHelper(this, this.renderAndStartPolling);
             sectionsViewHelper.getBoardForCurrentView(boardName, boardId);
-            sectionsViewHelper.startListeningToGetCommentCountEvents();
-            sectionsViewHelper.pollForNewCommentCount(boardId);
+        },
+
+        renderAndStartPolling: function(){
+            var commentCountHelper = new IdeaBoardz.CommentCountHelper(this);
+            commentCountHelper.start();
+            this.render();
         },
 
         render: function(){
