@@ -14,7 +14,6 @@ $(document).ready(function() {
         },
 
         initialize: function(container, boardName, id) {
-            console.log("in initialize Create Comments View");
             this._boardID = id;
             this._boardName = boardName;
             this.container=container;
@@ -37,10 +36,6 @@ $(document).ready(function() {
                 IdeaBoardz.Board.instance.startedPollingForComments=true;
             }
 
-        },
-
-        errorFunc : function(){
-            console.log("I am an error function") ;
         },
 
         doCommentsPoll : function(){
@@ -105,7 +100,6 @@ $(document).ready(function() {
            IdeaBoardz.CommentServer.instance.lastViewedAt = 0;
 
             for(i = 0; i < data.comments.length; i++) {
-                console.log("Am i here??");
                 new IdeaBoardz.CommentView(data.comments[i].comment);
             }
 
