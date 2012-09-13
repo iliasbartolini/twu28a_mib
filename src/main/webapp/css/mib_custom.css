@@ -43,7 +43,7 @@ body {
 
 .mib_content h1#boardName a, .mib_content h1#boardName:hover{
     color:#000;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .sticky {
@@ -215,6 +215,7 @@ body {
     outline: none;
     border: none;
     box-shadow: none;
+    font-size: 1.1em;
 }
 
 .content-pull-up{
